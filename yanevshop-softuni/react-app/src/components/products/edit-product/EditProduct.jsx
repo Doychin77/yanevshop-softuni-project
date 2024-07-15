@@ -6,6 +6,7 @@ const EditProduct = () => {
     const { id } = useParams(); // Get the product ID from URL params
     const navigate = useNavigate(); 
     const [productImage, setProductImage] = useState(null);
+    const [previewImage, setPreviewImage] = useState(null); 
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
    
@@ -28,6 +29,7 @@ const EditProduct = () => {
                     price: product.price,
                     category_id: product.category_id
                 });
+                setPreviewImage(product.image); // Set the initial image preview
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }
@@ -84,7 +86,11 @@ const EditProduct = () => {
     };
 
     const handleImageChange = (e) => {
-        setProductImage(e.target.files[0]);
+        const file = e.target.files[0];
+        if (file) {
+            setProductImage(file);
+            setPreviewImage(URL.createObjectURL(file)); 
+        }
     };
 
     return (
@@ -132,6 +138,11 @@ const EditProduct = () => {
                                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                             />
                         </label>
+                        {previewImage && (
+                            <div className="mt-2">
+                                <img src={previewImage} alt="Product Preview" className="max-h-40 rounded-md" />
+                            </div>
+                        )}
                         {errors.image && <div className="text-red-500">{errors.image[0]}</div>}
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-700">
                             Category

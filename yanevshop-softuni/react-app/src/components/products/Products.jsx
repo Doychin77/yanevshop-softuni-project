@@ -5,6 +5,7 @@ import wallpaper2 from '../../assets/wallpaper2.jpg';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         fetchProducts();
@@ -16,6 +17,16 @@ const Products = () => {
             setProducts(response.data);
         } catch (error) {
             console.error('Error fetching products:', error);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://yanevshop.test/api/products/${id}`);
+            setProducts(products.filter(product => product.id !== id));
+        } catch (error) {
+            console.error('Error deleting product:', error);
+            setErrors({ delete: 'Error deleting product' });
         }
     };
 
@@ -34,7 +45,7 @@ const Products = () => {
                 <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                     {products.map((product) => (
                         <div key={product.id} className="bg-gray-800 rounded-lg shadow-md text-gray-100 flex flex-col justify-center items-center p-4">
-                            <img src={`http://yanevshop.test/storage/images/${product.image}`} alt={product.name} className="w-200px h-auto mb-4 rounded-md" />
+                            <img src={`http://yanevshop.test/storage/images/${product.image}`} alt={product.name} style={{ width: '270px', height: '320px', objectFit: 'cover'}}  className="w-200px h-auto mb-4 rounded-md" />
                             <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
                             <p className="text-gray-300 text-center mb-4">{product.description}</p>
                             <p className="text-gray-300 text-center mb-4">{product.price}$</p>
@@ -45,13 +56,23 @@ const Products = () => {
                                 >
                                     Edit
                                 </Link>
-                                <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-4 py-2 rounded-lg">
-                                    View Product
+                                <button
+                                    onClick={() => handleDelete(product.id)}
+                                    className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg"
+                                >
+                                    Delete
                                 </button>
+                                <Link
+                                    to={`/products/${product.id}`}
+                                    className="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-4 py-2 rounded-lg ml-2"
+                                >
+                                    View Product
+                                </Link>
                             </div>
                         </div>
                     ))}
                 </main>
+                {errors.delete && <div className="text-red-500 text-center mt-4">{errors.delete}</div>}
             </div>
         </div>
     );
