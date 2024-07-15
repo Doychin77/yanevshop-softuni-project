@@ -9,6 +9,9 @@ import Register from './components/register/Register';
 import Login from './components/login/Login';
 import Contacts from './components/contacts/Contacts';
 import Products from './components/products/Products';
+import AddProduct from './components/products/add-product/AddProduct';
+import AddCategory from './components/categoies/add-category/AddCategory';
+import Categories from './components/categoies/Categories';
 
 function App() {
     return (
@@ -18,8 +21,11 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/catalog" element={<Catalog />} />
+                    <Route path="/categories" element={<Categories />} />
+                    <Route path="/add-category" element={<AddCategory />} />
                     <Route path="/contacts" element={<Contacts />} />
                     <Route path="/products" element={<Products />} />
+                    <Route path="/add-product" element={<AddProduct />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />

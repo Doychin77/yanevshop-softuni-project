@@ -32,7 +32,7 @@ export default function Register() {
             alert("Registration successful");
             navigate('/');
         } catch (error) {
-            console.error(error);
+            console.error(error.message);
             alert("An error occurred. Please try again.");
         }
     };
