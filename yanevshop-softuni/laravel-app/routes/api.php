@@ -26,6 +26,7 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::post('/products/{id}', [ProductController::class, 'update']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

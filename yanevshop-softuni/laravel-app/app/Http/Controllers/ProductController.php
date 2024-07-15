@@ -13,14 +13,14 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::findOrFail($id); // Fetch the product by ID from the database
+        $product = Product::findOrFail($id);
         return response()->json($product);
     }
 
 
     public function index()
     {
-        $products = Product::all(); // Fetch all products from the database
+        $products = Product::all();
 
         return response()->json($products);
     }
@@ -51,7 +51,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $imageName, // Store the image name or path in the database
+            'image' => $imageName,
             'category_id' => $request->category_id,
         ]);
 
@@ -60,7 +60,6 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $product = Product::findOrFail($id);
 
         $validatedData = $request->validate([
@@ -81,10 +80,14 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            // Store the image in the public/images directory
+
             $image->storeAs('public/images', $imageName);
-        } else {
-            return response()->json(['error' => 'Image not provided'], 422);
+
+            if ($product->image) {
+                Storage::delete('public/images/' . $product->image);
+            }
+
+            $product->image = $imageName;
         }
 
         $product->save();
@@ -92,5 +95,19 @@ class ProductController extends Controller
         return response()->json($product, 200);
     }
 
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product->image) {
+            Storage::delete('public/images/' . $product->image);
+        }
+
+        $product->delete();
+
+        return response()->json(['message' => 'Product deleted successfully'], 200);
+    }
 
 }
+
+
