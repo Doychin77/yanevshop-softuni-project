@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';  // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import wallpaper2 from '../../assets/wallpaper2.jpg';
 
-export default function Products() {
+const Products = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        // Fetch products from your API
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get('http://yanevshop.test/api/products');
-                setProducts(response.data);
-            } catch (error) {
-                console.error('Error fetching products:', error);
-            }
-        };
-
         fetchProducts();
     }, []);
+
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get('http://yanevshop.test/api/products');
+            setProducts(response.data);
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };
 
     return (
         <div className="home-background min-h-screen" style={{ backgroundImage: `url(${wallpaper2})`, backgroundSize: 'cover' }}>
@@ -26,7 +25,6 @@ export default function Products() {
                 <header className="py-6">
                     <h1 className="text-3xl font-bold text-gray-100 text-center">YanevShop</h1>
                     <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
-                    {/* Add a button to navigate to Add Product page */}
                     <div className="flex justify-center mt-4">
                         <Link to="/add-product" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg">
                             Add New Product
@@ -40,13 +38,23 @@ export default function Products() {
                             <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
                             <p className="text-gray-300 text-center mb-4">{product.description}</p>
                             <p className="text-gray-300 text-center mb-4">{product.price}$</p>
-                            <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-4 py-2 rounded-lg">
-                                View Product
-                            </button>
+                            <div className="flex justify-center">
+                                <Link
+                                    to={`/products/${product.id}/edit`}
+                                    className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg mr-2"
+                                >
+                                    Edit
+                                </Link>
+                                <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-4 py-2 rounded-lg">
+                                    View Product
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </main>
             </div>
         </div>
     );
-}
+};
+
+export default Products;

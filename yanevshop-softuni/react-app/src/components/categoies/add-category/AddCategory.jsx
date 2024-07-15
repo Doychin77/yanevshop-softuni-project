@@ -17,7 +17,6 @@ export default function AddCategory() {
             navigate('/categories');
         } catch (error) {
             console.error('Error creating category:', error);
-            // Handle error: display message or log to console
         }
     };
 

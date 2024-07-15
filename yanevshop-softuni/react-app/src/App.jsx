@@ -12,6 +12,7 @@ import Products from './components/products/Products';
 import AddProduct from './components/products/add-product/AddProduct';
 import AddCategory from './components/categoies/add-category/AddCategory';
 import Categories from './components/categoies/Categories';
+import EditProduct from './components/products/edit-product/EditProduct';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/contacts" element={<Contacts />} />
                     <Route path="/products" element={<Products />} />
                     <Route path="/add-product" element={<AddProduct />} />
+                    <Route path="/products/:id/edit" element={<EditProduct />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
