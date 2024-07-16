@@ -34,8 +34,8 @@ export default function AddCategory() {
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
             <div className="max-w-screen-sm mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Add New Category</h1>
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Add New Category</h1>
+                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-md p-6">
                     <form onSubmit={handleFormSubmit} className="grid grid-cols-1 gap-4">
                         <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
                             Name
@@ -44,7 +44,7 @@ export default function AddCategory() {
                                 placeholder="Category Name"
                                 value={categoryName}
                                 onChange={(e) => setCategoryName(e.target.value)}
-                                className="t-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focums:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600  border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                                 required
                             />
                         </label>
@@ -54,13 +54,13 @@ export default function AddCategory() {
                                 type="file"
                                 accept="image/*"
                                 onChange={handleFileChange} // Handle file change
-                                className="t-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focums:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600  border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                                 required
                             />
                         </label>
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
+                            className="block mx-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-xl"
                         >
                             Add Category
                         </button>

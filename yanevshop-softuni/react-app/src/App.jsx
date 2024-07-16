@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './components/UserContext'; // Ensure the path is correct
-import Navigation from './components/navigation/Navigation'; // Ensure the path is correct
+import { UserProvider } from './components/UserContext'; 
+import Navigation from './components/navigation/Navigation'; 
 import Home from './components/home/Home';
 import Catalog from './components/catalog/Catalog';
 import About from './components/about/About';

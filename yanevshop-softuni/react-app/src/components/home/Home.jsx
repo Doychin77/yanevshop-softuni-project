@@ -25,6 +25,7 @@ export default function Home() {
                     <h1 className="text-3xl font-bold text-gray-100 text-center">Welcome to My Shop</h1>
                     <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                 </header>
+                
                 <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                     {products.map((product) => (
                         <div key={product.id} className="bg-gray-800 rounded-lg shadow-md text-gray-100 flex flex-col justify-center items-center p-4">

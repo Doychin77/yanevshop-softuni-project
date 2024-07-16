@@ -97,8 +97,8 @@ const EditProduct = () => {
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
             <div className="max-w-screen-sm mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Edit Product <br/> {productData.name}  </h1>
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Edit Product <br /> {productData.name}  </h1>
+                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-md p-6">
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
                         <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
                             Name
@@ -108,7 +108,7 @@ const EditProduct = () => {
                                 name='name'
                                 value={productData.name}
                                 onChange={handleProductData}
-                                className="w-full border-gray-300 dark:text-gray-700 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600 border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                                 required
                             />
                         </label>
@@ -121,7 +121,7 @@ const EditProduct = () => {
                                 name='description'
                                 value={productData.description}
                                 onChange={handleProductData}
-                                className="w-full border-gray-300 dark:text-gray-700 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600 border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                                 required
                             ></textarea>
                         </label>
@@ -134,7 +134,7 @@ const EditProduct = () => {
                                 name='price'
                                 value={productData.price}
                                 onChange={handleProductData}
-                                className="w-full border-gray-300 dark:text-gray-700 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600 border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                                 required
                             />
                         </label>
@@ -145,7 +145,7 @@ const EditProduct = () => {
                                 type="file"
                                 accept=".jpg,.jpeg,.png"
                                 onChange={handleImageChange}
-                                className="mt-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600  border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                             />
                         </label>
                         <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
@@ -154,7 +154,7 @@ const EditProduct = () => {
                                 value={productData.category_id}
                                 name='category_id'
                                 onChange={handleProductData}
-                                className="mt-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="w-full mt-2 bg-gray-700 hover:bg-gray-600  border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
                                 required
                             >
                                 <option value="">Select a category</option>
@@ -168,7 +168,7 @@ const EditProduct = () => {
                         {errors.category_id && <div className="text-red-500">{errors.category_id[0]}</div>}
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
+                            className="block mx-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-xl"
                         >
                             Update Product
                         </button>
