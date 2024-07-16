@@ -13,6 +13,8 @@ import AddProduct from './components/products/add-product/AddProduct';
 import AddCategory from './components/categoies/add-category/AddCategory';
 import Categories from './components/categoies/Categories';
 import EditProduct from './components/products/edit-product/EditProduct';
+import CategoryProducts from './components/categoies/category-products/CategoryProducts';
+import Profile from './components/profile/Profile';
 
 function App() {
     return (
@@ -21,8 +23,10 @@ function App() {
                 <Navigation />
                 <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/catalog" element={<Catalog />} />
                     <Route path="/categories" element={<Categories />} />
+                    <Route path="/categories/:id/products" element={<CategoryProducts />} />
                     <Route path="/add-category" element={<AddCategory />} />
                     <Route path="/contacts" element={<Contacts />} />
                     <Route path="/products" element={<Products />} />

@@ -28,7 +28,7 @@ export default function Home() {
                 <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                     {products.map((product) => (
                         <div key={product.id} className="bg-gray-800 rounded-lg shadow-md text-gray-100 flex flex-col justify-center items-center p-4">
-                            <img src={`http://yanevshop.test/storage/images/${product.image}`} alt={product.name} className="w-200px h-auto mb-4 rounded-md" />
+                            <img src={`http://yanevshop.test/storage/images/${product.image}`} alt={product.name} style={{ width: '270px', height: '320px', objectFit: 'cover'}} className="w-200px h-auto mb-4 rounded-md" />
                             <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
                             <p className="text-gray-300 text-center mb-4">{product.description}</p>
                             <button className="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-4 py-2 rounded-lg">
