@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import wallpaper2 from '../../assets/wallpaper2.jpg';
+import Footer from '../footer/Footer';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -42,7 +43,7 @@ const Products = () => {
                         </Link>
                     </div>
                 </header>
-                <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
                     {products.map((product) => (
                         <div key={product.id} className="bg-gray-800 rounded-lg shadow-md text-gray-100 flex flex-col justify-center items-center p-4">
                             <img src={`http://yanevshop.test/storage/images/${product.image}`} alt={product.name} style={{ width: '270px', height: '320px', objectFit: 'cover'}}  className="w-200px h-auto mb-4 rounded-md" />
@@ -72,7 +73,9 @@ const Products = () => {
                         </div>
                     ))}
                 </main>
+
                 {errors.delete && <div className="text-red-500 text-center mt-4">{errors.delete}</div>}
+                <Footer />
             </div>
         </div>
     );

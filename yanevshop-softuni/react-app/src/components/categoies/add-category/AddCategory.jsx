@@ -33,25 +33,31 @@ export default function AddCategory() {
 
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
-            <div className="max-w-screen-xl mx-auto px-4 py-8">
+            <div className="max-w-screen-sm mx-auto px-4 py-8">
                 <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Add New Category</h1>
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                     <form onSubmit={handleFormSubmit} className="grid grid-cols-1 gap-4">
-                        <input
-                            type="text"
-                            placeholder="Category Name"
-                            value={categoryName}
-                            onChange={(e) => setCategoryName(e.target.value)}
-                            className="w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange} // Handle file change
-                            className="w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
+                            Name
+                            <input
+                                type="text"
+                                placeholder="Category Name"
+                                value={categoryName}
+                                onChange={(e) => setCategoryName(e.target.value)}
+                                className="t-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focums:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                required
+                            />
+                        </label>
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
+                            Image
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleFileChange} // Handle file change
+                                className="t-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focums:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                required
+                            />
+                        </label>
                         <button
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"

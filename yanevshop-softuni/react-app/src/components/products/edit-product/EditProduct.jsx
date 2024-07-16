@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import Footer from '../../footer/Footer';
 
 const EditProduct = () => {
     const { id } = useParams(); // Get the product ID from URL params
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [productImage, setProductImage] = useState(null);
-    const [previewImage, setPreviewImage] = useState(null); 
+    const [previewImage, setPreviewImage] = useState(null);
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
-   
+
     const [productData, setProductData] = useState({
         name: '',
         description: '',
@@ -89,68 +90,71 @@ const EditProduct = () => {
         const file = e.target.files[0];
         if (file) {
             setProductImage(file);
-            setPreviewImage(URL.createObjectURL(file)); 
+            setPreviewImage(URL.createObjectURL(file));
         }
     };
 
     return (
         <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
-            <div className="max-w-screen-xl mx-auto px-4 py-8">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Edit Product</h1>
+            <div className="max-w-screen-sm mx-auto px-4 py-8">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Edit Product <br/> {productData.name}  </h1>
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
-                        <input
-                            type="text"
-                            placeholder="Product Name"
-                            name='name'
-                            value={productData.name}
-                            onChange={handleProductData}
-                            className="w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
+                            Name
+                            <input
+                                type="text"
+                                placeholder="Product Name"
+                                name='name'
+                                value={productData.name}
+                                onChange={handleProductData}
+                                className="w-full border-gray-300 dark:text-gray-700 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                required
+                            />
+                        </label>
                         {errors.name && <div className="text-red-500">{errors.name[0]}</div>}
-                        <textarea
-                            placeholder="Product Description"
-                            rows="4"
-                            name='description'
-                            value={productData.description}
-                            onChange={handleProductData}
-                            className="w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        ></textarea>
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
+                            Description
+                            <textarea
+                                placeholder="Product Description"
+                                rows="4"
+                                name='description'
+                                value={productData.description}
+                                onChange={handleProductData}
+                                className="w-full border-gray-300 dark:text-gray-700 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                required
+                            ></textarea>
+                        </label>
                         {errors.description && <div className="text-red-500">{errors.description[0]}</div>}
-                        <input
-                            type="number"
-                            placeholder="Product Price"
-                            name='price'
-                            value={productData.price}
-                            onChange={handleProductData}
-                            className="w-full border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
-                            required
-                        />
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
+                            Price
+                            <input
+                                type="number"
+                                placeholder="Product Price"
+                                name='price'
+                                value={productData.price}
+                                onChange={handleProductData}
+                                className="w-full border-gray-300 dark:text-gray-700 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                required
+                            />
+                        </label>
                         {errors.price && <div className="text-red-500">{errors.price[0]}</div>}
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                            Product Image
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
+                            Image
                             <input
                                 type="file"
                                 accept=".jpg,.jpeg,.png"
                                 onChange={handleImageChange}
-                                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="mt-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                             />
                         </label>
-                        {previewImage && (
-                            <div className="mt-2">
-                                <img src={previewImage} alt="Product Preview" className="max-h-40 rounded-md" />
-                            </div>
-                        )}
-                        {errors.image && <div className="text-red-500">{errors.image[0]}</div>}
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-700">
+                        <label className="block text-md font-medium text-gray-700 dark:text-gray-100">
                             Category
                             <select
                                 value={productData.category_id}
                                 name='category_id'
                                 onChange={handleProductData}
-                                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                className="mt-1 block w-full py-2 px-3 border dark:text-gray-700 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                                 required
                             >
                                 <option value="">Select a category</option>
@@ -169,6 +173,7 @@ const EditProduct = () => {
                             Update Product
                         </button>
                     </form>
+                    <Footer />
                 </div>
             </div>
         </div>

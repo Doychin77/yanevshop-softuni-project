@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axiosInstance from './axiosConfig.js';
+import axiosInstance from './axiosConfig';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -13,7 +13,13 @@ const Profile = () => {
                 setUser(response.data);
                 setLoading(false);
             } catch (error) {
-                setError('Error fetching user profile');
+                if (error.response && error.response.status === 401) {
+                    setError('Unauthorized access. Please log in again.');
+                    localStorage.removeItem('authToken');
+                    window.location.href = '/login'; // Redirect to login page
+                } else {
+                    setError('Error fetching user profile');
+                }
                 setLoading(false);
             }
         };
