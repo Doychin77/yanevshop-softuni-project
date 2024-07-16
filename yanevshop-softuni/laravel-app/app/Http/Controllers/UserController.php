@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -26,5 +27,15 @@ class UserController extends Controller
         $user->save();
 
         return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
+    }
+
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum');
+    }
+
+    public function profile()
+    {
+        return response()->json(Auth::user());
     }
 }
