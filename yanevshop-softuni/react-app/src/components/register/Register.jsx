@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../css/toaststyles.css';
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -9,6 +12,10 @@ export default function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [termsAccepted, setTermsAccepted] = useState(false);
     const navigate = useNavigate();
+
+    const notify = () => toast("Registration Successful!", {
+        className: "toast-message-registration",
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,8 +36,7 @@ export default function Register() {
                 password_confirmation: confirmPassword
             });
             console.log(response.data);
-            alert("Registration successful");
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             console.error(error.message);
             alert("An error occurred. Please try again.");
@@ -50,17 +56,17 @@ export default function Register() {
                             Create an account
                         </h1>
                         <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-                        <div>
+                            <div>
                                 <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name</label>
-                                <input 
-                                    type="text" 
-                                    name="username" 
-                                    id="username" 
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                    placeholder="John Doe" 
-                                    value={username} 
-                                    onChange={(e) => setUsername(e.target.value)} 
-                                    required 
+                                <input
+                                    type="text"
+                                    name="username"
+                                    id="username"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="John Doe"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    required
                                 />
                             </div>
                             <div>
@@ -83,7 +89,9 @@ export default function Register() {
                                     <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Terms and Conditions</a></label>
                                 </div>
                             </div>
-                            <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                            <button type="submit"
+                                onClick={notify}
+                                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
                             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                                 Already have an account? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                             </p>

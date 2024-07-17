@@ -1,7 +1,14 @@
-export default function Footer() {
+// Footer.js
+
+import React from 'react';
+import styles from './footer.module.css'; // Import the CSS module
+
+const Footer = () => {
     return (
-        <footer className="fixed bottom-0 left-0 right-0 py-4 text-center text-gray-200 text-sm bg-opacity-1 backdrop-filter backdrop-blur-sm">
+        <footer className={styles.footer}> {/* Apply the CSS module */}
             &copy; 2024 Yanev Shop. All rights reserved.
         </footer>
     );
 }
+
+export default Footer;

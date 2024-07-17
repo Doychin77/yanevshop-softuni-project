@@ -1,0 +1,26 @@
+.toast-message-delete {
+    background: #19243a;
+    color: #ff0303;
+    font-size: 22px;
+    width: 22vw;
+    padding: 12px 70px;
+    margin-top: 45px;
+  }
+
+  .toast-message-update {
+    background: #19243a;
+    color: #35ff68;
+    font-size: 20px;
+    width: 22vw;
+    padding: 12px 70px;
+    margin-top: 45px;
+  }
+
+  .toast-message-registration {
+    background: #19243a;
+    color: #35ff68;
+    font-size: 20px;
+    width: 22vw;
+    padding: 12px 55px;
+    margin-top: 45px;
+  }

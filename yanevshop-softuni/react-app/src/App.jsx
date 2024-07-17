@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './components/UserContext'; 
-import Navigation from './components/navigation/Navigation'; 
+import { UserProvider } from './components/UserContext';
+import Navigation from './components/navigation/Navigation';
 import Home from './components/home/Home';
 import Catalog from './components/catalog/Catalog';
 import About from './components/about/About';
@@ -15,6 +15,7 @@ import Categories from './components/categoies/Categories';
 import EditProduct from './components/products/edit-product/EditProduct';
 import CategoryProducts from './components/categoies/category-products/CategoryProducts';
 import Profile from './components/profile/Profile';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 
 function App() {
     return (
@@ -36,6 +37,16 @@ function App() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
                 </Routes>
+                <ToastContainer
+                    autoClose={2000}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    transition: Bounce
+                />
             </Router>
         </UserProvider>
     );
