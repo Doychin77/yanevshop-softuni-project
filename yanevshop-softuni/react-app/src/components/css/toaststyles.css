@@ -16,6 +16,15 @@
     margin-top: 45px;
   }
 
+  .toast-message-create-product {
+    background: #19243a;
+    color: #35ff68;
+    font-size: 20px;
+    width: 22vw;
+    padding: 12px 70px;
+    margin-top: 45px;
+  }
+
   .toast-message-registration {
     background: #19243a;
     color: #35ff68;

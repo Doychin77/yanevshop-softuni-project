@@ -59,7 +59,7 @@ export default function Home() {
             <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
                 <div className="max-w-screen ml-16 mr-16 px-4">
                     <header className="py-6">
-                        <h1 className="text-3xl font-bold text-gray-100 text-center">Welcome to My Shop</h1>
+                        <h1 className="text-3xl font-bold text-gray-100 text-center">Welcome to Yanev Shop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                     </header>
 

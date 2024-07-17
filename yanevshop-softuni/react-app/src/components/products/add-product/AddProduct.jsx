@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate
 import Footer from '../../footer/Footer';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import '../../css/toaststyles.css';
 
 const AddProduct = () => {
     const [productName, setProductName] = useState('');
@@ -13,6 +15,11 @@ const AddProduct = () => {
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
     const navigate = useNavigate(); // Initialize useNavigate
+
+    const notify = () => toast("Product Created!", {
+        className: "toast-message-create-product",
+    });
+
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -74,7 +81,7 @@ const AddProduct = () => {
                                     placeholder="Product Name"
                                     value={productName}
                                     onChange={(e) => setProductName(e.target.value)}
-                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600  border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600  border-gray-300 dark:text-gray-100 rounded-md shadow-sm p-2 focus:ring focus:ring-blue-500 focus:border-blue-500"
                                     required
                                 />
                             </label>
@@ -131,7 +138,8 @@ const AddProduct = () => {
                             </label>
                             <button
                                 type="submit"
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
+                                onClick={notify}
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl"
                             >
                                 Add Product
                             </button>
