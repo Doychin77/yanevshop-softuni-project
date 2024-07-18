@@ -18,9 +18,23 @@ export default function Login() {
                 password
             });
 
-            console.log(response.data);
-            login(response.data.user);  // Set the user data in the context
-            navigate('/');
+            console.log('Login response:', response.data);
+            const token = response.data.token;
+
+            if (token) {
+                // Store token in localStorage
+                localStorage.setItem('token', token);
+                console.log('Token stored in localStorage:', localStorage.getItem('token'));
+                
+                // Set the user data in the context
+                login(response.data.user);
+
+                // Navigate to the profile page
+                navigate('/profile');
+            } else {
+                console.error('No token found in response');
+                alert('Login failed: No token provided');
+            }
         } catch (error) {
             console.error(error);
             alert("Invalid credentials. Please try again.");
