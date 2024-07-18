@@ -49,7 +49,7 @@ const Products = () => {
                         <h1 className="text-3xl font-bold text-gray-100 text-center">YanevShop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                         <div className="flex justify-center mt-4">
-                            <Link to="/add-product" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg">
+                            <Link to="/add-product" className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl mb-6 mt-6">
                                 Add New Product
                             </Link>
                         </div>
@@ -61,24 +61,35 @@ const Products = () => {
                                     style={{ width: '180px', height: '230px', objectFit: 'cover' }}
                                     className="w-200px h-auto mb-4 rounded-md" />
                                 <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
-                                <p className="text-gray-800 text-center mb-4">{product.description}</p>
+                                <p className="text-gray-800 text-lg mb-4" style={{
+                                    overflowWrap: 'break-word',
+                                    wordWrap: 'break-word',
+                                    hyphens: 'auto',
+                                    display: '-webkit-box',
+                                    WebkitBoxOrient: 'vertical',
+                                    WebkitLineClamp: 3,
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}>
+                                    {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
+                                </p>
                                 <p className="text-gray-800 text-center mb-4">{product.price}$</p>
                                 <div className="flex justify-center">
                                     <Link
                                         to={`/products/${product.id}/edit`}
-                                        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg mr-2"
+                                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg mr-2"
                                     >
                                         Edit
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(product.id)}
-                                        className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg"
+                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-lg"
                                     >
                                         Delete
                                     </button>
                                     <Link
                                         to={`/products/${product.id}`}
-                                        className="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-4 py-2 rounded-lg ml-2"
+                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-lg ml-2"
                                     >
                                         View
                                     </Link>

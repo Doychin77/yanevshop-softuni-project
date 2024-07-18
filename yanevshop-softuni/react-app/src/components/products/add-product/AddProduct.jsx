@@ -139,7 +139,7 @@ const AddProduct = () => {
                             <button
                                 type="submit"
                                 onClick={notify}
-                                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl"
+                                className="block mx-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-2 rounded-xl"
                             >
                                 Add Product
                             </button>

@@ -178,7 +178,7 @@ const EditProduct = () => {
                             <button
                                 type="submit"
                                 onClick={notify}
-                                className="block mx-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-xl"
+                                className="block mx-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-5 py-2 rounded-xl"
                             >
                                 Update Product
                             </button>

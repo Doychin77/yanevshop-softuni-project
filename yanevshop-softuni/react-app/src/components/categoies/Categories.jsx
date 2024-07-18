@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from '../footer/Footer';
+import wl from '../../assets/wl.jpg';
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
@@ -21,9 +22,9 @@ const Categories = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="bg-gray-50 dark:bg-gray-900 flex-grow">
+            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
                 <div className="max-w-screen-xl mx-auto px-4 py-8">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-4">Categories</h1>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-14">Categories</h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {categories.map((category) => (
                             <div key={category.id} className="bg-white dark:bg-gray-700 rounded-3xl shadow-md p-4 flex flex-col items-center">
@@ -37,14 +38,15 @@ const Categories = () => {
                                         className="w-20 h-20 object-cover rounded-full mb-2"
                                     />
                                     <span className="text-xl font-semibold text-gray-900 dark:text-white hover:text-gray-400 transition-colors duration-400">
-                                        {category.name}
+                                        {category.name.length > 12 ? `${category.name.substring(0, 12)}` : category.name}
                                     </span>
+
                                 </Link>
                             </div>
                         ))}
                     </div>
                     <div className="flex justify-center mt-6">
-                        <Link to="/add-category" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-xl">
+                        <Link to="/add-category" className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-2 rounded-2xl">
                             Add Category
                         </Link>
                     </div>
@@ -53,7 +55,7 @@ const Categories = () => {
             </div>
             <Footer className="footer" />
         </div>
-        
+
     );
 };
 

@@ -60,7 +60,7 @@ export default function AddCategory() {
                         </label>
                         <button
                             type="submit"
-                            className="block mx-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-xl"
+                            className="block mx-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-2 rounded-xl"
                         >
                             Add Category
                         </button>

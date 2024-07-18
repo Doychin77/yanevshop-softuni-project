@@ -90,7 +90,7 @@ export default function Home() {
                                             className="w-20 h-20 object-cover rounded-full mb-2"
                                         />
                                         <span className="text-xl font-semibold text-gray-900 dark:text-white hover:text-gray-400 transition-colors duration-400">
-                                            {category.name}
+                                            {category.name.length > 12 ? `${category.name.substring(0, 14)}` : category.name}
                                         </span>
                                     </Link>
                                 </div>
@@ -108,10 +108,12 @@ export default function Home() {
                                     className="w-200px h-auto mb-4 rounded-md"
                                 />
                                 <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
-                                <p className="text-gray-800 text-center mb-4">{product.description}</p>
-                                <button className="bg-black hover:bg-gray-800 text-white font-semibold px-4 py-2 rounded-xl">
+                                <p className="text-gray-800 text-lg mb-4">
+                                    {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
+                                </p>
+                                <Link to={`/products/${product.id}`} className="bg-black hover:bg-gray-800 text-white font-semibold px-4 py-2 rounded-xl">
                                     View Product
-                                </button>
+                                </Link>
                             </div>
                         ))}
                     </main>
