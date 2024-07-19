@@ -18,6 +18,7 @@ import CategoryProducts from './components/categoies/category-products/CategoryP
 import { ToastContainer } from 'react-toastify';
 import ProductDetails from './components/products/product-details/ProductDetails';
 import Profile from './components/profile/Profile';
+import EditProfile from './components/profile/edit-profile/EditProfile';
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/edit-profile" element={<EditProfile />} />
                     <Route path="/catalog" element={<Catalog />} />
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/categories/:id/products" element={<CategoryProducts />} />

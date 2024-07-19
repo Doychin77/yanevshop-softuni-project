@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
-// Make sure to import your background image
+// Import your background image
 import wl from '../../assets/wl.jpg';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -22,7 +24,7 @@ const Profile = () => {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                
+
                 setUser(response.data);
             } catch (err) {
                 console.error('Error fetching user data:', err);
@@ -72,6 +74,19 @@ const Profile = () => {
             >
                 <div className="dark:bg-gray-800 p-8 rounded-3xl shadow-lg w-full max-w-md">
                     <h1 className="text-2xl text-gray-100 font-bold mb-6 text-center">Profile</h1>
+                    <div className="flex justify-center mb-4">
+                        {user.image ? (
+                            <img
+                                src={`http://yanevshop.test/storage/${user.image}`}
+                                alt="Profile"
+                                className="w-32 h-32 object-cover rounded-full border-2 border-gray-600"
+                            />
+                        ) : (
+                            <div className="w-32 h-32 bg-gray-600 rounded-full flex items-center justify-center text-white text-xl">
+                                No Image
+                            </div>
+                        )}
+                    </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-100">
                             Username:
@@ -86,7 +101,7 @@ const Profile = () => {
                     </div>
                     <div className="flex justify-center mt-6">
                         <button
-                            onClick={() => alert('Edit button clicked')}
+                            onClick={() => navigate('/edit-profile')} // Navigate to the EditProfile component
                             className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-semibold rounded-2xl text-m px-14 py-2 text-center"
                         >
                             Edit
