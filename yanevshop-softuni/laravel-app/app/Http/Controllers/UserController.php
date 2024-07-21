@@ -24,7 +24,9 @@ class UserController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'image' => 'avatar.png'
         ]);
+
         $user->save();
 
         return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
@@ -63,7 +65,7 @@ class UserController extends Controller
                 $imagePath = $image->store('images', 'public');
                 $user->image = $imagePath;
             }
-            
+
             $user->save();
 
             return response()->json([
