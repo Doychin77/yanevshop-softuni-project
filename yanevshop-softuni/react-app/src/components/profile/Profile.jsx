@@ -88,16 +88,16 @@ const Profile = () => {
                         )}
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-100">
+                        <label className="block text-center text-sm font-medium text-gray-100">
                             Username:
                         </label>
-                        <p className="mt-1 text-lg text-gray-100">{user.username}</p>
+                        <p className="mt-1 text-lg text-center text-gray-100">{user.username}</p>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-100">
+                        <label className="block text-sm text-center font-medium text-gray-100">
                             Email:
                         </label>
-                        <p className="mt-1 text-lg text-gray-100">{user.email}</p>
+                        <p className="mt-1 text-lg text-center text-gray-100">{user.email}</p>
                     </div>
                     <div className="flex justify-center mt-6">
                         <button

@@ -49,28 +49,28 @@ const EditProfile = () => {
         setFormError('');  // Reset form errors
 
         // Client-side validation
-        if (new_password !== confirm_password) {
-            setFormError('The new password and confirmation do not match!');
-            setLoading(false);
-            return;
-        }
+        if (new_password || confirm_password) { // Only validate if passwords are provided
+            if (new_password !== confirm_password) {
+                setFormError('The new password and confirmation do not match!');
+                setLoading(false);
+                return;
+            }
 
-        if (new_password.length < 8) {
-            setFormError('The new password must be at least 8 characters!');
-            setLoading(false);
-            return;
+            if (new_password.length < 8) {
+                setFormError('The new password must be at least 8 characters!');
+                setLoading(false);
+                return;
+            }
         }
 
         // Prepare form data for submission
         const formData = new FormData();
         formData.append('username', username);
         formData.append('email', email);
-        formData.append('old_password', old_password);
-        formData.append('new_password', new_password);
-        formData.append('confirm_password', confirm_password);
-        if (image) {
-            formData.append('image', image);
-        }
+        if (old_password) formData.append('old_password', old_password);
+        if (new_password) formData.append('new_password', new_password);
+        if (confirm_password) formData.append('confirm_password', confirm_password);
+        if (image) formData.append('image', image);
 
         try {
             const token = localStorage.getItem('token');
@@ -233,7 +233,7 @@ const EditProfile = () => {
                                 type="file"
                                 id="image"
                                 onChange={handleImageChange}
-                                className="mt-1 block w-full text-gray-100 bg-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                             />
                         </div>
                         <div className="flex justify-center mt-6">
