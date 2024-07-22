@@ -29,8 +29,7 @@ export default function Login() {
                 // Set the user data in the context
                 login(response.data.user);
 
-                // Navigate to the profile page
-                navigate('/profile');
+                navigate('/');
             } else {
                 console.error('No token found in response');
                 alert('Login failed: No token provided');

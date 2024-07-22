@@ -111,6 +111,7 @@ export default function Home() {
                                 <p className="text-gray-800 text-lg mb-4">
                                     {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
                                 </p>
+                                <p className="text-gray-800 text-center font-bold mb-4">{product.price}$</p>
                                 <Link to={`/products/${product.id}`} className="bg-black hover:bg-gray-800 text-white font-semibold px-4 py-2 rounded-xl">
                                     View Product
                                 </Link>

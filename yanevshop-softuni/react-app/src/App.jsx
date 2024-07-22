@@ -19,40 +19,46 @@ import { ToastContainer } from 'react-toastify';
 import ProductDetails from './components/products/product-details/ProductDetails';
 import Profile from './components/profile/Profile';
 import EditProfile from './components/profile/edit-profile/EditProfile';
+import Cart from './components/cart/Cart';
+import { CartProvider } from './components/CartContext';
+
 
 function App() {
     return (
         <UserProvider>
-            <Router>
-                <Navigation />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/edit-profile" element={<EditProfile />} />
-                    <Route path="/catalog" element={<Catalog />} />
-                    <Route path="/categories" element={<Categories />} />
-                    <Route path="/categories/:id/products" element={<CategoryProducts />} />
-                    <Route path="/add-category" element={<AddCategory />} />
-                    <Route path="/contacts" element={<Contacts />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/add-product" element={<AddProduct />} />
-                    <Route path="/products/:id" element={<ProductDetails/>} />
-                    <Route path="/products/:id/edit" element={<EditProduct />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                </Routes>
-                <ToastContainer
-                    autoClose={2000}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    transition: Bounce
-                />
-            </Router>
+            <CartProvider>
+                <Router>
+                    <Navigation />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/edit-profile" element={<EditProfile />} />
+                        <Route path="/catalog" element={<Catalog />} />
+                        <Route path="/categories" element={<Categories />} />
+                        <Route path="/categories/:id/products" element={<CategoryProducts />} />
+                        <Route path="/add-category" element={<AddCategory />} />
+                        <Route path="/contacts" element={<Contacts />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/add-product" element={<AddProduct />} />
+                        <Route path="/products/:id" element={<ProductDetails />} />
+                        <Route path="/products/:id/edit" element={<EditProduct />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/login" element={<Login />} />
+                    </Routes>
+                    <ToastContainer
+                        autoClose={2000}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        transition:Bounce
+                    />
+                </Router>
+            </CartProvider>
         </UserProvider>
     );
 }

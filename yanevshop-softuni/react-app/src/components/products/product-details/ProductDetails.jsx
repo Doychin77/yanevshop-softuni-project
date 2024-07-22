@@ -37,7 +37,7 @@ export default function ProductDetails() {
         <div className="flex flex-col min-h-screen">
             <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
                 <div className="max-w-screen mx-auto px-4">
-                    <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ width: '800px', height: '600px', margin: '0 auto' }}>
+                    <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto' }}>
                         {product && (
                             <div className="flex flex-col items-center">
                                 <img
@@ -47,8 +47,9 @@ export default function ProductDetails() {
                                     className="rounded-md mb-4"
                                 />
                                 <h1 className="text-2xl font-bold text-gray-800 mb-4">{product.name}</h1>
-                                <p className="text-gray-800 text-lg mb-4">Description: {product.description}</p>
-                                <p className="text-gray-900 text-lg mb-4">Price: ${product.price}</p>
+                                <h1 className="text-1xl font-bold text-gray-800">Description:</h1>
+                                <p className="text-gray-800 text-lg mb-4 py-4" style={{ maxWidth: '740px', margin: '0 auto' }}> {product.description}</p>
+                                <p className="text-gray-900 text-lg font-bold mb-4">Price: ${product.price}</p>
                                 {/* Add more product details here as needed */}
                             </div>
                         )}

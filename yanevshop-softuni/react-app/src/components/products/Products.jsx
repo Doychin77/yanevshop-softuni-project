@@ -6,16 +6,16 @@ import Footer from '../footer/Footer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/toaststyles.css';
-
+import { useCart } from '../CartContext'; // Import the CartContext
 
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [errors, setErrors] = useState({});
+    const { addToCart } = useCart(); // Destructure addToCart function
 
     const notify = () => toast("Product Deleted!", {
         className: "toast-message-delete",
     });
-
 
     useEffect(() => {
         fetchProducts();
@@ -41,6 +41,13 @@ const Products = () => {
         }
     };
 
+    const handleAddToCart = (product) => {
+        addToCart(product);
+        toast.success("Product added to cart!", {
+            className: "toast-message-add",
+        });
+    };
+
     return (
         <div className="flex flex-col min-h-screen">
             <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
@@ -49,7 +56,7 @@ const Products = () => {
                         <h1 className="text-3xl font-bold text-gray-100 text-center">YanevShop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                         <div className="flex justify-center mt-4">
-                            <Link to="/add-product" className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-xl mb-6 mt-6">
+                            <Link to="/add-product" className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-2xl mb-6 mt-6">
                                 Add New Product
                             </Link>
                         </div>
@@ -75,21 +82,27 @@ const Products = () => {
                                 </p>
                                 <p className="text-gray-800 text-center mb-4">{product.price}$</p>
                                 <div className="flex justify-center">
+                                    <button
+                                        onClick={() => handleAddToCart(product)}
+                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-6 py-2 rounded-2xl mr-1"
+                                    >
+                                        Buy
+                                    </button>
                                     <Link
                                         to={`/products/${product.id}/edit`}
-                                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2 rounded-2xl mr-2"
+                                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2 rounded-2xl mr-1"
                                     >
                                         Edit
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(product.id)}
-                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl"
+                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl mr-1"
                                     >
                                         Delete
                                     </button>
                                     <Link
                                         to={`/products/${product.id}`}
-                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-6 py-2 rounded-2xl ml-2"
+                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-6 py-2 rounded-2xl mr-1"
                                     >
                                         View
                                     </Link>
