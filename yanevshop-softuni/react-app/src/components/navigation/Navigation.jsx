@@ -1,13 +1,15 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import UserContext from '../UserContext';
 import { NavLink } from 'react-router-dom';
-import { useCart } from '../CartContext'; 
+import { useCart } from '../CartContext';
+import CartDropdown from './CartDropdown';
+
 
 export default function Navigation() {
     const { user, logout } = useContext(UserContext);
-    const { cart } = useCart(); // Access cart from CartContext
+    const { cart } = useCart(); 
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
-    // Calculate the total number of items in the cart
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
@@ -83,20 +85,25 @@ export default function Navigation() {
                                         Log out
                                     </NavLink>
                                 </li>
-                                <li>
+                                <li
+                                    style={{ position: 'relative' }}
+                                    onMouseEnter={() => setIsCartOpen(true)}
+                                    onMouseLeave={() => setIsCartOpen(false)}
+                                >
                                     <NavLink
                                         to="cart"
                                         className={({ isActive }) =>
                                             `flex items-center py-1 px-2 rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
                                         }
                                     >
-                                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2001/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.6 2.3L6.3 6h12.4l.7-2.7L21 3h2m-5 7a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6 15h12v-2H6v2zm0 4h12v-2H6v2z" />
                                         </svg>
                                         {totalItems > 0 && (
                                             <span className="ml-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{totalItems}</span>
                                         )}
                                     </NavLink>
+                                    {isCartOpen && <CartDropdown cart={cart} totalItems={totalItems} />}
                                 </li>
                                 <li>
                                     <NavLink
