@@ -1,16 +1,31 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import UserContext from '../UserContext';
 import { NavLink } from 'react-router-dom';
 import { useCart } from '../CartContext';
 import CartDropdown from './CartDropdown';
 
-
 export default function Navigation() {
     const { user, logout } = useContext(UserContext);
-    const { cart } = useCart(); 
+    const { cart } = useCart();
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const timeoutRef = useRef(null); // Ref to store timeout ID
 
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+    const handleMouseEnter = () => {
+        // Clear any existing timeout and show the dropdown immediately
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+        setIsCartOpen(true);
+    };
+
+    const handleMouseLeave = () => {
+        // Set a timeout to hide the dropdown after 1 second
+        timeoutRef.current = setTimeout(() => {
+            setIsCartOpen(false);
+        }, 700);
+    };
 
     return (
         <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -87,8 +102,8 @@ export default function Navigation() {
                                 </li>
                                 <li
                                     style={{ position: 'relative' }}
-                                    onMouseEnter={() => setIsCartOpen(true)}
-                                    onMouseLeave={() => setIsCartOpen(false)}
+                                    onMouseEnter={handleMouseEnter}
+                                    onMouseLeave={handleMouseLeave}
                                 >
                                     <NavLink
                                         to="cart"
@@ -103,7 +118,9 @@ export default function Navigation() {
                                             <span className="ml-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{totalItems}</span>
                                         )}
                                     </NavLink>
-                                    {isCartOpen && <CartDropdown cart={cart} totalItems={totalItems} />}
+                                    {isCartOpen && (
+                                        <CartDropdown cart={cart} totalItems={totalItems} />
+                                    )}
                                 </li>
                                 <li>
                                     <NavLink

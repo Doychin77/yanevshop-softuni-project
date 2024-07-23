@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const CartDropdown = ({ cart, totalItems }) => {
     return (
@@ -28,18 +29,40 @@ const CartDropdown = ({ cart, totalItems }) => {
                     Your cart is empty.
                 </div>
             ) : (
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#ebf1f7' }}>
-                    {cart.map(item => (
-                        <li key={item.id} style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            padding: '0.5rem 0'
-                        }}>
-                            <span>{item.name}</span>
-                            <span>x{item.quantity}</span>
-                        </li>
-                    ))}
-                </ul>
+                <>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0, color: '#ebf1f7' }}>
+                        {cart.map(item => (
+                            <li key={item.id} style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                padding: '0.5rem 0'
+                            }}>
+                                <span>{item.name}</span>
+                                <span>x{item.quantity}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <div style={{ marginTop: '1rem', textAlign: 'center' }}>
+                        <NavLink
+                            to="/order"
+                            style={{
+                                display: 'inline-block',
+                                padding: '0.5rem 1rem',
+                                backgroundColor: '#1d4ed8', // Background color of the button
+                                color: '#ffffff', // Text color of the button
+                                borderRadius: '0.8rem', // Rounded corners
+                                textDecoration: 'none',
+                                fontWeight: '600',
+                                cursor: 'pointer'
+                            }}
+                            activeStyle={{
+                                backgroundColor: '#2563eb' // Darker color for active state
+                            }}
+                        >
+                            Order
+                        </NavLink>
+                    </div>
+                </>
             )}
         </div>
     );
