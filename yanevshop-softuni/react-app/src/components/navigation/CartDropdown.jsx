@@ -1,7 +1,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CartDropdown = ({ cart, totalItems }) => {
+
+    const navigate = useNavigate();
+
+    const handleOrderClick = () => {
+        navigate('/order'); // Navigate to /order page
+    };
     return (
         <div style={{
             position: 'absolute',
@@ -42,25 +49,13 @@ const CartDropdown = ({ cart, totalItems }) => {
                             </li>
                         ))}
                     </ul>
-                    <div style={{ marginTop: '1rem', textAlign: 'center' }}>
-                        <NavLink
-                            to="/order"
-                            style={{
-                                display: 'inline-block',
-                                padding: '0.5rem 1rem',
-                                backgroundColor: '#1d4ed8', // Background color of the button
-                                color: '#ffffff', // Text color of the button
-                                borderRadius: '0.8rem', // Rounded corners
-                                textDecoration: 'none',
-                                fontWeight: '600',
-                                cursor: 'pointer'
-                            }}
-                            activeStyle={{
-                                backgroundColor: '#2563eb' // Darker color for active state
-                            }}
+                    <div className="flex justify-center mt-1">
+                        <button
+                            onClick={handleOrderClick}
+                            className="bg-blue-600 ml-3 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-blue-500"
                         >
                             Order
-                        </NavLink>
+                        </button>
                     </div>
                 </>
             )}

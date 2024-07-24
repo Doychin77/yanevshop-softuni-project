@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/toaststyles.css';
 import { useCart } from '../CartContext'; // Import the CartContext
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -81,30 +83,34 @@ const Products = () => {
                                     {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
                                 </p>
                                 <p className="text-gray-800 text-center mb-4">{product.price}$</p>
-                                <div className="flex justify-center">
+                                <div className="flex justify-center space-x-2">
                                     <button
                                         onClick={() => handleAddToCart(product)}
-                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-6 py-2 rounded-2xl mr-1"
+                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
+                                        title="Buy"
                                     >
-                                        Buy
+                                        <FontAwesomeIcon icon={faShoppingCart} />
                                     </button>
                                     <Link
                                         to={`/products/${product.id}/edit`}
-                                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2 rounded-2xl mr-1"
+                                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-2xl"
+                                        title="Edit"
                                     >
-                                        Edit
+                                        <FontAwesomeIcon icon={faEdit} />
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(product.id)}
-                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl mr-1"
+                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl"
+                                        title="Delete"
                                     >
-                                        Delete
+                                        <FontAwesomeIcon icon={faTrash} />
                                     </button>
                                     <Link
                                         to={`/products/${product.id}`}
-                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-6 py-2 rounded-2xl mr-1"
+                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-2xl"
+                                        title="View"
                                     >
-                                        View
+                                        <FontAwesomeIcon icon={faEye} />
                                     </Link>
                                 </div>
                             </div>

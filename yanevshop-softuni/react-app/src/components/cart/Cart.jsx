@@ -1,18 +1,22 @@
 import React from 'react';
 import { useCart } from '../CartContext';
 import wl from '../../assets/wl.jpg';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Cart = () => {
     const context = useCart();
-
+    const navigate = useNavigate();
     if (!context) {
         return <div className="text-red-500">Error: Cart context is not available.</div>;
     }
 
-    const { cart, removeFromCart, clearCart, updateQuantity, placeOrder } = context;
+    const { cart, removeFromCart, clearCart, updateQuantity} = context;
 
     const handleQuantityChange = (productId, event) => {
         const newQuantity = parseInt(event.target.value, 10);
+        console.log(`Updating quantity for product ${productId} to ${newQuantity}`);
         if (newQuantity > 0) {
             updateQuantity(productId, newQuantity);
         }
@@ -21,6 +25,10 @@ const Cart = () => {
     // Calculate total price
     const calculateTotalPrice = () => {
         return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    };
+
+    const handleOrderClick = () => {
+        navigate('/order'); // Navigate to /order page
     };
 
     return (
@@ -52,32 +60,31 @@ const Cart = () => {
                                                 min="1"
                                                 value={item.quantity}
                                                 onChange={(e) => handleQuantityChange(item.id, e)}
-                                                className="w-16 text-center border border-gray-300 rounded-lg"
+                                                className="w-14 py-1 text-center border border-gray-300 rounded-2xl"
                                             />
                                             <button
                                                 onClick={() => removeFromCart(item.id)}
-                                                className="bg-red-600 text-white px-3 py-1 rounded-2xl hover:bg-red-500"
+                                                className="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1 rounded-2xl"
                                             >
-                                                Remove
+                                                <FontAwesomeIcon icon={faTrash} />
                                             </button>
                                         </div>
                                     </li>
                                 ))}
                             </ul>
-                            <div className="flex justify-between mt-6 border-t border-gray-300 pt-4">
-                                <div className="text-lg font-semibold">Total Price:</div>
-                                <div className="text-lg font-semibold">${calculateTotalPrice()}</div>
+                            <div className="flex justify-center mt-6 border-t border-gray-300 pt-4">
+                                <div className="text-lg font-semibold">Total Price: ${calculateTotalPrice()}</div>
                             </div>
-                            <div className="flex justify-around mt-6">
+                            <div className="flex justify-center mt-6">
                                 <button
                                     onClick={clearCart}
-                                    className="bg-red-600 text-white py-2 px-4 rounded-2xl hover:bg-red-500"
+                                    className="bg-red-600 ml-3 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-red-500"
                                 >
                                     Clear
                                 </button>
                                 <button
-                                    onClick={placeOrder}
-                                    className="bg-blue-600 text-white py-2 px-4 rounded-2xl hover:bg-blue-500"
+                                    onClick={handleOrderClick}
+                                    className="bg-blue-600 ml-3 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-blue-500"
                                 >
                                     Order
                                 </button>

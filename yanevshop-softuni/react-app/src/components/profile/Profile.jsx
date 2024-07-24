@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-
-// Import your background image
+import { useNavigate } from 'react-router-dom'; 
+import { ClipLoader } from 'react-spinners';
 import wl from '../../assets/wl.jpg';
 
 const Profile = () => {
@@ -40,7 +39,7 @@ const Profile = () => {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="text-lg font-semibold">Loading...</div>
+                <ClipLoader color="#3498db" size={150} />
             </div>
         );
     }

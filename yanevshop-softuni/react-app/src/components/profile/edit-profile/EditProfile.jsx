@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import wl from '../../../assets/wl.jpg';
+import { ClipLoader } from 'react-spinners';
 
 const EditProfile = () => {
     const [user, setUser] = useState(null);
@@ -112,7 +113,7 @@ const EditProfile = () => {
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="text-lg font-semibold">Loading...</div>
+                <ClipLoader color="#3498db" size={150} />
             </div>
         );
     }

@@ -3,12 +3,16 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Footer from '../../footer/Footer';
 import wl from '../../../assets/wl.jpg';
+import { useCart } from '../../CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 export default function ProductDetails() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { addToCart } = useCart();
 
     useEffect(() => {
         fetchProductDetails();
@@ -23,6 +27,13 @@ export default function ProductDetails() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleAddToCart = (product) => {
+        addToCart(product);
+        toast.success("Product added to cart!", {
+            className: "toast-message-add",
+        });
     };
 
     if (loading) {
@@ -50,7 +61,13 @@ export default function ProductDetails() {
                                 <h1 className="text-1xl font-bold text-gray-800">Description:</h1>
                                 <p className="text-gray-800 text-lg mb-4 py-4" style={{ maxWidth: '740px', margin: '0 auto' }}> {product.description}</p>
                                 <p className="text-gray-900 text-lg font-bold mb-4">Price: ${product.price}</p>
-                                {/* Add more product details here as needed */}
+                                <button
+                                        onClick={() => handleAddToCart(product)}
+                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
+                                        title="Buy"
+                                    >
+                                        <FontAwesomeIcon icon={faShoppingCart} />
+                                    </button>
                             </div>
                         )}
                     </div>

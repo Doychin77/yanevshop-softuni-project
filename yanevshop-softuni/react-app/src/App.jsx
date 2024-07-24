@@ -20,6 +20,7 @@ import ProductDetails from './components/products/product-details/ProductDetails
 import Profile from './components/profile/Profile';
 import EditProfile from './components/profile/edit-profile/EditProfile';
 import Cart from './components/cart/Cart';
+import Order from './components/orders/Order';
 import { CartProvider } from './components/CartContext';
 
 
@@ -44,6 +45,7 @@ function App() {
                         <Route path="/products/:id/edit" element={<EditProduct />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/cart" element={<Cart />} />
+                        <Route path="/order" element={<Order />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
                     </Routes>
