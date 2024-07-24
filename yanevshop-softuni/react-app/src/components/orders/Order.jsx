@@ -34,12 +34,31 @@ const Order = () => {
         }
     };
 
-    // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle the order submission here, like sending data to an API
-        console.log('Order submitted', deliveryInfo);
+    
+        try {
+            const response = await fetch('http://yanevshop.test/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(deliveryInfo),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+    
+            const result = await response.json();
+            console.log('Order submitted', result);
+    
+            // Optionally handle success, e.g., show a confirmation message or redirect
+        } catch (error) {
+            console.error('Error submitting order:', error);
+        }
     };
+    
 
     // Calculate total price
     const calculateTotalPrice = () => {
