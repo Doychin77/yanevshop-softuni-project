@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import wl from '../../assets/wl.jpg';
+import Spinner from '../spinner/Spinner';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -38,9 +39,11 @@ const Profile = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <ClipLoader color="#3498db" size={150} />
-            </div>
+            <Spinner
+                backgroundImage={wl}
+                loaderColor="#3498db"
+                size={150}
+            />
         );
     }
 
