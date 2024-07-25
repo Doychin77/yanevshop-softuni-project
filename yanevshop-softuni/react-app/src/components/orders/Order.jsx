@@ -34,31 +34,36 @@ const Order = () => {
         }
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        // Include products in the deliveryInfo object
+        const payload = {
+            ...deliveryInfo,
+            products: cart
+        };
+
         try {
             const response = await fetch('http://yanevshop.test/api/send-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
-                body: JSON.stringify(deliveryInfo),
+                body: JSON.stringify(payload),
             });
-    
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+
+            if (response.ok) {
+                alert('Order submitted successfully. Check your email!');
+            } else {
+                alert('Failed to submit order.');
             }
-    
-            const result = await response.json();
-            console.log('Order submitted', result);
-    
-            // Optionally handle success, e.g., show a confirmation message or redirect
         } catch (error) {
-            console.error('Error submitting order:', error);
+            console.error('Error:', error);
+            alert('An error occurred while submitting the order.');
         }
     };
-    
 
     // Calculate total price
     const calculateTotalPrice = () => {

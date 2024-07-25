@@ -45,9 +45,6 @@ const Products = () => {
 
     const handleAddToCart = (product) => {
         addToCart(product);
-        toast.success("Product added to cart!", {
-            className: "toast-message-add",
-        });
     };
 
     return (
