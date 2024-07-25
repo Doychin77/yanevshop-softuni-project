@@ -17,8 +17,8 @@ const About = () => {
                             <img src={topImage} alt="Top" className="w-full h-auto rounded-xl shadow-lg" />
                         </div>
                         {/* Right side for the "About Us" content */}
-                        <div className="md:w-1/2 flex items-center justify-center p-4">
-                            <div className="bg-white bg-opacity-90 rounded-2xl p-8 shadow-xl w-full">
+                        <div className="md:w-1/2 flex  items-center justify-center p-4">
+                            <div className="bg-white border-2 border-orange-500 rounded-2xl p-8 shadow-xl w-full">
                                 <h1 className="text-4xl text-center font-medium mb-6 text-orange-500">About Us</h1>
                                 <p className="leading-relaxed text-center mb-6 text-gray-900">
                                     Welcome to YanevShop, your one-stop destination for the best PC components and accessories. We are dedicated to providing you with top-quality products at competitive prices, ensuring your computer setup runs smoothly and efficiently.
@@ -35,9 +35,7 @@ const About = () => {
                                         className="bg-orange-500 hover:bg-black font-medium text-white px-5 py-2 rounded-2xl"
                                     >
                                         <span className="mr-2"><FontAwesomeIcon icon={faAddressBook} /></span>
-
                                         CONTACTS
-                                        
                                     </Link>
                                 </div>
                             </div>
@@ -62,10 +60,10 @@ const About = () => {
                             </div>
                             <div className="flex-1 rounded-2xl bg-orange-500 p-6 shadow-md">
                                 <h2 className="text-3xl font-medium mb-4 text-gray-100"><FontAwesomeIcon icon={faClock} /> HOURS</h2>
-                                <p className="mb-4 ml-2  text-gray-100">
+                                <div className="ml-2 text-gray-100">
                                     <p>Monday - Friday</p>
                                     <p>08:00 - 22:00</p>
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>

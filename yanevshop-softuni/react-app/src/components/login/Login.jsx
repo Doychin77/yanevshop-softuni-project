@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../UserContext';
+import wl from '../../assets/wl.jpg';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -41,7 +42,8 @@ export default function Login() {
     };
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col min-h-screen">
+            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
@@ -108,6 +110,7 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        </div>
     );
 }

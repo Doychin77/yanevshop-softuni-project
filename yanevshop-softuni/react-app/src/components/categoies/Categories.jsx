@@ -27,7 +27,7 @@ const Categories = () => {
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-14">Categories</h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {categories.map((category) => (
-                            <div key={category.id} className="bg-white dark:bg-gray-700 rounded-3xl shadow-md p-4 flex flex-col items-center">
+                            <div key={category.id} className="bg-white dark:bg-gray-700 border-2 border-orange-500 rounded-3xl shadow-md p-4 flex flex-col items-center">
                                 <Link
                                     to={`/categories/${category.id}/products`}
                                     className="flex flex-col items-center text-center hover:text-blue-400 transition-colors duration-300"
@@ -46,8 +46,8 @@ const Categories = () => {
                         ))}
                     </div>
                     <div className="flex justify-center mt-6">
-                        <Link to="/add-category" className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-8 py-2 rounded-2xl">
-                            Add Category
+                        <Link to="/add-category" className="bg-orange-500 hover:bg-black text-white font-medium px-8 py-2 rounded-2xl">
+                            ADD CATEGORY
                         </Link>
                     </div>
 

@@ -55,8 +55,8 @@ const Products = () => {
                         <h1 className="text-3xl font-bold text-gray-100 text-center">YanevShop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                         <div className="flex justify-center mt-4">
-                            <Link to="/add-product" className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-2xl mb-6 mt-6">
-                                Add New Product
+                            <Link to="/add-product" className="bg-orange-500 hover:bg-black text-white font-medium px-4 py-2 rounded-2xl mb-6 mt-6">
+                                ADD PRODUCT
                             </Link>
                         </div>
                     </header>
