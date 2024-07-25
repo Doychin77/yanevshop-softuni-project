@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useCart } from '../CartContext'; // Import the CartContext
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import wl from '../../assets/wl.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Order = () => {
     const { cart, removeFromCart, clearCart, updateQuantity } = useCart(); // Get cart items and methods from the CartContext
+    const navigate = useNavigate(); // Initialize useNavigate
     const [deliveryInfo, setDeliveryInfo] = useState({
         name: '',
         email: '',
@@ -56,6 +58,8 @@ const Order = () => {
 
             if (response.ok) {
                 alert('Order submitted successfully. Check your email!');
+                clearCart(); // Clear the cart
+                navigate('/'); // Navigate to home page
             } else {
                 alert('Failed to submit order.');
             }
