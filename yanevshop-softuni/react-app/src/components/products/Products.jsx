@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../css/toaststyles.css';
 import { useCart } from '../CartContext'; // Import the CartContext
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -86,7 +86,7 @@ const Products = () => {
                                         className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
                                         title="Buy"
                                     >
-                                        <FontAwesomeIcon icon={faShoppingCart} />
+                                        <FontAwesomeIcon icon={faCartPlus} size="lg" />
                                     </button>
                                     <Link
                                         to={`/products/${product.id}/edit`}

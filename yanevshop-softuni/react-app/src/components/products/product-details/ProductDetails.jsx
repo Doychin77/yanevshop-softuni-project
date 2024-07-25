@@ -5,7 +5,7 @@ import Footer from '../../footer/Footer';
 import wl from '../../../assets/wl.jpg';
 import { useCart } from '../../CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function ProductDetails() {
     const { id } = useParams();
@@ -63,10 +63,10 @@ export default function ProductDetails() {
                                 <p className="text-gray-900 text-lg font-bold mb-4">Price: ${product.price}</p>
                                 <button
                                         onClick={() => handleAddToCart(product)}
-                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
+                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-10 py-3 rounded-2xl"
                                         title="Buy"
                                     >
-                                        <FontAwesomeIcon icon={faShoppingCart} />
+                                        <FontAwesomeIcon icon={faCartPlus} size="xl" />
                                     </button>
                             </div>
                         )}
