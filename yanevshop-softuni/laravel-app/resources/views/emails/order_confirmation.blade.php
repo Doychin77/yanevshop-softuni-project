@@ -9,7 +9,7 @@
             line-height: 1.6;
         }
         .container {
-            width: 80%;
+            width: 50%;
             margin: auto;
             padding: 20px;
             border: 1px solid #ddd;
@@ -52,6 +52,11 @@
             text-align: center;
             color: #888;
         }
+        .total-price {
+            font-weight: bold;
+            text-align: right;
+            padding-right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -84,9 +89,15 @@
                 </tr>
             @endforeach
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2" class="total-price">Total Price:</td>
+                <td class="total-price">${{ $totalPrice }}</td>
+            </tr>
+            </tfoot>
         </table>
         <div class="centered-text">
-            <p>Thank you for shopping with us!</p>
+            <p>We're grateful for your trust in us. Thanks for your order!</p>
         </div>
     </div>
     <div class="footer">

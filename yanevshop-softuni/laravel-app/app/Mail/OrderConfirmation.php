@@ -21,11 +21,16 @@ class OrderConfirmation extends Mailable
 
     public function build()
     {
+        // Calculate total price
+        $totalPrice = array_reduce($this->products, function ($carry, $product) {
+            return $carry + ($product['price'] * $product['quantity']);
+        }, 0);
 
         return $this->view('emails.order_confirmation')
             ->with([
                 'deliveryInfo' => $this->deliveryInfo,
                 'products' => $this->products,
+                'totalPrice' => $totalPrice,
             ]);
     }
 }
