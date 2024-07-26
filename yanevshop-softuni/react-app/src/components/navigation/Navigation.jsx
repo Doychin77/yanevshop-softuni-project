@@ -23,7 +23,7 @@ export default function Navigation() {
     };
 
     const handleMouseLeave = () => {
-        // Set a timeout to hide the dropdown after 1 second
+        // Set a timeout to hide the dropdown after 0.5 second
         timeoutRef.current = setTimeout(() => {
             setIsCartOpen(false);
         }, 500);
@@ -42,7 +42,7 @@ export default function Navigation() {
                             <NavLink
                                 to="/"
                                 className={({ isActive }) =>
-                                    `block p-1 px-2 rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                    `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                 }
                             >
                                 Home
@@ -52,7 +52,7 @@ export default function Navigation() {
                             <NavLink
                                 to="contacts"
                                 className={({ isActive }) =>
-                                    `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                    `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                 }
                             >
                                 Contacts
@@ -62,7 +62,7 @@ export default function Navigation() {
                             <NavLink
                                 to="about"
                                 className={({ isActive }) =>
-                                    `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                    `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                 }
                             >
                                 About
@@ -74,7 +74,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="products"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         Products
@@ -84,7 +84,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="categories"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         Categories
@@ -96,7 +96,7 @@ export default function Navigation() {
                                         to="login"
                                         onClick={logout}
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         Log out
@@ -110,7 +110,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="cart"
                                         className={({ isActive }) =>
-                                            `flex items-center rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         <FontAwesomeIcon icon={faShoppingCart} />
@@ -126,7 +126,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="profile"
                                         className={({ isActive }) =>
-                                            `flex items-center rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         <img
@@ -143,7 +143,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="register"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         Register
@@ -153,7 +153,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="login"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-blue-700 !important' : 'hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}`
+                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
                                         }
                                     >
                                         Log In

@@ -89,7 +89,7 @@ export default function Home() {
                                             alt={category.name}
                                             className="w-20 h-20 object-cover rounded-full mb-2"
                                         />
-                                        <span className="text-xl font-semibold text-gray-900 dark:text-white hover:text-gray-400 transition-colors duration-400">
+                                        <span className="text-xl font-semibold text-gray-900 dark:text-white hover:text-orange-500 transition-colors duration-400">
                                             {category.name.length > 12 ? `${category.name.substring(0, 14)}` : category.name}
                                         </span>
                                     </Link>
