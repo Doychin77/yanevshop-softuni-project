@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import wl from '../../../assets/wl.jpg';
-import { ClipLoader } from 'react-spinners';
 import Spinner from '../../spinner/Spinner';
 
 const EditProfile = () => {
@@ -148,7 +147,7 @@ const EditProfile = () => {
                     padding: '50px',
                 }}
             >
-                <div className="dark:bg-gray-800 p-8 rounded-3xl shadow-lg w-full max-w-md">
+                <div className="form-container w-full p-8 max-w-md">
                     <h1 className="text-2xl text-gray-100 font-bold mb-6 text-center">Edit Profile</h1>
                     <form onSubmit={handleSubmit}>
                         {formError && (
@@ -161,7 +160,7 @@ const EditProfile = () => {
                                 <img
                                     src={`http://yanevshop.test/storage/${user.image}`}
                                     alt="Profile"
-                                    className="w-32 h-32 object-cover rounded-full border-2 border-gray-600"
+                                    className="w-32 h-32 object-cover rounded-full border-2 border-orange-500"
                                 />
                             ) : (
                                 <div className="w-32 h-32 bg-gray-600 rounded-full flex items-center justify-center text-white text-xl">
@@ -170,7 +169,7 @@ const EditProfile = () => {
                             )}
                         </div>
                         <div className="mb-4">
-                            <label className="block text-center text-sm font-medium text-gray-100" htmlFor="username">
+                            <label className="label-profile" htmlFor="username">
                                 Username:
                             </label>
                             <input
@@ -178,11 +177,12 @@ const EditProfile = () => {
                                 id="username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="input-field-primary"
+                                required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-center text-sm font-medium text-gray-100" htmlFor="email">
+                            <label className="label-profile" htmlFor="email">
                                 Email:
                             </label>
                             <input
@@ -190,11 +190,12 @@ const EditProfile = () => {
                                 id="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="input-field-primary"
+                                required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-center text-sm font-medium text-gray-100" htmlFor="oldPassword">
+                            <label className="label-profile" htmlFor="oldPassword">
                                 Old Password:
                             </label>
                             <input
@@ -202,11 +203,12 @@ const EditProfile = () => {
                                 id="old_password"
                                 value={old_password}
                                 onChange={(e) => setOldPassword(e.target.value)}
-                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="input-field-primary"
+                                required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-center text-sm font-medium text-gray-100" htmlFor="newPassword">
+                            <label className="label-profile" htmlFor="newPassword">
                                 New Password:
                             </label>
                             <input
@@ -214,11 +216,12 @@ const EditProfile = () => {
                                 id="new_password"
                                 value={new_password}
                                 onChange={(e) => setNewPassword(e.target.value)}
-                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="input-field-primary"
+                                required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="block text-center text-sm font-medium text-gray-100" htmlFor="confirmPassword">
+                            <label className="label-profile" htmlFor="confirmPassword">
                                 Confirm Password:
                             </label>
                             <input
@@ -226,27 +229,29 @@ const EditProfile = () => {
                                 id="confirm_password"
                                 value={confirm_password}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="input-field-primary"
+                                required
                             />
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-center text-sm font-medium text-gray-100" htmlFor="image">
+                        <div className="mb-6">
+                            <label className="label-profile" htmlFor="profileImage">
                                 Profile Image:
                             </label>
                             <input
                                 type="file"
-                                id="image"
+                                id="profileImage"
+                                accept=".jpg,.jpeg,.png"
                                 onChange={handleImageChange}
-                                className="mt-1 py-2 text-center block w-full rounded-2xl bg-gray-700 border-gray-600 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                                className="input-field-primary"
                             />
                         </div>
-                        <div className="flex justify-center mt-6">
-                            <button
-                                type="submit"
-                                className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-semibold rounded-2xl text-m px-14 py-2 text-center"
-                            >
-                                Save
-                            </button>
+                        <div>
+                        <button
+                            type="submit"
+                            className="btn-primary block mx-auto px-8 py-2 "
+                        >
+                            UPDATE PROFILE
+                        </button>
                         </div>
                     </form>
                 </div>

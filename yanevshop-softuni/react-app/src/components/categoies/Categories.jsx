@@ -22,7 +22,7 @@ const Categories = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
+            <div className="home-background">
                 <div className="max-w-screen-xl mx-auto px-4 py-8">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-14">Categories</h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -45,15 +45,16 @@ const Categories = () => {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-center mt-6">
-                        <Link to="/add-category" className="bg-orange-500 hover:bg-black text-white font-medium px-8 py-2 rounded-2xl">
+                    <div className="flex justify-center mt-20">
+                        <Link to="/add-category" className="btn-primary px-8 py-2">
                             ADD CATEGORY
                         </Link>
                     </div>
 
                 </div>
+                <Footer className="footer" />
             </div>
-            <Footer className="footer" />
+            
         </div>
 
     );

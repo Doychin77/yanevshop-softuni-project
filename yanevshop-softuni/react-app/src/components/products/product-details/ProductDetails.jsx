@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Footer from '../../footer/Footer';
-import wl from '../../../assets/wl.jpg';
 import { useCart } from '../../CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
@@ -46,7 +45,7 @@ export default function ProductDetails() {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
+            <div className="home-background">
                 <div className="max-w-screen mx-auto px-4">
                     <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto' }}>
                         {product && (
@@ -72,8 +71,10 @@ export default function ProductDetails() {
                         )}
                     </div>
                 </div>
+                
             </div>
-            <Footer />
+            
         </div>
+        
     );
 }

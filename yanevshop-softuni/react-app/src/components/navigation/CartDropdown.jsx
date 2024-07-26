@@ -15,8 +15,8 @@ const CartDropdown = ({ cart, totalItems }) => {
             top: 'calc(100% + 22px)',
             right: '-90px', // Adjust this value to move the dropdown more to the right
             width: '240px',
-            backgroundColor: '#05192e', // Background color of the dropdown
-            border: '1px solid #e5e7eb',
+            backgroundColor: '#242629', // Background color of the dropdown
+            border: '1px solid #F97316',
             borderRadius: '0.9rem',
             boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
             zIndex: 1000,
@@ -52,9 +52,9 @@ const CartDropdown = ({ cart, totalItems }) => {
                     <div className="flex justify-center mt-1">
                         <button
                             onClick={handleOrderClick}
-                            className="bg-blue-600 ml-3 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-blue-500"
+                            className="bg-orange-500 ml-3 transition-colors duration-300 text-white font-medium py-2 px-4 rounded-2xl hover:bg-black"
                         >
-                            Order
+                            ORDER
                         </button>
                     </div>
                 </>

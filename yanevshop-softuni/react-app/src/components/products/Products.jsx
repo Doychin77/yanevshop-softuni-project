@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import wl from '../../assets/wl.jpg';
 import Footer from '../footer/Footer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -49,13 +48,13 @@ const Products = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
+            <div className="home-background">
                 <div className="max-w-screen mx-auto px-4">
                     <header className="py-6">
                         <h1 className="text-3xl font-bold text-gray-100 text-center">YanevShop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                         <div className="flex justify-center mt-4">
-                            <Link to="/add-product" className="bg-orange-500 hover:bg-black text-white font-medium px-4 py-2 rounded-2xl mb-6 mt-6">
+                            <Link to="/add-product" className="btn-primary px-4 py-2 mb-6 mt-6">
                                 ADD PRODUCT
                             </Link>
                         </div>
@@ -116,8 +115,9 @@ const Products = () => {
 
                     {errors.delete && <div className="text-red-500 text-center mt-4">{errors.delete}</div>}
                 </div>
+                <Footer />
             </div>
-            <Footer />
+            
         </div>
     );
 };

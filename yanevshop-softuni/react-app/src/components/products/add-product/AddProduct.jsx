@@ -5,7 +5,7 @@ import Footer from '../../footer/Footer';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../css/toaststyles.css';
-import wl from '../../../assets/wl.jpg';
+
 
 const AddProduct = () => {
     const [productName, setProductName] = useState('');
@@ -70,10 +70,10 @@ const AddProduct = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
+            <div className="home-background">
                 <div className="max-w-screen-sm mx-auto px-4 py-8">
                     
-                    <div className="bg-[#242629] border-2 border-orange-500 rounded-3xl shadow-md p-6">
+                    <div className="form-container p-6">
                     <h1 className="text-lg font-medium text-gray-900 dark:text-white text-center mb-4">ADD NEW PRODUCT</h1>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
                             <label className="block  text-md font-medium text-gray-100">
@@ -83,25 +83,18 @@ const AddProduct = () => {
                                 
                                     value={productName}
                                     onChange={(e) => setProductName(e.target.value)}
-                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600 rounded-2xl dark:text-gray-100 shadow-sm p-2 focus:outline-none"
-                                    style={{ border: '2px solid transparent' }}
-                                    onFocus={(e) => e.target.style.border = '2px solid orange'}
-                                    onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                    className="input-field-primary w-full mt-2p-2"
                                     required
                                 />
                             </label>
                             {errors.name && <div className="text-red-500">{errors.name[0]}</div>}
                             <label className="block text-md  font-medium text-gray-100">
                             <p className="text-center text-orange-500">Description</p>
-                                <textarea
-            
+                                <textarea    
                                     rows="4"
                                     value={productDescription}
                                     onChange={(e) => setProductDescription(e.target.value)}
-                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600 rounded-2xl dark:text-gray-100 shadow-sm p-2 focus:outline-none"
-                                    style={{ border: '2px solid transparent' }}
-                                    onFocus={(e) => e.target.style.border = '2px solid orange'}
-                                    onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                    className="input-field-primary w-full mt-2 p-2"
                                     required
                                 ></textarea>
                             </label>
@@ -113,10 +106,7 @@ const AddProduct = () => {
                                     
                                     value={productPrice}
                                     onChange={(e) => setProductPrice(e.target.value)}
-                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600 rounded-2xl dark:text-gray-100 shadow-sm p-2 focus:outline-none"
-                                    style={{ border: '2px solid transparent' }}
-                                    onFocus={(e) => e.target.style.border = '2px solid orange'}
-                                    onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                    className="input-field-primary w-full mt-2p-2"
                                     required
                                 />
                             </label>
@@ -127,10 +117,7 @@ const AddProduct = () => {
                                     type="file"
                                     accept=".jpg,.jpeg,.png"
                                     onChange={handleImageChange}
-                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600 rounded-2xl dark:text-gray-100 shadow-sm p-2 focus:outline-none"
-                                    style={{ border: '2px solid transparent' }}
-                                    onFocus={(e) => e.target.style.border = '2px solid orange'}
-                                    onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                    className="input-field-primary w-full mt-2p-2"
                                     required
                                 />
                             </label>
@@ -139,10 +126,7 @@ const AddProduct = () => {
                                 <select
                                     value={categoryId}
                                     onChange={(e) => setCategoryId(e.target.value)}
-                                    className="w-full mt-2 bg-gray-700 hover:bg-gray-600 rounded-2xl dark:text-gray-100 shadow-sm p-2 focus:outline-none"
-                                    style={{ border: '2px solid transparent' }}
-                                    onFocus={(e) => e.target.style.border = '2px solid orange'}
-                                    onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                    className="input-field-primary w-full mt-2p-2"
                                     required
                                 >
                                     <option value="">Select a category</option>
@@ -156,15 +140,16 @@ const AddProduct = () => {
                             <button
                                 type="submit"
                                 onClick={notify}
-                                className="block mx-auto bg-orange-500 hover:bg-black text-white font-medium px-8 py-2 rounded-2xl"
+                                className="btn-primary block mx-auto px-8 py-2"
                             >
                                 ADD PRODUCT
                             </button>
                         </form>
                     </div>
                 </div>
+                <Footer />
             </div>
-            <Footer className="footer" />
+            
         </div>
     );
 };

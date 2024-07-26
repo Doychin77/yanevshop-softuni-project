@@ -1,13 +1,12 @@
-/* footer.module.css */
-
 .footer {
-    position: relative;
+    position:absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: #333;
+    background: transparent;
     color: white;
     text-align: center;
-    padding: 10px;
     z-index: 1001;
+    margin-top: 100px; 
+     
 }

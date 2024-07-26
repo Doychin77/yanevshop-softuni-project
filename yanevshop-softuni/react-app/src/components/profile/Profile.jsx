@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import wl from '../../assets/wl.jpg';
 import Spinner from '../spinner/Spinner';
+import '../css/styles.css';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -74,14 +75,14 @@ const Profile = () => {
                     padding: '50px',
                 }}
             >
-                <div className="dark:bg-gray-800 p-8 rounded-3xl shadow-lg w-full max-w-md">
+                <div className="form-container p-8 w-full max-w-md">
                     <h1 className="text-2xl text-gray-100 font-bold mb-6 text-center">Profile</h1>
                     <div className="flex justify-center mb-4">
                         {user.image ? (
                             <img
                                 src={`http://yanevshop.test/storage/${user.image}`}
                                 alt="Profile"
-                                className="w-32 h-32 object-cover rounded-full border-2 border-gray-600"
+                                className="w-32 h-32 object-cover rounded-full border-2 border-orange-500"
                             />
                         ) : (
                             <div className="w-32 h-32 bg-gray-600 rounded-full flex items-center justify-center text-white text-xl">
@@ -104,9 +105,9 @@ const Profile = () => {
                     <div className="flex justify-center mt-6">
                         <button
                             onClick={() => navigate('/edit-profile')} // Navigate to the EditProfile component
-                            className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-semibold rounded-2xl text-m px-14 py-2 text-center"
+                            className="btn-primary text-m px-14 py-2"
                         >
-                            Edit
+                            EDIT
                         </button>
                     </div>
                 </div>

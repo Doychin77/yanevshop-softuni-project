@@ -30,7 +30,6 @@ const Order = () => {
 
     const handleQuantityChange = (productId, event) => {
         const newQuantity = parseInt(event.target.value, 10);
-        console.log(`Updating quantity for product ${productId} to ${newQuantity}`);
         if (newQuantity > 0) {
             updateQuantity(productId, newQuantity);
         }
@@ -76,123 +75,140 @@ const Order = () => {
 
     return (
         <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
-                <div className="flex flex-wrap max-w-6xl mx-auto bg-white rounded-2xl shadow-md p-6 space-x-4">
-                    {/* Cart Items */}
-                    <div className="flex-1 min-w-[300px]">
-                        <h2 className="text-2xl text-center font-bold mb-4">Shopping Cart</h2>
-                        {cart.length === 0 ? (
-                            <div className="text-center font-bold text-gray-500">Your cart is empty.</div>
-                        ) : (
-                            <div>
-                                <ul className="space-y-4">
-                                    {cart.map(item => (
-                                        <li key={item.id} className="flex items-center justify-between bg-gray-100 p-4 rounded-2xl shadow-sm">
-                                            <div className="flex items-center space-x-4">
-                                                <img
-                                                    src={`http://yanevshop.test/storage/images/${item.image}`}
-                                                    alt={item.name}
-                                                    className="w-16 h-16 object-cover rounded-md"
-                                                />
-                                                <div>
-                                                    <h3 className="text-lg font-semibold">{item.name}</h3>
-                                                    <p className="text-gray-600">${item.price}</p>
+            <div className="home-background">
+                <div className="max-w-screen-lg mx-auto px-4 py-8">
+                    <div className="form-container p-6 flex flex-wrap space-x-4">
+                        {/* Cart Items */}
+                        <div className="flex-1 min-w-[300px]">
+                            <h2 className="text-2xl text-gray-100 font-bold text-center mb-6">Shopping Cart</h2>
+                            {cart.length === 0 ? (
+                                <div className="text-center font-bold text-gray-500">Your cart is empty.</div>
+                            ) : (
+                                <div>
+                                    <ul className="space-y-6">
+                                        {cart.map(item => (
+                                            <li key={item.id} className="flex items-center justify-between bg-gray-700 p-4 rounded-3xl shadow-md">
+                                                <div className="flex items-center space-x-4">
+                                                    <img
+                                                        src={`http://yanevshop.test/storage/images/${item.image}`}
+                                                        alt={item.name}
+                                                        className="w-24 h-24 object-cover rounded-md"
+                                                    />
+                                                    <div>
+                                                        <h3 className="text-lg font-semibold text-gray-100">{item.name}</h3>
+                                                        <p className="text-gray-300">${item.price}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="flex items-center space-x-2">
-                                                <input
-                                                    type="number"
-                                                    min="1"
-                                                    value={item.quantity}
-                                                    onChange={(e) => handleQuantityChange(item.id, e)}
-                                                    className="w-14 py-1 text-center border border-gray-300 rounded-2xl"
-                                                />
-                                                <button
-                                                    onClick={() => removeFromCart(item.id)}
-                                                    className="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1 rounded-2xl"
-                                                >
-                                                    <FontAwesomeIcon icon={faTrash} />
-                                                </button>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <div className="flex justify-center mt-6 pt-4">
-                                    <div className="text-lg ml-6 font-semibold">Total Price: ${calculateTotalPrice()}</div>
+                                                <div className="flex items-center space-x-3">
+                                                    <input
+                                                        type="number"
+                                                        min="1"
+                                                        value={item.quantity}
+                                                        onChange={(e) => handleQuantityChange(item.id, e)}
+                                                        className="w-16 py-1 text-center bg-gray-800 border border-gray-600 rounded-2xl text-gray-100 shadow-sm"
+                                                        style={{ border: '2px solid transparent' }}
+                                                        onFocus={(e) => e.target.style.border = '2px solid orange'}
+                                                        onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                                    />
+                                                    <button
+                                                        onClick={() => removeFromCart(item.id)}
+                                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl transition-colors"
+                                                    >
+                                                        <FontAwesomeIcon icon={faTrash} />
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <div className="flex justify-between mt-6 border-t border-orange-500 pt-4 text-gray-100">
+                                        <div className="text-lg font-semibold">Total Price:</div>
+                                        <div className="text-lg font-semibold">${calculateTotalPrice()}</div>
+                                    </div>
+                                    <div className="flex justify-center mt-6">
+                                        <button
+                                            onClick={clearCart}
+                                            className="bg-red-600 hover:bg-red-500 text-white font-semibold py-2 px-4 rounded-2xl transition-colors"
+                                        >
+                                            CLEAR CART
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Delivery Info Form */}
+                        <div className="flex-1 min-w-[300px] mt-6 md:mt-0">
+                            <h2 className="text-2xl font-bold text-gray-100 text-center mb-6">
+                                Delivery Information
+                            </h2>
+                            <form onSubmit={handleSubmit} className="form-container p-6">
+                                <div className="mb-4">
+                                    <label htmlFor="name" className="block text-md font-medium text-gray-100">
+                                        <p className="text-center text-orange-500">Name</p>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={deliveryInfo.name}
+                                        onChange={handleInputChange}
+                                        className="input-field-primary w-full mt-2 p-2"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="email" className="block text-md font-medium text-gray-100">
+                                        <p className="text-center text-orange-500">Email</p>
+                                    </label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={deliveryInfo.email}
+                                        onChange={handleInputChange}
+                                        className="input-field-primary w-full mt-2 p-2"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="address" className="block text-md font-medium text-gray-100">
+                                        <p className="text-center text-orange-500">Address</p>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="address"
+                                        name="address"
+                                        value={deliveryInfo.address}
+                                        onChange={handleInputChange}
+                                        className="input-field-primary w-full mt-2 p-2"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="phone" className="block text-md font-medium text-gray-100">
+                                        <p className="text-center text-orange-500">Phone</p>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="phone"
+                                        name="phone"
+                                        value={deliveryInfo.phone}
+                                        onChange={handleInputChange}
+                                        className="input-field-primary w-full mt-2 p-2"
+                                        required
+                                    />
                                 </div>
                                 <div className="flex justify-center mt-6">
                                     <button
-                                        onClick={clearCart}
-                                        className="bg-red-600 text-white font-semibold py-2 px-4 rounded-2xl hover:bg-red-500"
+                                        type="submit"
+                                        className="btn-primary px-4 py-2"
                                     >
-                                        Clear
+                                        PURCHASE
                                     </button>
                                 </div>
-                            </div>
-                        )}
-                    </div>
+                            </form>
+                        </div>
 
-                    {/* Delivery Info Form */}
-                    <div className="flex-1 min-w-[300px] mt-6 md:mt-0">
-                        <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Delivery Information</h2>
-                        <form onSubmit={handleSubmit} className="p-4 border rounded-2xl bg-white">
-                            <div className="mb-4">
-                                <label htmlFor="name" className="block ml-1 text-gray-800">Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={deliveryInfo.name}
-                                    onChange={handleInputChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-2xl"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="email" className="block ml-1 text-gray-800">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={deliveryInfo.email}
-                                    onChange={handleInputChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-2xl"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="address" className="block ml-1 text-gray-800">Address</label>
-                                <input
-                                    type="text"
-                                    id="address"
-                                    name="address"
-                                    value={deliveryInfo.address}
-                                    onChange={handleInputChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-2xl"
-                                    required
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="phone" className="block ml-1 text-gray-800">Phone</label>
-                                <input
-                                    type="text"
-                                    id="phone"
-                                    name="phone"
-                                    value={deliveryInfo.phone}
-                                    onChange={handleInputChange}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-2xl"
-                                    required
-                                />
-                            </div>
-                            <div className="flex justify-center mt-4">
-                                <button
-                                    type="submit"
-                                    className="w-32 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-2xl"
-                                >
-                                    Purchase
-                                </button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

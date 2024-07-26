@@ -1,0 +1,59 @@
+/* styles.css or main.css */
+.btn-primary {
+    background-color: #f97316; /* Orange-500 */
+    color: white;
+    text-align: center;
+    font-weight: 500; /* Medium font weight */
+    border-radius: 1rem; /* Rounded-2xl */
+    transition: background-color 0.3s ease; /* Transition for hover effect */
+}
+
+.btn-primary:hover {
+    background-color: #000000; /* Black */
+}
+
+
+.input-field-primary {
+    margin-top: 0.5rem; /* mt-2 equivalent */
+    width: 100%; /* w-full equivalent */
+    background-color: #374151; /* bg-gray-700 */
+    color: #f9fafb; /* text-gray-100 */
+    border-radius: 1rem; /* rounded-2xl */
+    padding: 0.5rem; /* p-2 */
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1); /* shadow-sm */
+    border: 2px solid transparent; /* border-2 border-transparent */
+    transition: background-color 0.2s, border-color 0.2s; /* Transition for hover and focus */
+}
+
+.input-field-primary:hover {
+    background-color: #4B5563; /* hover:bg-gray-600 */
+}
+
+.input-field-primary:focus {
+    outline: none; /* focus:outline-none */
+    border-color: #f97316; /* focus:border-orange-500 */
+}
+
+.label-profile {
+    display: block; /* block */
+    text-align: center; /* text-center */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    color: #f9fafb; /* text-gray-100 */
+    margin-bottom: 0.05rem; /* Adjust spacing below label */
+}
+
+.form-container {
+    background-color: #242629; /* Dark background */
+    border: 2px solid #F97316; /* Orange border */
+    border-radius: 1.5rem; /* Rounded corners (3xl) */
+}
+
+.home-background {
+    background-image: url('../../assets/wl.jpg'); /* Path to the background image */
+    background-size: cover; /* Make sure the background image covers the entire container */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    padding: 50px; /* Add padding around the content */
+    flex-grow: 1; /* Make the element grow to fill available space */
+}
