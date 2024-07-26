@@ -112,7 +112,7 @@ export default function Register() {
                                     <button type="submit"
                                         onClick={notify}
                                         className="w-1/2 mb-2 text-white bg-orange-500 hover:bg-orange-400 rounded-2xl py-2 font-medium">Create an account</button>
-                                    <p className="text-sm mt-2 text-center font-light text-gray-500 dark:text-gray-400">
+                                    <p className="text-sm mt-2 text-center font-light text-gray-300">
                                         Already have an account? <a href="/login" className="font-medium hover:underline dark:text-orange-500">Login here</a>
                                     </p>
                                 </div>

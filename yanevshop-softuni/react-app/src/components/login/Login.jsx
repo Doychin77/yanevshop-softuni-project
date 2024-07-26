@@ -58,8 +58,7 @@ export default function Login() {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-
+                                        className="input-field-primary block w-full p-2"
                                         required
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -72,7 +71,7 @@ export default function Login() {
                                         name="password"
                                         id="password"
 
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 rounded-xl focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="input-field-primary block w-full p-2"
                                         required
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
@@ -101,7 +100,7 @@ export default function Login() {
                                     >
                                         Sign in
                                     </button>
-                                    <p className="text-sm mt-2 font-light text-gray-500 dark:text-gray-400">
+                                    <p className="text-sm mt-2 font-light text-gray-300">
                                         Don’t have an account yet? <a href="/register" className="font-medium  hover:underline dark:text-orange-500">Sign up</a>
                                     </p>
                                 </div>

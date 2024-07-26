@@ -44,7 +44,7 @@
 }
 
 .form-container {
-    background-color: #242629; /* Dark background */
+    background-color: rgba(36, 38, 41, 0.90);
     border: 2px solid #F97316; /* Orange border */
     border-radius: 1.5rem; /* Rounded corners (3xl) */
 }
