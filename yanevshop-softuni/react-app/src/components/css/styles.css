@@ -57,3 +57,22 @@
     padding: 50px; /* Add padding around the content */
     flex-grow: 1; /* Make the element grow to fill available space */
 }
+
+/* General styles for nav-link */
+.nav-link {
+    display: block;
+    border-radius: 0.5rem; /* rounded */
+    transition: color 0.4s; /* transition-colors duration-400 */
+    color: #ffff; /* Default color (black) */
+}
+
+/* Active state styles */
+.nav-link.is-active {
+    color: #f97316 !important; /* text-orange-500 !important */
+}
+
+/* Hover state styles */
+.nav-link:hover {
+    color: #f97316; /* hover:text-orange-500 */
+}
+

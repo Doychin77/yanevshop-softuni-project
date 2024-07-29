@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from '../footer/Footer';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/toaststyles.css';
 import { useCart } from '../CartContext'; // Import the CartContext
@@ -14,9 +13,6 @@ const Products = () => {
     const [errors, setErrors] = useState({});
     const { addToCart } = useCart(); // Destructure addToCart function
 
-    const notify = () => toast("Product Deleted!", {
-        className: "toast-message-delete",
-    });
 
     useEffect(() => {
         fetchProducts();
@@ -35,7 +31,6 @@ const Products = () => {
         try {
             await axios.delete(`http://yanevshop.test/api/products/${id}`);
             setProducts(products.filter(product => product.id !== id));
-            notify();
         } catch (error) {
             console.error('Error deleting product:', error);
             setErrors({ delete: 'Error deleting product' });

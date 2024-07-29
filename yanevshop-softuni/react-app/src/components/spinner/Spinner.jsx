@@ -2,7 +2,7 @@
 import React from 'react';
 import ClipLoader from 'react-spinners/ClipLoader'; // Ensure you have this dependency installed
 
-const Spinner = ({ backgroundImage, loaderColor = "#88ddf2", size = 150 }) => {
+const Spinner = ({ backgroundImage, loaderColor = "#f97316", size = 150 }) => {
     return (
         <div className="flex flex-col min-h-screen">
             <div

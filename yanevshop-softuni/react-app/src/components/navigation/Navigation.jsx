@@ -34,7 +34,7 @@ export default function Navigation() {
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="https://www.jimphicdesigns.com/imgs/designs/portfolio/lion-logo-3.png" className="h-10 w-10 rounded-full" alt="Flowbite Logo" />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">YanevShop</span>
+                    <span className="self-center text-2xl font-semibold text-white hover:text-orange-500 transition duration-300">YanevShop</span>
                 </a>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul className="items-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-orange-500 md:dark:bg-black dark:border-gray-700">
@@ -42,7 +42,7 @@ export default function Navigation() {
                             <NavLink
                                 to="/"
                                 className={({ isActive }) =>
-                                    `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                    `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
                                 Home
@@ -52,7 +52,7 @@ export default function Navigation() {
                             <NavLink
                                 to="contacts"
                                 className={({ isActive }) =>
-                                    `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                    `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
                                 Contacts
@@ -62,7 +62,7 @@ export default function Navigation() {
                             <NavLink
                                 to="about"
                                 className={({ isActive }) =>
-                                    `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                    `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
                                 About
@@ -74,7 +74,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="products"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         Products
@@ -84,7 +84,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="categories"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         Categories
@@ -96,7 +96,7 @@ export default function Navigation() {
                                         to="login"
                                         onClick={logout}
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         Log out
@@ -110,7 +110,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="cart"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         <FontAwesomeIcon icon={faShoppingCart} />
@@ -126,7 +126,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="profile"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         <img
@@ -143,7 +143,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="register"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         Register
@@ -153,7 +153,7 @@ export default function Navigation() {
                                     <NavLink
                                         to="login"
                                         className={({ isActive }) =>
-                                            `block rounded ${isActive ? 'text-orange-500 !important' : ' transition-colors duration-400 dark:text-white md:dark:hover:text-orange-500'}`
+                                            `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
                                         Log In

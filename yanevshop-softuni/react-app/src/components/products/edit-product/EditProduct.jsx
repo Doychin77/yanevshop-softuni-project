@@ -17,12 +17,7 @@ const EditProduct = () => {
         name: '',
         description: '',
         price: '',
-        image: '',
         category_id: ''
-    });
-
-    const notify = () => toast("Product Updated!", {
-        className: "toast-message-update",
     });
 
     useEffect(() => {
@@ -36,7 +31,8 @@ const EditProduct = () => {
                     price: product.price,
                     category_id: product.category_id
                 });
-                setPreviewImage(product.image);
+                // Set previewImage with the existing product image URL if it exists
+                setPreviewImage(product.image ? `http://yanevshop.test/storage/images/${product.image}` : null);
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }
@@ -82,6 +78,9 @@ const EditProduct = () => {
                 },
             });
             console.log('Product updated:', response.data);
+            toast("Product updated successfully!", {
+                className: "toast-message-create-product",
+            });
             navigate('/products');
         } catch (error) {
             console.error('Error updating product:', error);
@@ -127,7 +126,7 @@ const EditProduct = () => {
                                     name='description'
                                     value={productData.description}
                                     onChange={handleProductData}
-                                    className="input-field-primary w-full mt-2p-2"
+                                    className="input-field-primary w-full mt-2 p-2"
                                     required
                                 ></textarea>
                             </label>
@@ -154,11 +153,18 @@ const EditProduct = () => {
                                     className="input-field-primary w-full mt-2 p-2"
                                 />
                                 {previewImage && (
-                                    <div className="mt-2">
-                                        <img src={previewImage} alt="Preview" className="rounded-2xl" />
+                                    <div className="mt-2 flex justify-center">
+                                        <img
+                                            src={previewImage}
+                                            alt="Preview"
+                                            className="max-w-full h-auto rounded-2xl"
+                                            style={{ width: '300px', height: 'auto' }} 
+                                        />
                                     </div>
                                 )}
                             </label>
+
+
                             <label className="block text-md mb-2 font-medium text-gray-100">
                                 <p className="text-center text-orange-500">Category</p>
                                 <select
@@ -179,7 +185,6 @@ const EditProduct = () => {
                             {errors.category_id && <div className="text-red-500">{errors.category_id[0]}</div>}
                             <button
                                 type="submit"
-                                onClick={notify}
                                 className="btn-primary block mx-auto px-8 py-2"
                             >
                                 UPDATE PRODUCT

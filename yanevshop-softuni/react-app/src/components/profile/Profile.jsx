@@ -42,7 +42,7 @@ const Profile = () => {
         return (
             <Spinner
                 backgroundImage={wl}
-                loaderColor="#3498db"
+                loaderColor="#f97316"
                 size={150}
             />
         );
