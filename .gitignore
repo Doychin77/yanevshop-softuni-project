@@ -1,48 +1,56 @@
-# Ignore vendor and node_modules directories
-/vendor/
-/node_modules/
-
-# Logs
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
 npm-debug.log
 yarn-error.log
+/.fleet
+/.idea
+/.vscode
 
-# Laravel specific ignores
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
 
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
 
-# Laravel storage key
-storage/*.key
+# Dependency directories
+node_modules/
+jspm_packages/
 
-# Environment file
-.env
+# Distribution directories
+dist/
 
-# Homestead specific files
-Homestead.yaml
-Homestead.json
-/.vagrant
+# Typescript v1 declaration files
+typings/
 
-# PHPUnit result cache
-.phpunit.result.cache
+# Optional npm cache directory
+.npm
 
-# React build artifacts (if you are using create-react-app or similar)
-/build/
-/.pnp/
-.pnp.js
+# Optional eslint cache
+.eslintcache
 
-# IDE/Editor specific ignores (optional - customize based on your editor)
-.idea/
-.vscode/
-*.code-workspace
+# Optional REPL history
+.node_repl_history
 
-# Miscellaneous
-.DS_Store
-Thumbs.db
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity

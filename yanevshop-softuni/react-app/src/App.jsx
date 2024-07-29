@@ -23,6 +23,8 @@ import { CartProvider } from './components/CartContext';
 import PrivateRoutes from './components/PrivateRoutes'; // Import the PrivateRoutes component
 import { ToastContainer } from 'react-toastify';
 import NotFound from './components/NotFound';
+import SuccessfulOrder from './components/orders/SuccessfulOrder';
+import OrderHistory from './components/orders/OrderHistory';
 
 function App() {
     return (
@@ -46,6 +48,8 @@ function App() {
                             <Route path="/edit-profile" element={<EditProfile />} />
                             <Route path="/cart" element={<Cart />} />
                             <Route path="/order" element={<Order />} />
+                            <Route path="/successful-order" element={<SuccessfulOrder />} />
+                            <Route path="/order-history" element={<OrderHistory />} />
                             <Route path="/add-category" element={<AddCategory />} />
                             <Route path="/add-product" element={<AddProduct />} />
                             <Route path="/products/:id" element={<ProductDetails />} />

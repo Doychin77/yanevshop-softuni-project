@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
 import wl from '../../assets/wl.jpg';
 import Spinner from '../spinner/Spinner';
 import '../css/styles.css';

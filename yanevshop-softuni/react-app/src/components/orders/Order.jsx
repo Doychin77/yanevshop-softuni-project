@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCart } from '../CartContext'; // Import the CartContext
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import wl from '../../assets/wl.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../footer/Footer';
@@ -15,6 +14,12 @@ const Order = () => {
         address: '',
         phone: '',
     });
+
+    useEffect(() => {
+        if (cart.length === 0) {
+            navigate('/cart'); // Redirect to the cart page if the cart is empty
+        }
+    }, [cart, navigate]);
 
     if (!cart) {
         return <div className="text-red-500">Error: Cart context is not available.</div>;
@@ -47,19 +52,35 @@ const Order = () => {
         };
 
         try {
-            const response = await fetch('http://yanevshop.test/api/send-email', {
+            // Send order details to save in the database
+            const token = localStorage.getItem('token');
+            const orderResponse = await fetch('http://yanevshop.test/api/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
             });
 
-            if (response.ok) {
-                alert('Order submitted successfully. Check your email!');
-                clearCart(); // Clear the cart
-                navigate('/'); // Navigate to home page
+            if (orderResponse.ok) {
+                // Send email
+                const emailResponse = await fetch('http://yanevshop.test/api/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (emailResponse.ok) {
+                    clearCart(); 
+                    navigate('/successful-order'); 
+                } else {
+                    alert('Order saved but failed to send email.');
+                }
             } else {
                 alert('Failed to submit order.');
             }

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/toaststyles.css';
 import Footer from '../footer/Footer';
@@ -131,8 +130,7 @@ export default function Register() {
                                 </div>
                                 <div className="text-center">
                                     <button
-                                        type="submit"
-                                        onClick={notify}
+                                        type="submit"                           
                                         className="w-1/2 mb-2 text-white bg-orange-500 hover:bg-orange-400 rounded-2xl py-2 font-medium"
                                     >
                                         Create an account
