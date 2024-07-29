@@ -1,6 +1,5 @@
 import React from 'react';
 import { useCart } from '../CartContext';
-import wl from '../../assets/wl.jpg';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -22,20 +21,20 @@ const Cart = () => {
         }
     };
 
-    // Calculate total price
+    
     const calculateTotalPrice = () => {
         return cart.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
     };
 
     const handleOrderClick = () => {
-        navigate('/order'); // Navigate to /order page
+        navigate('/order'); 
     };
 
     return (
         <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen-sm mx-auto px-4 py-8">
-                    <div className="bg-[#242629] border-2 border-orange-500 rounded-3xl shadow-md p-6">
+                    <div className="form-container p-6">
                         <h1 className="text-lg font-medium text-gray-100 text-center mb-6">Shopping Cart</h1>
                         {cart.length === 0 ? (
                             <div className="text-center font-bold text-gray-500">Your cart is empty.</div>
