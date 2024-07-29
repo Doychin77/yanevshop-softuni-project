@@ -45,7 +45,7 @@ const Products = () => {
     return (
         <div className="page-container">
             <div className="home-background">
-                <div className="max-w-screen mx-auto px-32">
+                <div className="max-w-screen mb-10 mx-auto px-32">
                     <header className="py-6">
                         <h1 className="text-3xl font-bold text-gray-100 text-center">YanevShop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
