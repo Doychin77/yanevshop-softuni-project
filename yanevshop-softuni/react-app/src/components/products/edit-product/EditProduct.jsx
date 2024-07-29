@@ -96,10 +96,10 @@ const EditProduct = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
-                <div className="max-w-screen-sm mx-auto px-4 py-8">
-                    <div className="bg-[#242629] border-2 border-orange-500 rounded-3xl shadow-md p-6">
+                <div className="max-w-screen-sm mx-auto mb-10 px-4 py-8">
+                    <div className="form-container p-6">
                         <h1 className="text-lg font-medium text-gray-900 dark:text-white text-center mb-4">EDIT PRODUCT<br />{productData.name}</h1>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
                             <label className="block text-md font-medium text-gray-100">
@@ -189,8 +189,8 @@ const EditProduct = () => {
                         </form>
                     </div>
                 </div>
+                <Footer />
             </div>
-            <Footer />
         </div>
     );
 };

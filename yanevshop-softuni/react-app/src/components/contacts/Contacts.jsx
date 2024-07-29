@@ -1,8 +1,9 @@
+import Footer from "../footer/Footer";
 
 
 export default function Contacts() {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen-xl mx-auto px-4 py-8">
                     <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 text-center mb-14">Contact Us</h1>
@@ -39,7 +40,10 @@ export default function Contacts() {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
+            
+            
         </div>
     );
 }

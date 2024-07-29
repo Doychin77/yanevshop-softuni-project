@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Footer from '../footer/Footer';
 import wl from '../../assets/wl.jpg';
 
+
 export default function Home() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -47,9 +48,9 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen page-container">
             <div className="home-background">
-                <div className="content-overlay relative z-10 max-w-screen ml-16 mr-16 px-4">
+                <div className="content-overlay relative z-10 max-w-screen ml-16 mb-10 mr-16 px-4 content-wrap">
                     <header className="py-6">
                         <h1 className="text-3xl font-bold text-gray-100 text-center">Welcome to Yanev Shop</h1>
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>

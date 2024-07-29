@@ -4,6 +4,7 @@ import wl from '../../assets/wl.jpg';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Footer from '../footer/Footer';
 
 const Cart = () => {
     const context = useCart();
@@ -31,8 +32,8 @@ const Cart = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
+        <div className="page-container">
+            <div className="home-background">
                 <div className="max-w-screen-sm mx-auto px-4 py-8">
                     <div className="bg-[#242629] border-2 border-orange-500 rounded-3xl shadow-md p-6">
                         <h1 className="text-lg font-medium text-gray-100 text-center mb-6">Shopping Cart</h1>
@@ -97,6 +98,7 @@ const Cart = () => {
                         )}
                     </div>
                 </div>
+                <Footer />
             </div>
         </div>
     );

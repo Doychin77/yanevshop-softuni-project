@@ -1,14 +1,15 @@
 import React from 'react';
-import wl from '../../assets/wl.jpg';
 import topImage from '../../assets/topImage.jpg';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faLocationDot, faClock, faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import Footer from '../footer/Footer';
+
 
 const About = () => {
     return (
-        <div className="flex flex-col min-h-screen">
-            <div className="relative flex-grow bg-cover bg-center" style={{ backgroundImage: `url(${wl})` }}>
+        <div className="page-container">
+            <div className="home-background">
                 {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
                 <div className="relative max-w-screen-xl mx-auto p-6 md:p-12 text-gray-800">
                     <div className="flex flex-col md:flex-row items-stretch">
@@ -68,6 +69,7 @@ const About = () => {
                         </div>
                     </div>
                 </div>
+                <Footer />
             </div>
         </div>
     );

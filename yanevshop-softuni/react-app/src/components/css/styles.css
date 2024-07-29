@@ -63,12 +63,14 @@
 }
 
 .home-background {
-    background-image: url('../../assets/wl.jpg'); /* Path to the background image */
-    background-size: cover; /* Make sure the background image covers the entire container */
+    background-image: url('../../assets/wl.jpg'); /* Default background image */
+    background-size: cover; /* Cover the container */
     background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the background image from repeating */
-    padding: 50px; /* Add padding around the content */
-    flex-grow: 1; /* Make the element grow to fill available space */
+    background-repeat: no-repeat; /* Prevent repeating the image */
+    padding-top: 50px;
+    flex-grow: 1; /* Allows the element to grow and fill available space */
+    position: relative; 
+    overflow: hidden;/* Relative positioning for child positioning */
 }
 
 /* General styles for nav-link */
@@ -88,4 +90,19 @@
 .nav-link:hover {
     color: #f97316; /* hover:text-orange-500 */
 }
+
+
+.page-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+.content-wrap {
+    padding-bottom: 3.5rem;    /* Footer height */
+  }
+  
+
 

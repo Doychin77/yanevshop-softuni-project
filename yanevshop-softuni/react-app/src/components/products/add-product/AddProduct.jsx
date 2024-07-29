@@ -73,7 +73,7 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen-sm mx-auto px-4 py-8">
                     <div className="form-container p-6">

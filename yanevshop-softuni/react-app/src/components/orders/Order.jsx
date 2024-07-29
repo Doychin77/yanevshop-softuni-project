@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import wl from '../../assets/wl.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Footer from '../footer/Footer';
 
 const Order = () => {
     const { cart, removeFromCart, clearCart, updateQuantity } = useCart(); // Get cart items and methods from the CartContext
@@ -74,7 +75,7 @@ const Order = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen-lg mx-auto px-4 py-8">
                     <div className="form-container p-6 flex flex-wrap space-x-4">
@@ -211,6 +212,7 @@ const Order = () => {
 
                     </div>
                 </div>
+                <Footer/>
             </div>
         </div>
     );

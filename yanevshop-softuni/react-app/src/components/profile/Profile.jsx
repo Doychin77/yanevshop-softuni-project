@@ -5,6 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import wl from '../../assets/wl.jpg';
 import Spinner from '../spinner/Spinner';
 import '../css/styles.css';
+import Footer from '../footer/Footer';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -65,7 +66,7 @@ const Profile = () => {
     }
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div
                 className="flex-grow flex items-center justify-center"
                 style={{
@@ -111,7 +112,9 @@ const Profile = () => {
                         </button>
                     </div>
                 </div>
+                
             </div>
+            <Footer />
         </div>
     );
 };

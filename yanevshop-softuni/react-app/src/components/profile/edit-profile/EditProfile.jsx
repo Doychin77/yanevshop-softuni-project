@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import wl from '../../../assets/wl.jpg';
 import Spinner from '../../spinner/Spinner';
+import Footer from '../../footer/Footer';
 
 const EditProfile = () => {
     const [user, setUser] = useState(null);
@@ -137,9 +138,9 @@ const EditProfile = () => {
     }
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div
-                className="flex-grow flex items-center justify-center"
+                className=" flex-grow flex items-center justify-center"
                 style={{
                     backgroundImage: `url(${wl})`,
                     backgroundSize: 'cover',
@@ -147,7 +148,7 @@ const EditProfile = () => {
                     padding: '50px',
                 }}
             >
-                <div className="form-container w-full p-8 max-w-md">
+                <div className="form-container p-8 w-full max-w-md bg-[#242629] border-2 border-orange-500 rounded-2xl shadow-xl">
                     <h1 className="text-2xl text-gray-100 font-bold mb-6 text-center">Edit Profile</h1>
                     <form onSubmit={handleSubmit}>
                         {formError && (
@@ -245,17 +246,18 @@ const EditProfile = () => {
                                 className="input-field-primary"
                             />
                         </div>
-                        <div>
-                        <button
-                            type="submit"
-                            className="btn-primary block mx-auto px-8 py-2 "
-                        >
-                            UPDATE PROFILE
-                        </button>
+                        <div className="text-center">
+                            <button
+                                type="submit"
+                                className="btn-primary block mx-auto px-8 py-2"
+                            >
+                                UPDATE PROFILE
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };

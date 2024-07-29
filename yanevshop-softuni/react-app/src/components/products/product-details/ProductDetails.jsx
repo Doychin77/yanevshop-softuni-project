@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useCart } from '../../CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import Footer from '../../footer/Footer';
 
 export default function ProductDetails() {
     const { id } = useParams();
@@ -67,7 +68,7 @@ export default function ProductDetails() {
                         )}
                     </div>
                 </div>
-                
+                <Footer />
             </div>
             
         </div>
