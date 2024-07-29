@@ -70,7 +70,6 @@
     padding-top: 50px;
     flex-grow: 1; /* Allows the element to grow and fill available space */
     position: relative; 
-    overflow: hidden;/* Relative positioning for child positioning */
 }
 
 /* General styles for nav-link */

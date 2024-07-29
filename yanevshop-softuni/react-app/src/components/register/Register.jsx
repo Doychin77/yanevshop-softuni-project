@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../css/toaststyles.css';
 import wl from '../../assets/wl.jpg';
+import Footer from '../footer/Footer';
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -45,7 +46,7 @@ export default function Register() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
@@ -120,6 +121,7 @@ export default function Register() {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         </div>
     );

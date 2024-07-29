@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../UserContext';
 import wl from '../../assets/wl.jpg';
+import Footer from '../footer/Footer';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -42,7 +43,7 @@ export default function Login() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 
@@ -109,6 +110,7 @@ export default function Login() {
                         </div>
                     </div>
                 </div>
+                <Footer/>
             </div>
         </div>
     );

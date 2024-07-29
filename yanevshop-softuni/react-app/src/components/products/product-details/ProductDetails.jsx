@@ -41,7 +41,7 @@ export default function ProductDetails() {
     }
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen mx-auto px-4">
                     <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto' }}>
