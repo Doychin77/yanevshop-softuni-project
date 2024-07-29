@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import Footer from '../../footer/Footer';
 import { useCart } from '../../CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
@@ -30,9 +29,6 @@ export default function ProductDetails() {
 
     const handleAddToCart = (product) => {
         addToCart(product);
-        toast.success("Product added to cart!", {
-            className: "toast-message-add",
-        });
     };
 
     if (loading) {

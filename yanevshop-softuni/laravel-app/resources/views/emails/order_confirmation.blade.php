@@ -7,14 +7,18 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            background-color: #242629;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
         }
         .container {
             width: 50%;
             margin: auto;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f9f9f9;
+            border-radius: 1rem;
+            background-color: #333;
+            color: #e0e0e0;
         }
         .header {
             text-align: center;
@@ -22,11 +26,12 @@
         }
         .header h1 {
             margin: 0;
-            color: #333;
+            color: #f9a825;
+            font-size: 2rem;
         }
         .content p {
             margin: 10px 0;
-            color: #555;
+            color: #ccc;
         }
         .product-list {
             width: 100%;
@@ -34,18 +39,19 @@
             border-collapse: collapse;
         }
         .product-list th, .product-list td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            border: 1px solid #555;
+            padding: 12px;
             text-align: left;
         }
         .product-list th {
-            background-color: #f4f4f4;
+            background-color: #444;
+            color: #f9a825;
         }
         .centered-text {
             text-align: center;
             margin-top: 20px;
-            font-size: 1.2em;
-            color: #333;
+            font-size: 1.5em;
+            color: #f9a825;
         }
         .footer {
             margin-top: 30px;
@@ -56,6 +62,9 @@
             font-weight: bold;
             text-align: right;
             padding-right: 20px;
+        }
+        .total-price td {
+            color: #f9a825;
         }
     </style>
 </head>
@@ -70,7 +79,7 @@
         <p><strong>Address:</strong> {{ $deliveryInfo['address'] }}</p>
         <p><strong>Phone:</strong> {{ $deliveryInfo['phone'] }}</p>
         <div class="centered-text">
-            <h2>Purchased Products:</h2>
+            <h2>Purchased Products</h2>
         </div>
         <table class="product-list">
             <thead>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Footer from '../../footer/Footer';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../css/toaststyles.css';
 
@@ -78,9 +77,7 @@ const EditProduct = () => {
                 },
             });
             console.log('Product updated:', response.data);
-            toast("Product updated successfully!", {
-                className: "toast-message-create-product",
-            });
+            
             navigate('/products');
         } catch (error) {
             console.error('Error updating product:', error);

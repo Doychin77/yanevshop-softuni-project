@@ -46,20 +46,9 @@ export default function Home() {
         setSearchTerm(e.target.value);
     };
 
-    const handleFocus = () => {
-        setIsSearchFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsSearchFocused(false);
-    };
-
     return (
         <div className="flex flex-col min-h-screen">
-            <div
-                className="home-background relative flex-grow"
-                style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}
-            >
+            <div className="home-background">
                 <div className="content-overlay relative z-10 max-w-screen ml-16 mr-16 px-4">
                     <header className="py-6">
                         <h1 className="text-3xl font-bold text-gray-100 text-center">Welcome to Yanev Shop</h1>
@@ -73,9 +62,7 @@ export default function Home() {
                             placeholder={isSearchFocused ? '' : 'Search products...'}
                             value={searchTerm}
                             onChange={handleSearch}
-                            onFocus={handleFocus}
-                            onBlur={handleBlur}
-                            className="border-gray-300 dark:text-gray-800 rounded-3xl shadow-sm py-4 px-36"
+                            className="home-search"
                         />
                     </div>
 

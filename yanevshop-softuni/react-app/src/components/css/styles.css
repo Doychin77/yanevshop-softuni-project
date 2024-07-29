@@ -12,6 +12,19 @@
     background-color: #000000; /* Black */
 }
 
+.home-search {
+    color: #1f2937; /* text-gray-800 */
+    border-radius: 1.5rem;
+    padding: 1rem 9rem;
+    border: 2px solid transparent; /* border-2 border-transparent */
+    transition: background-color 0.2s, border-color 0.2s; 
+}
+
+.home-search:focus {
+    outline: none; /* focus:outline-none */
+    border-color: #f97316; /* focus:border-orange-500 */
+}
+
 
 .input-field-primary {
     margin-top: 0.5rem; /* mt-2 equivalent */
