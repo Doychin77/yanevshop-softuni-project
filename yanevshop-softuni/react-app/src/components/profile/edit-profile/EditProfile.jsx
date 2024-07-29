@@ -9,12 +9,14 @@ const EditProfile = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [formError, setFormError] = useState('');
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [old_password, setOldPassword] = useState('');
-    const [new_password, setNewPassword] = useState('');
-    const [confirm_password, setConfirmPassword] = useState('');
-    const [image, setImage] = useState(null);
+    const [formState, setFormState] = useState({
+        username: '',
+        email: '',
+        old_password: '',
+        new_password: '',
+        confirm_password: '',
+        image: null
+    });
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -31,9 +33,14 @@ const EditProfile = () => {
                 });
 
                 setUser(response.data);
-                setUsername(response.data.username);
-                setEmail(response.data.email);
-                setImage(response.data.image); // Set image URL from response
+                setFormState({
+                    username: response.data.username,
+                    email: response.data.email,
+                    old_password: '',
+                    new_password: '',
+                    confirm_password: '',
+                    image: response.data.image
+                });
             } catch (err) {
                 console.error('Error fetching user data:', err);
                 setError(err.message || 'Unknown error');
@@ -45,20 +52,28 @@ const EditProfile = () => {
         fetchUser();
     }, []);
 
+    const handleChange = (e) => {
+        const { name, value, type, files } = e.target;
+        setFormState(prevState => ({
+            ...prevState,
+            [name]: type === 'file' ? files[0] : value
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setFormError('');  // Reset form errors
 
         // Client-side validation
-        if (new_password || confirm_password) { // Only validate if passwords are provided
-            if (new_password !== confirm_password) {
+        if (formState.new_password || formState.confirm_password) { // Only validate if passwords are provided
+            if (formState.new_password !== formState.confirm_password) {
                 setFormError('The new password and confirmation do not match!');
                 setLoading(false);
                 return;
             }
 
-            if (new_password.length < 8) {
+            if (formState.new_password.length < 8) {
                 setFormError('The new password must be at least 8 characters!');
                 setLoading(false);
                 return;
@@ -67,12 +82,12 @@ const EditProfile = () => {
 
         // Prepare form data for submission
         const formData = new FormData();
-        formData.append('username', username);
-        formData.append('email', email);
-        if (old_password) formData.append('old_password', old_password);
-        if (new_password) formData.append('new_password', new_password);
-        if (confirm_password) formData.append('confirm_password', confirm_password);
-        if (image) formData.append('image', image);
+        formData.append('username', formState.username);
+        formData.append('email', formState.email);
+        if (formState.old_password) formData.append('old_password', formState.old_password);
+        if (formState.new_password) formData.append('new_password', formState.new_password);
+        if (formState.confirm_password) formData.append('confirm_password', formState.confirm_password);
+        if (formState.image) formData.append('image', formState.image);
 
         try {
             const token = localStorage.getItem('token');
@@ -107,10 +122,6 @@ const EditProfile = () => {
         }
     };
 
-    const handleImageChange = (e) => {
-        setImage(e.target.files[0]);
-    };
-
     if (loading) {
         return (
             <Spinner
@@ -140,7 +151,7 @@ const EditProfile = () => {
     return (
         <div className="page-container">
             <div
-                className=" flex-grow flex items-center justify-center"
+                className="flex-grow flex items-center justify-center"
                 style={{
                     backgroundImage: `url(${wl})`,
                     backgroundSize: 'cover',
@@ -176,8 +187,9 @@ const EditProfile = () => {
                             <input
                                 type="text"
                                 id="username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
+                                name="username"
+                                value={formState.username}
+                                onChange={handleChange}
                                 className="input-field-primary"
                                 required
                             />
@@ -189,60 +201,65 @@ const EditProfile = () => {
                             <input
                                 type="email"
                                 id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                name="email"
+                                value={formState.email}
+                                onChange={handleChange}
                                 className="input-field-primary"
                                 required
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="label-profile" htmlFor="oldPassword">
+                            <label className="label-profile" htmlFor="old_password">
                                 Old Password:
                             </label>
                             <input
                                 type="password"
                                 id="old_password"
-                                value={old_password}
-                                onChange={(e) => setOldPassword(e.target.value)}
+                                name="old_password"
+                                value={formState.old_password}
+                                onChange={handleChange}
                                 className="input-field-primary"
-                                required
+                                
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="label-profile" htmlFor="newPassword">
+                            <label className="label-profile" htmlFor="new_password">
                                 New Password:
                             </label>
                             <input
                                 type="password"
                                 id="new_password"
-                                value={new_password}
-                                onChange={(e) => setNewPassword(e.target.value)}
+                                name="new_password"
+                                value={formState.new_password}
+                                onChange={handleChange}
                                 className="input-field-primary"
-                                required
+                                
                             />
                         </div>
                         <div className="mb-4">
-                            <label className="label-profile" htmlFor="confirmPassword">
+                            <label className="label-profile" htmlFor="confirm_password">
                                 Confirm Password:
                             </label>
                             <input
                                 type="password"
                                 id="confirm_password"
-                                value={confirm_password}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                name="confirm_password"
+                                value={formState.confirm_password}
+                                onChange={handleChange}
                                 className="input-field-primary"
-                                required
+                                
                             />
                         </div>
                         <div className="mb-6">
-                            <label className="label-profile" htmlFor="profileImage">
+                            <label className="label-profile" htmlFor="image">
                                 Profile Image:
                             </label>
                             <input
                                 type="file"
-                                id="profileImage"
+                                id="image"
+                                name="image"
                                 accept=".jpg,.jpeg,.png"
-                                onChange={handleImageChange}
+                                onChange={handleChange}
                                 className="input-field-primary"
                             />
                         </div>
