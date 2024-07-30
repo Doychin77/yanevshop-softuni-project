@@ -5,6 +5,8 @@ import wl from '../../assets/wl.jpg';
 import Spinner from '../spinner/Spinner';
 import '../css/styles.css';
 import Footer from '../footer/Footer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -102,16 +104,21 @@ const Profile = () => {
                         </label>
                         <p className="mt-1 text-lg text-center text-gray-100">{user.email}</p>
                     </div>
-                    <div className="flex justify-center mt-6">
+                    <div className="flex justify-center mt-6 space-x-4">
                         <button
-                            onClick={() => navigate('/edit-profile')} // Navigate to the EditProfile component
-                            className="btn-primary text-m px-14 py-2"
+                            onClick={() => navigate('/edit-profile')} 
+                            className="btn-primary text-m px-6 py-2"
                         >
                             EDIT
                         </button>
+                        <button
+                            onClick={() => navigate('/order-history')} // Navigate to the OrderHistory component
+                            className="btn-primary text-m px-4 py-2"
+                        >
+                            <FontAwesomeIcon icon={faBagShopping} /> ORDER HISTORY
+                        </button>
                     </div>
                 </div>
-                
             </div>
             <Footer />
         </div>

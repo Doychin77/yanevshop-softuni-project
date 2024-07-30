@@ -46,6 +46,29 @@ const OrderHistory = () => {
         fetchOrders();
     }, [navigate]);
 
+    const handleDelete = async (orderId) => {
+        try {
+            const token = localStorage.getItem('token'); // Retrieve token from localStorage
+            const response = await fetch(`http://yanevshop.test/api/orders/${orderId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Include token in request headers
+                },
+            });
+    
+            if (response.ok) {
+                setOrders(orders.filter(order => order.id !== orderId)); // Remove deleted order from state
+            } else {
+                throw new Error('Failed to delete the order');
+            }
+        } catch (error) {
+            console.error('Error deleting order:', error);
+            setError(error.message);
+        }
+    };
+
     if (error) {
         return <div className="text-red-500">Failed to fetch orders: {error}</div>;
     }
@@ -60,7 +83,14 @@ const OrderHistory = () => {
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
                             {orders.map(order => (
-                                <div key={order.id} className="form-container text-center">
+                                <div key={order.id} className="relative form-container text-center  p-4">
+                                    {/* Delete Button */}
+                                    <button
+                                        onClick={() => handleDelete(order.id)}
+                                        className="absolute top-2 right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700"
+                                    >
+                                        <span className="text-lg font-bold">&times;</span>
+                                    </button>
                                     <h3 className="text-lg font-semibold text-gray-100">Order #{order.id}</h3>
                                     <p className="text-gray-300">Date: {new Date(order.created_at).toLocaleDateString()}</p>
                                     <div className="mt-4">

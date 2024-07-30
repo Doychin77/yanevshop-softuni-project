@@ -33,6 +33,9 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('/send-email', [OrderController::class, 'sendEmail']);
 
+Route::middleware('auth:api')->delete('orders/{id}', [OrderController::class, 'destroy']);
+
+
 Route::middleware('auth:sanctum')->post('/orders', [OrderController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/orders', [OrderController::class, 'index']);
 Route::middleware('auth:sanctum')->post('/user/update', [UserController::class, 'update']);
