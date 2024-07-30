@@ -56,14 +56,10 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        try {
-            $order = Order::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
-            $order->delete();
+        $order = Order::findOrFail($id);
+        $order->delete();
 
-            return response()->json(['message' => 'Order deleted successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to delete the order'], 500);
-        }
+        return response()->json(['message' => 'Order deleted successfully']);
     }
 }
 
