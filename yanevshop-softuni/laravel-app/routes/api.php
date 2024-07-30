@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,8 @@ Route::post('/send-email', [OrderController::class, 'sendEmail']);
 
 Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 
+Route::get('products/{id}/reviews', [ReviewController::class, 'index']);
+Route::middleware('auth:sanctum')->post('/products/{productId}/reviews', [ReviewController::class, 'store']);
 
 Route::middleware('auth:sanctum')->post('/orders', [OrderController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/orders', [OrderController::class, 'index']);

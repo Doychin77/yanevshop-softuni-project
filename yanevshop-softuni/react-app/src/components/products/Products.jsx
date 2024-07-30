@@ -85,10 +85,17 @@ const Products = () => {
                                     </button>
                                     <Link
                                         to={`/products/${product.id}/edit`}
-                                        className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-2xl"
+                                        className="bg-[#242529] hover:bg-orange-500 text-white font-semibold px-4 py-2 rounded-2xl"
                                         title="Edit"
                                     >
                                         <FontAwesomeIcon icon={faEdit} />
+                                    </Link>
+                                    <Link
+                                        to={`/products/${product.id}`}
+                                        className="bg-[#242529] hover:bg-orange-500 text-white font-semibold px-4 py-2 rounded-2xl"
+                                        title="View"
+                                    >
+                                        <FontAwesomeIcon icon={faEye} />
                                     </Link>
                                     <button
                                         onClick={() => handleDelete(product.id)}
@@ -97,13 +104,7 @@ const Products = () => {
                                     >
                                         <FontAwesomeIcon icon={faTrash} />
                                     </button>
-                                    <Link
-                                        to={`/products/${product.id}`}
-                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-2xl"
-                                        title="View"
-                                    >
-                                        <FontAwesomeIcon icon={faEye} />
-                                    </Link>
+                                    
                                 </div>
                             </div>
                         ))}

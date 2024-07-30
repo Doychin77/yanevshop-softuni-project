@@ -33,8 +33,8 @@ const CategoryProducts = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <div className="home-background flex-grow" style={{ backgroundImage: `url(${wl})`, backgroundSize: 'cover', padding: '50px' }}>
+        <div className="page-container">
+            <div className="home-background">
                 <div className="max-w-screen-xl mx-auto px-4 py-8">
                     <header className="py-6">
                         <h1 className="text-3xl font-bold text-gray-100 text-center mb-4">

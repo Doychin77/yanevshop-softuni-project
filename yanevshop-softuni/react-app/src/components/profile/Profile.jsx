@@ -6,7 +6,7 @@ import Spinner from '../spinner/Spinner';
 import '../css/styles.css';
 import Footer from '../footer/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping, faUserPen } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
     const [user, setUser] = useState(null);
@@ -109,7 +109,7 @@ const Profile = () => {
                             onClick={() => navigate('/edit-profile')} 
                             className="btn-primary text-m px-6 py-2"
                         >
-                            EDIT
+                           <FontAwesomeIcon icon={faUserPen} size='xl'/>
                         </button>
                         <button
                             onClick={() => navigate('/order-history')} // Navigate to the OrderHistory component
