@@ -123,6 +123,7 @@ export default function ProductDetails() {
     };
 
     const truncateReviewText = (text, limit) => {
+        if (!text) return '';
         const words = text.split(' ');
         return words.length > limit ? words.slice(0, limit).join(' ') + '...' : text;
     };
@@ -138,7 +139,7 @@ export default function ProductDetails() {
     const ReviewItem = ({ review }) => {
         const [showFull, setShowFull] = useState(false);
         const [isEditing, setIsEditing] = useState(false);
-        const [editText, setEditText] = useState(review.text);
+        const [editText, setEditText] = useState(review.text || '');
         const [editRating, setEditRating] = useState(review.rating);
 
         const handleToggle = () => {
@@ -149,11 +150,42 @@ export default function ProductDetails() {
 
         return (
             <li key={review.id} className="border-b border-gray-200 pb-4 relative">
-                <p className="text-gray-700 mb-2">{review.user?.username}</p>
+                <p className="text-gray-700 mb-2">{review.user?.username || 'Anonymous'}</p>
                 <div className="flex justify-center mb-2">
                     {renderStars(review.rating)}
                 </div>
-                {isEditing ? (
+                {review.text ? (
+                    <>
+                        <p>{reviewText}</p>
+                        {review.text.length > 40 && (
+                            <button
+                                onClick={handleToggle}
+                                className="text-blue-500 hover:underline mt-2"
+                            >
+                                {showFull ? 'Show Less' : 'See More'}
+                            </button>
+                        )}
+                    </>
+                ) : (
+                    <p></p>
+                )}
+                {user?.id === review.user_id && (
+                    <div className="absolute top-0 right-0 mt-2 flex space-x-2">
+                        <button
+                            onClick={() => setIsEditing(true)}
+                            className="text-blue-500 hover:text-blue-400"
+                        >
+                            <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                        <button
+                            onClick={() => handleDeleteReview(review.id)}
+                            className="text-red-500 hover:text-red-400"
+                        >
+                            <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                    </div>
+                )}
+                {isEditing && (
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
@@ -186,34 +218,6 @@ export default function ProductDetails() {
                             </button>
                         </div>
                     </form>
-                ) : (
-                    <>
-                        <p>{reviewText}</p>
-                        {review.text.length > 40 && (
-                            <button
-                                onClick={handleToggle}
-                                className="text-blue-500 hover:underline mt-2"
-                            >
-                                {showFull ? 'Show Less' : 'See More'}
-                            </button>
-                        )}
-                        {user?.id === review.user_id && (
-                            <div className="absolute top-0 right-0 mt-2 flex space-x-2">
-                                <button
-                                    onClick={() => setIsEditing(true)}
-                                    className="text-blue-500 hover:text-blue-400"
-                                >
-                                    <FontAwesomeIcon icon={faEdit} />
-                                </button>
-                                <button
-                                    onClick={() => handleDeleteReview(review.id)}
-                                    className="text-red-500 hover:text-red-400"
-                                >
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </button>
-                            </div>
-                        )}
-                    </>
                 )}
             </li>
         );
