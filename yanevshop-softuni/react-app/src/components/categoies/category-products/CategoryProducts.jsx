@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import wl from '../../../assets/wl.jpg';  // Ensure this path is correct
 import Footer from '../../footer/Footer';
-import { useCart } from '../../CartContext';
+import { useCart } from '../../../contexts/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faEye } from '@fortawesome/free-solid-svg-icons';
 

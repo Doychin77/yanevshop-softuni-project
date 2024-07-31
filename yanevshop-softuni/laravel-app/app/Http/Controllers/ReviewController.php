@@ -19,7 +19,7 @@ class ReviewController extends Controller
     public function store(Request $request, $productId)
     {
         $request->validate([
-            'text' => 'required|string',
+            'text' => 'nullable|string',
             'rating' => 'required|integer|between:1,5',
         ]);
 
@@ -32,11 +32,58 @@ class ReviewController extends Controller
         $review = Review::create([
             'product_id' => $productId,
             'user_id' => $userId,
-            'text' => $request->input('text'),
+            'text' => $request->input('text', ''),
             'rating' => $request->input('rating'),
         ]);
 
         return response()->json($review, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'text' => 'nullable|string',
+                'rating' => 'required|integer|between:1,5',
+            ]);
+
+            $userId = Auth::id();
+            $review = Review::findOrFail($id);
+
+            if ($review->user_id != $userId) {
+                return response()->json(['error' => 'Unauthorized'], 401);
+            }
+
+            $review->update([
+                'text' => $request->input('text', $review->text),
+                'rating' => $request->input('rating'),
+            ]);
+
+            return response()->json($review);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(['errors' => $e->errors()], 422);
+        }
+    }
+
+
+
+    // Delete a review
+    public function destroy($id)
+    {
+        $review = Review::find($id);
+
+        if (!$review) {
+            return response()->json(['message' => 'Review not found'], 404);
+        }
+
+        // Ensure the user is authorized to delete this review
+        if ($review->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $review->delete();
+
+        return response()->json(['message' => 'Review deleted successfully'], 200);
     }
 }
 

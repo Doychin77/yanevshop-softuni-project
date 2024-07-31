@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './components/UserContext';
+import { UserProvider } from './contexts/UserContext';
 import Navigation from './components/navigation/Navigation';
 import Home from './components/home/Home';
 import About from './components/about/About';
@@ -19,9 +19,8 @@ import Profile from './components/profile/Profile';
 import EditProfile from './components/profile/edit-profile/EditProfile';
 import Cart from './components/cart/Cart';
 import Order from './components/orders/Order';
-import { CartProvider } from './components/CartContext';
+import { CartProvider } from './contexts/CartContext';
 import PrivateRoutes from './components/PrivateRoutes'; 
-import { ToastContainer } from 'react-toastify';
 import NotFound from './components/NotFound';
 import SuccessfulOrder from './components/orders/SuccessfulOrder';
 import OrderHistory from './components/orders/OrderHistory';
@@ -60,16 +59,6 @@ function App() {
                         {/* Catch-all route for 404 */}
                         <Route path="*" element={<NotFound />} />
                     </Routes>
-                    <ToastContainer
-                        autoClose={2000}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        transition="bounce"
-                    />
                 </Router>
             </CartProvider>
         </UserProvider>

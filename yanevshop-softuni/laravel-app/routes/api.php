@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Public routes
 Route::post('/categories', [CategoryController::class, 'store']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/{id}/products', [CategoryController::class, 'products']);
@@ -29,6 +30,7 @@ Route::post('/products', [ProductController::class, 'store']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::post('/products/{id}', [ProductController::class, 'update']);
 Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+Route::get('products/{id}/reviews', [ReviewController::class, 'index']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
@@ -36,12 +38,15 @@ Route::post('/send-email', [OrderController::class, 'sendEmail']);
 
 Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 
-Route::get('products/{id}/reviews', [ReviewController::class, 'index']);
-Route::middleware('auth:sanctum')->post('/products/{productId}/reviews', [ReviewController::class, 'store']);
-
-Route::middleware('auth:sanctum')->post('/orders', [OrderController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/orders', [OrderController::class, 'index']);
-Route::middleware('auth:sanctum')->post('/user/update', [UserController::class, 'update']);
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Authenticated routes
+Route::middleware('auth:sanctum')->group(function () {
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
+    Route::post('/reviews/{id}', [ReviewController::class, 'update']);
+    Route::post('/products/{productId}/reviews', [ReviewController::class, 'store']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::post('/user/update', [UserController::class, 'update']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });

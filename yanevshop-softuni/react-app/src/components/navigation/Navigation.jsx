@@ -1,7 +1,7 @@
 import { useContext, useState, useRef } from 'react';
-import UserContext from '../UserContext';
+import UserContext from '../../contexts/UserContext';
 import { NavLink } from 'react-router-dom';
-import { useCart } from '../CartContext';
+import { useCart } from '../../contexts/CartContext';
 import CartDropdown from './CartDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart} from '@fortawesome/free-solid-svg-icons';
