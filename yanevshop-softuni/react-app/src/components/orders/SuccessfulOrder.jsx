@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Footer from "../footer/Footer";
+
 
 const SuccessfulOrder = () => {
   const navigate = useNavigate();
@@ -29,8 +29,6 @@ const SuccessfulOrder = () => {
               >
                 Continue Shopping
               </button>
-              
-              
             </div>
           </div>
         </div>

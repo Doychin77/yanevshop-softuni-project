@@ -75,7 +75,7 @@ const OrderHistory = () => {
             console.error('Error deleting order:', error);
             setError(error.message);
         } finally {
-            setLoading(false); // Ensure loading is set to false here
+            setLoading(false); 
         }
     };
 

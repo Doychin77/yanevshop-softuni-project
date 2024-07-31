@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useCart } from '../CartContext'; // Import the CartContext
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useCart } from '../CartContext'; 
+import { useNavigate } from 'react-router-dom'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../footer/Footer';
 
 const Order = () => {
     const { cart, removeFromCart, clearCart, updateQuantity } = useCart(); // Get cart items and methods from the CartContext
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
     const [deliveryInfo, setDeliveryInfo] = useState({
         name: '',
         email: '',
@@ -17,15 +17,16 @@ const Order = () => {
 
     useEffect(() => {
         if (cart.length === 0) {
-            navigate('/cart'); // Redirect to the cart page if the cart is empty
+            navigate('/cart'); 
         }
     }, [cart, navigate]);
+
 
     if (!cart) {
         return <div className="text-red-500">Error: Cart context is not available.</div>;
     }
 
-    // Handle input changes
+   
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setDeliveryInfo({
@@ -41,18 +42,16 @@ const Order = () => {
         }
     };
 
-    // Handle form submission
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Include products in the deliveryInfo object
         const payload = {
             ...deliveryInfo,
             products: cart
         };
 
         try {
-            // Send order details to save in the database
             const token = localStorage.getItem('token');
             const orderResponse = await fetch('http://yanevshop.test/api/orders', {
                 method: 'POST',
@@ -65,7 +64,6 @@ const Order = () => {
             });
 
             if (orderResponse.ok) {
-                // Send email
                 const emailResponse = await fetch('http://yanevshop.test/api/send-email', {
                     method: 'POST',
                     headers: {
@@ -90,7 +88,7 @@ const Order = () => {
         }
     };
 
-    // Calculate total price
+    
     const calculateTotalPrice = () => {
         return (cart || []).reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
     };

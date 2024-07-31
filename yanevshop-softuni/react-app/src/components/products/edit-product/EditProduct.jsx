@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Footer from '../../footer/Footer';
-import 'react-toastify/dist/ReactToastify.css';
-import '../../css/toaststyles.css';
+
 
 const EditProduct = () => {
     const { id } = useParams();
@@ -30,7 +29,6 @@ const EditProduct = () => {
                     price: product.price,
                     category_id: product.category_id
                 });
-                // Set previewImage with the existing product image URL if it exists
                 setPreviewImage(product.image ? `http://yanevshop.test/storage/images/${product.image}` : null);
             } catch (error) {
                 console.error('Error fetching product details:', error);

@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from '../footer/Footer';
-import 'react-toastify/dist/ReactToastify.css';
-import '../css/toaststyles.css';
-import { useCart } from '../CartContext'; // Import the CartContext
+import { useCart } from '../CartContext'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,7 +10,7 @@ import { faCartPlus, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [errors, setErrors] = useState({});
-    const { addToCart } = useCart(); // Destructure addToCart function
+    const { addToCart } = useCart(); 
 
 
     useEffect(() => {

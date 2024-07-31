@@ -63,10 +63,10 @@ const EditProfile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setFormError('');  // Reset form errors
+        setFormError('');  
 
         // Client-side validation
-        if (formState.new_password || formState.confirm_password) { // Only validate if passwords are provided
+        if (formState.new_password || formState.confirm_password) { 
             if (formState.new_password !== formState.confirm_password) {
                 setFormError('The new password and confirmation do not match!');
                 setLoading(false);
@@ -79,6 +79,7 @@ const EditProfile = () => {
                 return;
             }
         }
+
 
         // Prepare form data for submission
         const formData = new FormData();
@@ -108,7 +109,7 @@ const EditProfile = () => {
 
             setUser(response.data.user);
             alert('Profile updated successfully');
-            setFormError('');  // Clear any previous errors
+            setFormError('');  
         } catch (err) {
             console.error('Error updating profile:', err.response ? err.response.data : err.message);
             

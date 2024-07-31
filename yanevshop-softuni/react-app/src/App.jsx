@@ -1,4 +1,4 @@
-// src/App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './components/UserContext';
@@ -20,7 +20,7 @@ import EditProfile from './components/profile/edit-profile/EditProfile';
 import Cart from './components/cart/Cart';
 import Order from './components/orders/Order';
 import { CartProvider } from './components/CartContext';
-import PrivateRoutes from './components/PrivateRoutes'; // Import the PrivateRoutes component
+import PrivateRoutes from './components/PrivateRoutes'; 
 import { ToastContainer } from 'react-toastify';
 import NotFound from './components/NotFound';
 import SuccessfulOrder from './components/orders/SuccessfulOrder';
