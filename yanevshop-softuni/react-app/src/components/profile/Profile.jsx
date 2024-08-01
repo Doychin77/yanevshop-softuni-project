@@ -22,6 +22,8 @@ const Profile = () => {
                     throw new Error('No token found');
                 }
 
+                // Verify the token
+                // Optionally, you can add more robust token validation logic here
                 const response = await axios.get('http://yanevshop.test/api/user', {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -31,7 +33,13 @@ const Profile = () => {
                 setUser(response.data);
             } catch (err) {
                 console.error('Error fetching user data:', err);
-                setError(err.message || 'Unknown error');
+                if (err.response && err.response.status === 401) {
+                    setError('Unauthorized: Invalid or expired token.');
+                    // Optionally, you can navigate to login page here
+                    // navigate('/login');
+                } else {
+                    setError(err.message || 'Unknown error');
+                }
             } finally {
                 setLoading(false);
             }

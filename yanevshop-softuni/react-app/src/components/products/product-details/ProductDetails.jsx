@@ -8,6 +8,7 @@ import { faCartPlus, faStar, faEdit, faTrash } from '@fortawesome/free-solid-svg
 import Footer from '../../footer/Footer';
 import Spinner from '../../spinner/Spinner';
 
+/* eslint-disable react/prop-types */
 export default function ProductDetails() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
