@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import wl from '../../../assets/wl.jpg';  // Ensure this path is correct
 import Footer from '../../footer/Footer';
 import { useCart } from '../../../contexts/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faEye } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../../spinner/Spinner';  // Ensure this path is correct
 
 const CategoryProducts = () => {
     const { id } = useParams();
     const [products, setProducts] = useState([]);
     const [categoryName, setCategoryName] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const { addToCart } = useCart();
 
@@ -22,6 +23,8 @@ const CategoryProducts = () => {
                 setCategoryName(response.data.name);
             } catch (error) {
                 console.error('Error fetching category products:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -31,6 +34,10 @@ const CategoryProducts = () => {
     const handleAddToCart = (product) => {
         addToCart(product);
     };
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     return (
         <div className="page-container">
@@ -42,47 +49,53 @@ const CategoryProducts = () => {
                         </h1>
                     </header>
                     <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {products.map((product) => (
-                            <div key={product.id} className="bg-white rounded-3xl shadow-md text-gray-800 flex flex-col justify-center items-center p-4">
-                                <img
-                                    src={`http://yanevshop.test/storage/images/${product.image}`}
-                                    alt={product.name}
-                                    style={{ width: '180px', height: '230px', objectFit: 'cover' }}
-                                    className="w-180px h-auto mb-4 rounded-md"
-                                />
-                                <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
-                                <p className="text-gray-800 text-lg mb-4" style={{
-                                    overflowWrap: 'break-word',
-                                    wordWrap: 'break-word',
-                                    hyphens: 'auto',
-                                    display: '-webkit-box',
-                                    WebkitBoxOrient: 'vertical',
-                                    WebkitLineClamp: 3,
-                                    overflow: 'hidden',
-                                    textOverflow: 'ellipsis',
-                                }}>
-                                    {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
-                                </p>
-                                <p className="text-gray-800 text-center mb-4">{product.price}$</p>
-                                <div className="flex justify-center space-x-2">
-                                    <button
-                                        onClick={() => handleAddToCart(product)}
-                                        className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
-                                        title="Buy"
-                                    >
-                                        <FontAwesomeIcon icon={faShoppingCart} />
-                                    </button>
-                                    
-                                    <Link
-                                        to={`/products/${product.id}`}
-                                        className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-2xl"
-                                        title="View"
-                                    >
-                                        <FontAwesomeIcon icon={faEye} />
-                                    </Link>
+                        {products.length > 0 ? (
+                            products.map((product) => (
+                                <div key={product.id} className="bg-white rounded-3xl shadow-md text-gray-800 flex flex-col justify-center items-center p-4">
+                                    <img
+                                        src={`http://yanevshop.test/storage/images/${product.image}`}
+                                        alt={product.name}
+                                        style={{ width: '180px', height: '230px', objectFit: 'cover' }}
+                                        className="w-180px h-auto mb-4 rounded-md"
+                                    />
+                                    <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
+                                    <p className="text-gray-800 text-lg mb-4" style={{
+                                        overflowWrap: 'break-word',
+                                        wordWrap: 'break-word',
+                                        hyphens: 'auto',
+                                        display: '-webkit-box',
+                                        WebkitBoxOrient: 'vertical',
+                                        WebkitLineClamp: 3,
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                    }}>
+                                        {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
+                                    </p>
+                                    <p className="text-gray-800 text-center mb-4">{product.price}$</p>
+                                    <div className="flex justify-center space-x-2">
+                                        <button
+                                            onClick={() => handleAddToCart(product)}
+                                            className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
+                                            title="Buy"
+                                        >
+                                            <FontAwesomeIcon icon={faShoppingCart} />
+                                        </button>
+                                        
+                                        <Link
+                                            to={`/products/${product.id}`}
+                                            className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-2xl"
+                                            title="View"
+                                        >
+                                            <FontAwesomeIcon icon={faEye} />
+                                        </Link>
+                                    </div>
                                 </div>
+                            ))
+                        ) : (
+                            <div className="text-center text-gray-100 text-3xl font-medium col-span-1 md:col-span-2 lg:col-span-3">
+                                No products in this category
                             </div>
-                        ))}
+                        )}
                     </main>
                     <div className="flex justify-center mt-20">
                         <Link

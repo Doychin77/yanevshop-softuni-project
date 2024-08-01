@@ -6,6 +6,7 @@ import { useUser } from '../../../contexts/useUser'; // Import custom hook
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faStar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../../footer/Footer';
+import Spinner from '../../spinner/Spinner';
 
 export default function ProductDetails() {
     const { id } = useParams();
@@ -224,7 +225,7 @@ export default function ProductDetails() {
     };
 
     if (loading) {
-        return <div className="text-center">Loading...</div>;
+        return <Spinner />;
     }
 
     if (error) {
