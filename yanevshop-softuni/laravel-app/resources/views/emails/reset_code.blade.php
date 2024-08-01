@@ -1,59 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Reset Password</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            line-height: 1.6;
+            background-color: #242629;
+            color: #e0e0e0;
             margin: 0;
             padding: 0;
         }
         .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #1e1e1e;
+            width: 30%;
+            margin: auto;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 1rem;
+            background-color: #333;
+            color: #e0e0e0;
+            text-align: center;
         }
         .header {
             text-align: center;
-            padding: 10px 0;
-            background-color: #ff6600;
-            color: #ffffff;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+            padding-bottom: 20px;
         }
         .header h1 {
             margin: 0;
-            font-size: 24px;
-        }
-        .content {
-            padding: 20px;
+            color: #f9a825;
+            font-size: 2rem;
         }
         .content p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #ffffff; /* Ensure text is white */
+            text-align: center;
+            margin: 10px 0;
+            color: #ccc;
         }
         .reset-code {
             display: block;
             margin: 20px 0;
-            font-size: 18px;
+            font-size: 1.5rem;
             font-weight: bold;
             text-align: center;
-            color: #ff6600;
+            color: #f9a825;
         }
         .footer {
+            margin-top: 30px;
             text-align: center;
-            padding: 10px 0;
-            font-size: 12px;
-            color: #777;
+            color: #888;
         }
     </style>
 </head>
@@ -63,7 +56,7 @@
         <h1>Reset Password</h1>
     </div>
     <div class="content">
-        <p>Hello,</p>
+        <p>Hello {{ $username }},</p>
         <p>You requested to reset your password. Please use the following code to reset your password:</p>
         <p class="reset-code">{{ $resetCode }}</p>
         <p>If you did not request a password reset, please ignore this email.</p>

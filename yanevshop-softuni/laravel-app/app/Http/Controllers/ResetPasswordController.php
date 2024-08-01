@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\User;
-use App\Mail\ResetPassword; // Create this mail class for sending reset code
+use App\Mail\ResetPassword;
 
 class ResetPasswordController extends Controller
 {
@@ -31,11 +31,11 @@ class ResetPasswordController extends Controller
 
         // Save the reset code to the database
         $user->reset_code = $resetCode;
-        $user->reset_code_expires_at = now()->addMinutes(15); // Set expiry time
+        $user->reset_code_expires_at = now()->addMinutes(15);
         $user->save();
 
         // Send the reset code via email
-        Mail::to($user->email)->send(new ResetPassword($resetCode));
+        Mail::to($user->email)->send(new ResetPassword($resetCode, $user->username));
 
         return response()->json(['message' => 'Reset code sent successfully.'], 200);
     }
@@ -62,8 +62,8 @@ class ResetPasswordController extends Controller
 
         // Reset the password
         $user->password = Hash::make($request->password);
-        $user->reset_code = null; // Clear the reset code
-        $user->reset_code_expires_at = null; // Clear the expiry time
+        $user->reset_code = null;
+        $user->reset_code_expires_at = null;
         $user->save();
 
         event(new PasswordReset($user));
