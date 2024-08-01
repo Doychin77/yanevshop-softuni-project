@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -37,6 +39,10 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/send-email', [OrderController::class, 'sendEmail']);
 
 Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+
+Route::post('/forgot-password', [ResetPasswordController::class, 'sendEmail']);
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
+
 
 // Authenticated routes
 Route::middleware('auth:sanctum')->group(function () {

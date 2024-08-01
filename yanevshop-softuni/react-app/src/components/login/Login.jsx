@@ -7,6 +7,7 @@ import Footer from '../footer/Footer';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [remember, setRemember] = useState(false);
     const navigate = useNavigate();
     const { login } = useContext(UserContext);
 
@@ -16,18 +17,20 @@ export default function Login() {
         try {
             const response = await axios.post('http://yanevshop.test/api/login', {
                 email,
-                password
+                password,
+                remember
             });
 
             console.log('Login response:', response.data);
             const token = response.data.token;
 
             if (token) {
-                // Store token in localStorage
-                localStorage.setItem('token', token);
-                console.log('Token stored in localStorage:', localStorage.getItem('token'));
+                if (remember) {
+                    localStorage.setItem('token', token);
+                } else {
+                    sessionStorage.setItem('token', token);
+                }
 
-                // Set the user data in the context
                 login(response.data.user);
 
                 navigate('/');
@@ -45,7 +48,6 @@ export default function Login() {
         <div className="page-container">
             <div className="home-background">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                
                     <div className="w-full rounded-2xl border-2 border-orange-500 shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -70,7 +72,6 @@ export default function Login() {
                                         type="password"
                                         name="password"
                                         id="password"
-
                                         className="input-field-primary block w-full p-2"
                                         required
                                         value={password}
@@ -85,13 +86,15 @@ export default function Login() {
                                                 aria-describedby="remember"
                                                 type="checkbox"
                                                 className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                                                checked={remember}
+                                                onChange={(e) => setRemember(e.target.checked)}
                                             />
                                         </div>
                                         <div className="ml-3 text-sm">
                                             <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                                         </div>
                                     </div>
-                                    <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-orange-500">Forgot password?</a>
+                                    <a href="/reset-password" className="text-sm font-medium text-primary-600 hover:underline dark:text-orange-500">Forgot password?</a>
                                 </div>
                                 <div className="text-center">
                                     <button
@@ -101,15 +104,14 @@ export default function Login() {
                                         Sign in
                                     </button>
                                     <p className="text-sm mt-2 font-light text-gray-300">
-                                        Don’t have an account yet? <a href="/register" className="font-medium  hover:underline dark:text-orange-500">Sign up</a>
+                                        Don’t have an account yet? <a href="/register" className="font-medium hover:underline dark:text-orange-500">Sign up</a>
                                     </p>
                                 </div>
-
                             </form>
                         </div>
                     </div>
                 </div>
-                <Footer/>
+                <Footer />
             </div>
         </div>
     );

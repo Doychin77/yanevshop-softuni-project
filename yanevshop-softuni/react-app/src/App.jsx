@@ -24,6 +24,7 @@ import PrivateRoutes from './components/PrivateRoutes';
 import NotFound from './components/NotFound';
 import SuccessfulOrder from './components/orders/SuccessfulOrder';
 import OrderHistory from './components/orders/OrderHistory';
+import ResetPassword from './components/profile/passwords/ResetPassword';
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
                         <Route path="/contacts" element={<Contacts />} />
 
                         {/* Protected Routes */}
