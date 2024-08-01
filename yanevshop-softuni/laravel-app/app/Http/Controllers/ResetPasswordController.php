@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use App\Models\User;
-use App\Mail\ResetCodeMail; // Create this mail class for sending reset code
+use App\Mail\ResetPassword; // Create this mail class for sending reset code
 
 class ResetPasswordController extends Controller
 {
@@ -35,7 +35,7 @@ class ResetPasswordController extends Controller
         $user->save();
 
         // Send the reset code via email
-        Mail::to($user->email)->send(new ResetCodeMail($resetCode));
+        Mail::to($user->email)->send(new ResetPassword($resetCode));
 
         return response()->json(['message' => 'Reset code sent successfully.'], 200);
     }
@@ -48,15 +48,19 @@ class ResetPasswordController extends Controller
             'password' => 'required|confirmed|min:8',
         ]);
 
-        $user = User::where('email', $request->email)
-            ->where('reset_code', $request->code)
-            ->where('reset_code_expires_at', '>', now())
-            ->first();
+        // Find the user by email
+        $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'Invalid or expired reset code.'], 400);
+            return response()->json(['message' => 'No user found with this email.'], 404);
         }
 
+        // Check if the reset code is correct and not expired
+        if ($user->reset_code !== $request->code || $user->reset_code_expires_at < now()) {
+            return response()->json(['message' => 'Invalid or expired reset code.'], 422);
+        }
+
+        // Reset the password
         $user->password = Hash::make($request->password);
         $user->reset_code = null; // Clear the reset code
         $user->reset_code_expires_at = null; // Clear the expiry time
@@ -66,6 +70,7 @@ class ResetPasswordController extends Controller
 
         return response()->json(['message' => 'Password reset successfully.'], 200);
     }
+
 
 
 }

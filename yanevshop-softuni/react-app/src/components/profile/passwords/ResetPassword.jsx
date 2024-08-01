@@ -16,12 +16,16 @@ export default function ResetPassword() {
     const handleSendCode = async () => {
         try {
             await axios.post('http://yanevshop.test/api/forgot-password', { email });
-            setSuccess('Reset code sent successfully.');
+            setSuccess('A reset code has been sent to your email.');
             setStep(2); // Move to the next step
             setError(''); // Clear previous errors
         } catch (err) {
             console.error(err);
-            setError('Failed to send reset code.');
+            if (err.response && err.response.data.message === 'Email not found.') {
+                setError('No account found with this email address.');
+            } else {
+                setError('Failed to send reset code.');
+            }
             setSuccess(''); // Clear previous success messages
         }
     };
@@ -44,8 +48,8 @@ export default function ResetPassword() {
             setError(''); // Clear previous errors
         } catch (err) {
             console.error(err);
-            if (err.response && err.response.data.errors) {
-                setError(Object.values(err.response.data.errors).flat().join(' '));
+            if (err.response && err.response.data.message) {
+                setError(err.response.data.message);
             } else {
                 setError('Failed to reset password.');
             }
@@ -78,13 +82,15 @@ export default function ResetPassword() {
                                             onChange={(e) => setEmail(e.target.value)}
                                         />
                                     </div>
-                                    <button
-                                        type="button"
-                                        onClick={handleSendCode}
-                                        className="w-full mb-2 mt-2 text-white bg-orange-500 hover:bg-orange-400 rounded-2xl py-2 font-medium"
-                                    >
-                                        Send Reset Code
-                                    </button>
+                                    <div className="text-center">
+                                        <button
+                                            type="button"
+                                            onClick={handleSendCode}
+                                            className="btn-primary px-5 py-2"
+                                        >
+                                            Send Reset Code
+                                        </button>
+                                    </div>
                                 </form>
                             ) : (
                                 <form className="space-y-4 md:space-y-6">
