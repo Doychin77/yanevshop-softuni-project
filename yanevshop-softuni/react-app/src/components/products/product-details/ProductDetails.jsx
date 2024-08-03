@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faStar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../../footer/Footer';
 import Spinner from '../../spinner/Spinner';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination } from 'swiper/modules';
 
 /* eslint-disable react/prop-types */
 export default function ProductDetails() {
@@ -30,7 +35,14 @@ export default function ProductDetails() {
     const fetchProductDetails = async () => {
         try {
             const response = await axios.get(`http://yanevshop.test/api/products/${id}`);
-            setProduct(response.data);
+            const product = response.data;
+            setProduct(product);
+
+            // Set product images if available
+            const images = product.images ? JSON.parse(product.images) : [];
+            if (images.length > 0) {
+                product.images = images.map(image => `http://yanevshop.test/storage/images/${image}`);
+            }
         } catch (error) {
             setError('Error fetching product details');
         } finally {
@@ -75,27 +87,18 @@ export default function ProductDetails() {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(`http://yanevshop.test/api/reviews/${reviewId}`, {
-                text: updatedText, // Ensure text is a string and not empty
-                rating: Number(updatedRating) // Ensure rating is an integer
+                text: updatedText,
+                rating: Number(updatedRating)
             }, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             console.log('Edit review response:', response.data);
             fetchReviews(); // Refresh the reviews list
         } catch (error) {
-            if (error.response) {
-                console.error('Edit review error:', error.response.data); // Log the detailed error response
-                setError(error.response.data.message || 'Error editing review');
-            } else if (error.request) {
-                console.error('Edit review error: No response received:', error.request);
-                setError('No response from server');
-            } else {
-                console.error('Edit review error:', error.message);
-                setError('Error editing review');
-            }
+            console.error('Edit review error:', error);
+            setError('Error editing review');
         }
     };
-
 
     const handleDeleteReview = async (reviewId) => {
         try {
@@ -240,12 +243,34 @@ export default function ProductDetails() {
                     <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto' }}>
                         {product && (
                             <div className="flex flex-col items-center">
-                                <img
-                                    src={`http://yanevshop.test/storage/images/${product.image}`}
-                                    alt={product.name}
-                                    style={{ width: '400px', height: '400px', objectFit: 'cover' }}
-                                    className="rounded-md mb-4"
-                                />
+                                {/* Swiper for product images */}
+                                {product.images && product.images.length > 0 ? (
+                                    <Swiper
+                                        modules={[Navigation, Pagination]}
+                                        navigation
+                                        pagination={{ clickable: true }}
+                                        className="mySwiper"
+                                        style={{ width: '400px', height: '400px' }}
+                                    >
+                                        {product.images.map((image, index) => (
+                                            <SwiperSlide key={index}>
+                                                <img
+                                                    src={image}
+                                                    alt={`Product Image ${index + 1}`}
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                    className="rounded-md"
+                                                />
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+                                ) : (
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        style={{ width: '400px', height: '400px', objectFit: 'cover' }}
+                                        className="rounded-md mb-4"
+                                    />
+                                )}
                                 <h1 className="text-2xl font-bold text-gray-800 mb-4">{product.name}</h1>
                                 <h1 className="text-1xl font-bold text-gray-800">Description:</h1>
                                 <p className="text-gray-800 text-lg mb-4 py-4" style={{ maxWidth: '740px', margin: '0 auto' }}>

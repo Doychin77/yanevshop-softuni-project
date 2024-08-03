@@ -21,12 +21,10 @@ const Order = () => {
         }
     }, [cart, navigate]);
 
-
     if (!cart) {
         return <div className="text-red-500">Error: Cart context is not available.</div>;
     }
 
-   
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setDeliveryInfo({
@@ -42,7 +40,6 @@ const Order = () => {
         }
     };
 
-   
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -88,7 +85,6 @@ const Order = () => {
         }
     };
 
-    
     const calculateTotalPrice = () => {
         return (cart || []).reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
     };
@@ -106,39 +102,50 @@ const Order = () => {
                             ) : (
                                 <div>
                                     <ul className="space-y-6">
-                                        {cart.map(item => (
-                                            <li key={item.id} className="flex items-center justify-between bg-gray-700 p-4 rounded-3xl shadow-md">
-                                                <div className="flex items-center space-x-4">
-                                                    <img
-                                                        src={`http://yanevshop.test/storage/images/${item.image}`}
-                                                        alt={item.name}
-                                                        className="w-24 h-24 object-cover rounded-md"
-                                                    />
-                                                    <div>
-                                                        <h3 className="text-lg font-semibold text-gray-100">{item.name}</h3>
-                                                        <p className="text-gray-300">${item.price}</p>
+                                        {cart.map(item => {
+                                            const images = Array.isArray(item.images) ? item.images : JSON.parse(item.images || '[]');
+                                            const imageUrl = images.length > 0 
+                                                ? `http://yanevshop.test/storage/images/${images[0]}` 
+                                                : 'http://yanevshop.test/storage/images/default.jpg'; // Fallback image
+
+                                            return (
+                                                <li key={item.id} className="flex items-center justify-between bg-gray-700 p-4 rounded-3xl shadow-md">
+                                                    <div className="flex items-center space-x-4">
+                                                        <img
+                                                            src={imageUrl}
+                                                            alt={item.name}
+                                                            className="w-24 h-24 object-cover rounded-md"
+                                                            onError={(e) => {
+                                                                console.error(`Failed to load image at ${imageUrl}`);
+                                                                e.target.src = 'http://yanevshop.test/storage/images/default.jpg'; // Fallback on error
+                                                            }}
+                                                        />
+                                                        <div>
+                                                            <h3 className="text-lg font-semibold text-gray-100">{item.name}</h3>
+                                                            <p className="text-gray-300">${item.price}</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="flex items-center space-x-3">
-                                                    <input
-                                                        type="number"
-                                                        min="1"
-                                                        value={item.quantity}
-                                                        onChange={(e) => handleQuantityChange(item.id, e)}
-                                                        className="w-16 py-1 text-center bg-gray-800 border border-gray-600 rounded-2xl text-gray-100 shadow-sm"
-                                                        style={{ border: '2px solid transparent' }}
-                                                        onFocus={(e) => e.target.style.border = '2px solid orange'}
-                                                        onBlur={(e) => e.target.style.border = '2px solid transparent'}
-                                                    />
-                                                    <button
-                                                        onClick={() => removeFromCart(item.id)}
-                                                        className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl transition-colors"
-                                                    >
-                                                        <FontAwesomeIcon icon={faTrash} />
-                                                    </button>
-                                                </div>
-                                            </li>
-                                        ))}
+                                                    <div className="flex items-center space-x-3">
+                                                        <input
+                                                            type="number"
+                                                            min="1"
+                                                            value={item.quantity}
+                                                            onChange={(e) => handleQuantityChange(item.id, e)}
+                                                            className="w-16 py-1 text-center bg-gray-800 border border-gray-600 rounded-2xl text-gray-100 shadow-sm"
+                                                            style={{ border: '2px solid transparent' }}
+                                                            onFocus={(e) => e.target.style.border = '2px solid orange'}
+                                                            onBlur={(e) => e.target.style.border = '2px solid transparent'}
+                                                        />
+                                                        <button
+                                                            onClick={() => removeFromCart(item.id)}
+                                                            className="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-2xl transition-colors"
+                                                        >
+                                                            <FontAwesomeIcon icon={faTrash} />
+                                                        </button>
+                                                    </div>
+                                                </li>
+                                            );
+                                        })}
                                     </ul>
                                     <div className="flex justify-between mt-6 border-t border-orange-500 pt-4 text-gray-100">
                                         <div className="text-lg font-semibold">Total Price:</div>
@@ -228,7 +235,6 @@ const Order = () => {
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
                 <Footer/>

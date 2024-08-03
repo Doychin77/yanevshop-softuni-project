@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2);
-            $table->string('image')->nullable();
+            $table->json('images')->nullable(); // Store image names as a JSON array
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -24,3 +24,4 @@ class CreateProductsTable extends Migration
         Schema::dropIfExists('products');
     }
 }
+

@@ -28,22 +28,35 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+
+        \Log::info('Received Files: ', $request->file('images'));
+
+        // Validate the incoming request
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate each image file
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            // Store the image in the public/images directory
-            $image->storeAs('public/images', $imageName);
-        } else {
-            return response()->json(['error' => 'Image not provided'], 422);
+        // Initialize an array to store the image names
+        $imageNames = [];
+
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                // Generate a unique name for the image
+                $imageName = time() . '_' . $image->getClientOriginalName();
+
+                // Store the image in the public/images directory
+                $image->storeAs('public/images', $imageName);
+
+                // Add the image name to the array
+                $imageNames[] = $imageName;
+                \Log::info('Image Names: ', $imageNames);
+
+            }
         }
 
         // Create the product
@@ -51,12 +64,24 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
-            'image' => $imageName,
+            'images' => !empty($imageNames) ? json_encode($imageNames) : null, // Convert array to JSON string
             'category_id' => $request->category_id,
         ]);
 
+        \Log::info('Product Data: ', [
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'images' => $imageNames,
+            'category_id' => $request->category_id,
+        ]);
+
+        // Return a JSON response with the created product
         return response()->json($product, 201);
     }
+
+
+
 
     public function update(Request $request, $id)
     {

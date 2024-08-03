@@ -4,8 +4,13 @@ import { Link, useParams } from 'react-router-dom';
 import Footer from '../../footer/Footer';
 import { useCart } from '../../../contexts/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faEye } from '@fortawesome/free-solid-svg-icons';
-import Spinner from '../../spinner/Spinner';  // Ensure this path is correct
+import { faCartPlus, faEye } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../../spinner/Spinner'; // Ensure this path is correct
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 const CategoryProducts = () => {
     const { id } = useParams();
@@ -48,16 +53,58 @@ const CategoryProducts = () => {
                             {categoryName}
                         </h1>
                     </header>
-                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {products.length > 0 ? (
-                            products.map((product) => (
+                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                        {products.map((product) => {
+                            let images = [];
+                            try {
+                                images = JSON.parse(product.images);
+                            } catch (e) {
+                                console.error('Error parsing product images:', e);
+                            }
+
+                            return (
                                 <div key={product.id} className="bg-white rounded-3xl shadow-md text-gray-800 flex flex-col justify-center items-center p-4">
-                                    <img
-                                        src={`http://yanevshop.test/storage/images/${product.image}`}
-                                        alt={product.name}
-                                        style={{ width: '180px', height: '230px', objectFit: 'cover' }}
-                                        className="w-180px h-auto mb-4 rounded-md"
-                                    />
+                                    <Swiper
+                                        spaceBetween={10} // Adjust spacing between slides
+                                        slidesPerView={1} // Number of slides visible at a time
+                                        navigation
+                                        autoplay={{ delay: 3000 }} // Autoplay configuration
+                                        modules={[Navigation, Autoplay]} // Include Autoplay module
+                                        className="swiper-container mb-4"
+                                        style={{ width: '100%', height: 'auto' }} // Ensure Swiper takes full width
+                                    >
+                                        {images.length > 0 ? (
+                                            images.map((image, index) => {
+                                                const imageUrl = `http://yanevshop.test/storage/images/${image}`;
+                                                return (
+                                                    <SwiperSlide key={index}>
+                                                        <img
+                                                            src={imageUrl}
+                                                            alt={product.name}
+                                                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }} // Full width
+                                                            className="rounded-md"
+                                                            onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
+                                                            onError={(e) => {
+                                                                e.target.onerror = null;
+                                                                e.target.src = 'http://yanevshop.test/storage/images/default.jpg';
+                                                                console.error(`Image failed to load: ${imageUrl}`);
+                                                            }}
+                                                        />
+                                                    </SwiperSlide>
+                                                );
+                                            })
+                                        ) : (
+                                            <SwiperSlide>
+                                                <img
+                                                    src="http://yanevshop.test/storage/images/default.jpg"
+                                                    alt="Default"
+                                                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }} // Full width
+                                                    className="rounded-md"
+                                                    onLoad={() => console.log('Default image loaded')}
+                                                />
+                                            </SwiperSlide>
+                                        )}
+                                    </Swiper>
                                     <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
                                     <p className="text-gray-800 text-lg mb-4" style={{
                                         overflowWrap: 'break-word',
@@ -69,7 +116,7 @@ const CategoryProducts = () => {
                                         overflow: 'hidden',
                                         textOverflow: 'ellipsis',
                                     }}>
-                                        {product.description.length > 30 ? product.description.substring(0, 30) : product.description}
+                                        {product.description.length > 30 ? product.description.substring(0, 30) + '...' : product.description}
                                     </p>
                                     <p className="text-gray-800 text-center mb-4">{product.price}$</p>
                                     <div className="flex justify-center space-x-2">
@@ -78,24 +125,21 @@ const CategoryProducts = () => {
                                             className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-4 py-2 rounded-2xl"
                                             title="Buy"
                                         >
-                                            <FontAwesomeIcon icon={faShoppingCart} />
+                                            <FontAwesomeIcon icon={faCartPlus} size="lg" />
                                         </button>
                                         
                                         <Link
                                             to={`/products/${product.id}`}
-                                            className="bg-primary-600 hover:bg-primary-500 text-white font-semibold px-4 py-2 rounded-2xl"
+                                            className="bg-[#242529] hover:bg-orange-500 text-white font-semibold px-4 py-2 rounded-2xl"
                                             title="View"
                                         >
                                             <FontAwesomeIcon icon={faEye} />
                                         </Link>
+                                        
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            <div className="text-center text-gray-100 text-3xl font-medium col-span-1 md:col-span-2 lg:col-span-3">
-                                No products in this category
-                            </div>
-                        )}
+                            );
+                        })}
                     </main>
                     <div className="flex justify-center mt-20">
                         <Link

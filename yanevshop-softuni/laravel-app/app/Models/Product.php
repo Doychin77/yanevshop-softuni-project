@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'image', 'category_id'];
+    protected $fillable = ['name', 'description', 'price', 'images', 'category_id'];
 
     public function category()
     {
@@ -20,4 +20,10 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'wishlist', 'user_id', 'product_id');
+    }
+
 }

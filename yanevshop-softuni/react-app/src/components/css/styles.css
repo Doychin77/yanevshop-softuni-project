@@ -102,6 +102,19 @@
 .content-wrap {
     padding-bottom: 3.5rem;    /* Footer height */
   }
+
+  .swiper-button-next, .swiper-button-prev {
+    width: 30px; /* Adjust width */
+    height: 30px; /* Adjust height */
+    background-size: 20px; /* Adjust icon size */
+    /* background-color: rgba(0, 0, 0, 0.5); Optional: background color */
+    border-radius: 50%; /* Optional: make buttons circular */
+    z-index: 10; /* Ensure buttons are on top */
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+    font-size: 20px; /* Adjust font size for arrow icons */
+    color: #000000; /* Arrow color */
   
 
-
+}

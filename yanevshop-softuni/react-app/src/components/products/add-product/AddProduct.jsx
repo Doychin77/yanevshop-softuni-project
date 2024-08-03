@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import Footer from '../../footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../css/toaststyles.css';
@@ -12,11 +12,11 @@ const AddProduct = () => {
         price: ''
     });
     const [categoryId, setCategoryId] = useState('');
-    const [productImage, setProductImage] = useState(null);
+    const [imageInputs, setImageInputs] = useState(['']); // Array to manage multiple image inputs
+    const [productImages, setProductImages] = useState([]); // To store selected images
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
-    const navigate = useNavigate(); 
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -33,16 +33,18 @@ const AddProduct = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const formData = new FormData();
         formData.append('name', productData.name);
         formData.append('description', productData.description);
         formData.append('price', productData.price);
         formData.append('category_id', categoryId);
-        if (productImage) {
-            formData.append('image', productImage);
-        }
-
+    
+        // Append each file to FormData
+        productImages.forEach((file) => {
+            formData.append('images[]', file);
+        });
+    
         try {
             const response = await axios.post('http://yanevshop.test/api/products', formData, {
                 headers: {
@@ -50,7 +52,7 @@ const AddProduct = () => {
                 },
             });
             console.log('Product added:', response.data);
-            navigate('/products'); // Use navigate for navigation
+            navigate('/products');
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
                 setErrors(error.response.data.errors);
@@ -59,9 +61,18 @@ const AddProduct = () => {
             }
         }
     };
+    
+    const handleImageChange = (e, index) => {
+        const files = Array.from(e.target.files);
+        setProductImages(prevImages => {
+            const newImages = [...prevImages];
+            newImages[index] = files[0];
+            return newImages;
+        });
+    };
 
-    const handleImageChange = (e) => {
-        setProductImage(e.target.files[0]);
+    const handleAddImageInput = () => {
+        setImageInputs([...imageInputs, '']); // Add a new empty input field
     };
 
     const handleInputChange = (e) => {
@@ -93,7 +104,7 @@ const AddProduct = () => {
                             {errors.name && <div className="text-red-500">{errors.name[0]}</div>}
                             <label className="block text-md font-medium text-gray-100">
                                 <p className="text-center text-orange-500">Description</p>
-                                <textarea    
+                                <textarea
                                     name="description"
                                     rows="4"
                                     value={productData.description}
@@ -115,16 +126,28 @@ const AddProduct = () => {
                                 />
                             </label>
                             {errors.price && <div className="text-red-500">{errors.price[0]}</div>}
-                            <label className="block text-md font-medium text-gray-100">
-                                <p className="text-center text-orange-500">Image</p>
-                                <input
-                                    type="file"
-                                    accept=".jpg,.jpeg,.png"
-                                    onChange={handleImageChange}
-                                    className="input-field-primary w-full mt-2 p-2"
-                                    required
-                                />
-                            </label>
+                            <div className="block text-md font-medium text-gray-100">
+                                <p className="text-center text-orange-500">Images</p>
+                                {imageInputs.map((_, index) => (
+                                    <input
+                                        key={index}
+                                        type="file"
+                                        accept=".jpg,.jpeg,.png"
+                                        onChange={(e) => handleImageChange(e, index)}
+                                        className="input-field-primary w-full mt-2 p-2"
+                                        multiple
+                                    />
+                                ))}
+                                <div className="text-center">
+                                <button
+                                    type="button"
+                                    onClick={handleAddImageInput}
+                                    className="btn-primary py-2 px-5 mt-2"
+                                >
+                                    Add More Images
+                                </button>
+                                </div>
+                            </div>
                             <label className="block text-md font-medium text-gray-100">
                                 <p className="text-center text-orange-500">Category</p>
                                 <select
