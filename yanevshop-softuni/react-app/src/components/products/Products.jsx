@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from '../footer/Footer';
@@ -27,6 +27,7 @@ const Products = () => {
         } catch (error) {
             console.error('Error fetching products:', error);
         }
+        
     };
 
     const handleDelete = async (id) => {
@@ -41,6 +42,7 @@ const Products = () => {
 
     const handleAddToCart = (product) => {
         addToCart(product);
+        console.log(product);
     };
 
     return (

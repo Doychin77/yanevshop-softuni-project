@@ -68,64 +68,61 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
         ]);
 
-        \Log::info('Product Data: ', [
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'images' => $imageNames,
-            'category_id' => $request->category_id,
-        ]);
-
         // Return a JSON response with the created product
         return response()->json($product, 201);
     }
 
-
-
-
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
-
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'category_id' => 'required|exists:categories,id',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ]);
 
-        // Update the product details
-        $product->name = $validatedData['name'];
-        $product->description = $validatedData['description'];
-        $product->price = $validatedData['price'];
-        $product->category_id = $validatedData['category_id'];
+        $product = Product::findOrFail($id);
 
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            $image->storeAs('public/images', $imageName);
-
-            if ($product->image) {
-                Storage::delete('public/images/' . $product->image);
+        // Process new images
+        $newImageNames = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->storeAs('public/images', $imageName);
+                $newImageNames[] = $imageName;
             }
-
-            $product->image = $imageName;
         }
 
-        $product->save();
+        // Decode existing images
+        $existingImages = json_decode($request->input('existing_images', '[]'), true);
+        if (!is_array($existingImages)) {
+            return response()->json(['error' => 'existing_images should be an array'], 422);
+        }
+
+        // Combine existing and new images
+        $allImageNames = array_merge($existingImages, $newImageNames);
+
+        // Update product
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'images' => !empty($allImageNames) ? json_encode($allImageNames) : null,
+            'category_id' => $request->category_id,
+        ]);
 
         return response()->json($product, 200);
     }
+
 
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
 
-        if ($product->image) {
-            Storage::delete('public/images/' . $product->image);
+        if ($product->images) {
+            Storage::delete('public/images/' . $product->images);
         }
 
         $product->delete();

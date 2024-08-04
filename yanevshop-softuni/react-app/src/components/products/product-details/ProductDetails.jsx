@@ -36,13 +36,12 @@ export default function ProductDetails() {
         try {
             const response = await axios.get(`http://yanevshop.test/api/products/${id}`);
             const product = response.data;
-            setProduct(product);
 
-            // Set product images if available
+            // Correctly format product images
             const images = product.images ? JSON.parse(product.images) : [];
-            if (images.length > 0) {
-                product.images = images.map(image => `http://yanevshop.test/storage/images/${image}`);
-            }
+            product.images = images.map(image => `http://yanevshop.test/storage/images/${image}`);
+
+            setProduct(product);
         } catch (error) {
             setError('Error fetching product details');
         } finally {
@@ -61,6 +60,7 @@ export default function ProductDetails() {
 
     const handleAddToCart = (product) => {
         addToCart(product);
+        console.log(product);
     };
 
     const handleReviewSubmit = async (e) => {

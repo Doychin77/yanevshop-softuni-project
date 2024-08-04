@@ -3,20 +3,23 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Footer from '../../footer/Footer';
 
+const MAX_IMAGE_INPUTS = 6;
 
 const EditProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [productImage, setProductImage] = useState(null);
-    const [previewImage, setPreviewImage] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const [errors, setErrors] = useState({});
     const [productData, setProductData] = useState({
         name: '',
         description: '',
         price: '',
         category_id: ''
     });
+    const [imageInputs, setImageInputs] = useState([]);
+    const [productImages, setProductImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [errors, setErrors] = useState({});
+    const [imageInputError, setImageInputError] = useState('');
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -29,7 +32,13 @@ const EditProduct = () => {
                     price: product.price,
                     category_id: product.category_id
                 });
-                setPreviewImage(product.image ? `http://yanevshop.test/storage/images/${product.image}` : null);
+
+                if (product.images) {
+                    const images = JSON.parse(product.images).map(image => `http://yanevshop.test/storage/images/${image}`);
+                    setProductImages(images);
+                    setPreviewImages(images);
+                    setImageInputs(new Array(images.length).fill(''));
+                }
             } catch (error) {
                 console.error('Error fetching product details:', error);
             }
@@ -48,12 +57,47 @@ const EditProduct = () => {
         fetchCategories();
     }, [id]);
 
-    const handleProductData = (e) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProductData(prevData => ({
             ...prevData,
             [name]: value
         }));
+    };
+
+    const handleImageChange = (e, index) => {
+        const files = Array.from(e.target.files);
+        const newPreviewImages = files.map(file => URL.createObjectURL(file));
+
+        setProductImages(prevImages => {
+            const newImages = [...prevImages];
+            newImages[index] = files[0];
+            return newImages;
+        });
+
+        setPreviewImages(prevPreviews => {
+            const newPreviews = [...prevPreviews];
+            newPreviews[index] = newPreviewImages[0];
+            return newPreviews;
+        });
+    };
+
+    const handleAddImageInput = () => {
+        if (imageInputs.length < MAX_IMAGE_INPUTS) {
+            setImageInputs([...imageInputs, '']);
+            setProductImages([...productImages, null]);
+            setPreviewImages([...previewImages, null]);
+            setImageInputError('');
+        } else {
+            setImageInputError(`You can upload max ${MAX_IMAGE_INPUTS} images.`);
+        }
+    };
+
+    const handleRemoveImageInput = (index) => {
+        setImageInputs(imageInputs.filter((_, i) => i !== index));
+        setProductImages(productImages.filter((_, i) => i !== index));
+        setPreviewImages(previewImages.filter((_, i) => i !== index));
+        setImageInputError('');
     };
 
     const handleSubmit = async (e) => {
@@ -63,10 +107,22 @@ const EditProduct = () => {
         formData.append('name', productData.name);
         formData.append('description', productData.description);
         formData.append('price', productData.price);
-        if (productImage) {
-            formData.append('image', productImage);
-        }
         formData.append('category_id', productData.category_id);
+
+        // Prepare existing images array
+        const existingImages = previewImages
+            .filter(image => image && !image.startsWith('blob:'))
+            .map(image => image.replace('http://yanevshop.test/storage/images/', ''));
+
+        // Append existing images
+        formData.append('existing_images', JSON.stringify(existingImages));
+
+        // Append new images
+        productImages.forEach((file) => {
+            if (file && file instanceof File) {
+                formData.append('images[]', file);
+            }
+        });
 
         try {
             const response = await axios.post(`http://yanevshop.test/api/products/${id}`, formData, {
@@ -74,22 +130,15 @@ const EditProduct = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
+
             console.log('Product updated:', response.data);
-            
             navigate('/products');
         } catch (error) {
             console.error('Error updating product:', error);
             if (error.response && error.response.status === 422) {
                 setErrors(error.response.data.errors);
+                console.log('Validation Errors:', error.response.data.errors);
             }
-        }
-    };
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            setProductImage(file);
-            setPreviewImage(URL.createObjectURL(file));
         }
     };
 
@@ -104,10 +153,9 @@ const EditProduct = () => {
                                 <p className="text-center text-orange-500">Name</p>
                                 <input
                                     type="text"
-                                    placeholder="Product Name"
-                                    name='name'
+                                    name="name"
                                     value={productData.name}
-                                    onChange={handleProductData}
+                                    onChange={handleInputChange}
                                     className="input-field-primary w-full mt-2 p-2"
                                     required
                                 />
@@ -116,11 +164,10 @@ const EditProduct = () => {
                             <label className="block text-md font-medium text-gray-100">
                                 <p className="text-center text-orange-500">Description</p>
                                 <textarea
-                                    placeholder="Product Description"
+                                    name="description"
                                     rows="4"
-                                    name='description'
                                     value={productData.description}
-                                    onChange={handleProductData}
+                                    onChange={handleInputChange}
                                     className="input-field-primary w-full mt-2 p-2"
                                     required
                                 ></textarea>
@@ -130,42 +177,65 @@ const EditProduct = () => {
                                 <p className="text-center text-orange-500">Price</p>
                                 <input
                                     type="number"
-                                    placeholder="Product Price"
-                                    name='price'
+                                    name="price"
                                     value={productData.price}
-                                    onChange={handleProductData}
+                                    onChange={handleInputChange}
                                     className="input-field-primary w-full mt-2 p-2"
                                     required
                                 />
                             </label>
                             {errors.price && <div className="text-red-500">{errors.price[0]}</div>}
-                            <label className="block text-md font-medium text-gray-100">
-                                <p className="text-center text-orange-500">Image</p>
-                                <input
-                                    type="file"
-                                    accept=".jpg,.jpeg,.png"
-                                    onChange={handleImageChange}
-                                    className="input-field-primary w-full mt-2 p-2"
-                                />
-                                {previewImage && (
-                                    <div className="mt-2 flex justify-center">
-                                        <img
-                                            src={previewImage}
-                                            alt="Preview"
-                                            className="max-w-full h-auto rounded-2xl"
-                                            style={{ width: '300px', height: 'auto' }} 
+                            <div className="block text-md font-medium text-gray-100">
+                                <p className="text-center text-orange-500">Images</p>
+                                {imageInputs.map((_, index) => (
+                                    <div key={index} className="relative mb-2">
+                                        <input
+                                            type="file"
+                                            accept=".jpg,.jpeg,.png"
+                                            onChange={(e) => handleImageChange(e, index)}
+                                            className="input-field-primary w-full p-2"
                                         />
+                                        {previewImages[index] && (
+                                            <div className="mt-2 flex justify-center">
+                                                <img
+                                                    src={previewImages[index]}
+                                                    alt="Preview"
+                                                    className="max-w-full h-auto rounded-2xl"
+                                                    style={{ width: '300px', height: 'auto' }}
+                                                />
+                                            </div>
+                                        )}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveImageInput(index)}
+                                            className="absolute top-0 right-0 text-red-500 hover:text-red-700 font-bold text-2xl"
+                                            title="Remove Image"
+                                            style={{ margin: '5px', padding: '0 5px', border: 'none', background: 'transparent' }}
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
+                                ))}
+                                {imageInputError && (
+                                    <div className="text-red-500 text-center mb-2">
+                                        {imageInputError}
                                     </div>
                                 )}
-                            </label>
-
-
-                            <label className="block text-md mb-2 font-medium text-gray-100">
+                                <div className="text-center">
+                                    <button
+                                        type="button"
+                                        onClick={handleAddImageInput}
+                                        className="btn-primary py-2 px-5 mt-2"
+                                    >
+                                        Add More Images
+                                    </button>
+                                </div>
+                            </div>
+                            <label className="block text-md font-medium text-gray-100">
                                 <p className="text-center text-orange-500">Category</p>
                                 <select
                                     value={productData.category_id}
-                                    name='category_id'
-                                    onChange={handleProductData}
+                                    onChange={(e) => setProductData(prevData => ({ ...prevData, category_id: e.target.value }))}
                                     className="input-field-primary w-full mt-2 p-2"
                                     required
                                 >
@@ -177,7 +247,6 @@ const EditProduct = () => {
                                     ))}
                                 </select>
                             </label>
-                            {errors.category_id && <div className="text-red-500">{errors.category_id[0]}</div>}
                             <button
                                 type="submit"
                                 className="btn-primary block mx-auto px-8 py-2"

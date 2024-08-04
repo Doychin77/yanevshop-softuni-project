@@ -5,6 +5,8 @@ import Footer from '../../footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../css/toaststyles.css';
 
+const MAX_IMAGE_INPUTS = 6; // Maximum number of image inputs
+
 const AddProduct = () => {
     const [productData, setProductData] = useState({
         name: '',
@@ -16,6 +18,7 @@ const AddProduct = () => {
     const [productImages, setProductImages] = useState([]); // To store selected images
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
+    const [imageInputError, setImageInputError] = useState(''); // State for image input error
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -61,7 +64,7 @@ const AddProduct = () => {
             }
         }
     };
-    
+
     const handleImageChange = (e, index) => {
         const files = Array.from(e.target.files);
         setProductImages(prevImages => {
@@ -72,7 +75,19 @@ const AddProduct = () => {
     };
 
     const handleAddImageInput = () => {
-        setImageInputs([...imageInputs, '']); // Add a new empty input field
+        if (imageInputs.length < MAX_IMAGE_INPUTS) {
+            setImageInputs([...imageInputs, '']); // Add a new empty input field
+            setProductImages([...productImages, null]); // Add a new null entry for the new file
+            setImageInputError(''); // Clear error message
+        } else {
+            setImageInputError(`You can upload max ${MAX_IMAGE_INPUTS} images.`);
+        }
+    };
+
+    const handleRemoveImageInput = (index) => {
+        setImageInputs(imageInputs.filter((_, i) => i !== index)); // Remove input field
+        setProductImages(productImages.filter((_, i) => i !== index)); // Remove corresponding file
+        setImageInputError(''); // Clear error message when removing an image
     };
 
     const handleInputChange = (e) => {
@@ -129,23 +144,38 @@ const AddProduct = () => {
                             <div className="block text-md font-medium text-gray-100">
                                 <p className="text-center text-orange-500">Images</p>
                                 {imageInputs.map((_, index) => (
-                                    <input
-                                        key={index}
-                                        type="file"
-                                        accept=".jpg,.jpeg,.png"
-                                        onChange={(e) => handleImageChange(e, index)}
-                                        className="input-field-primary w-full mt-2 p-2"
-                                        multiple
-                                    />
+                                    <div key={index} className="relative mb-2">
+                                        <input
+                                            type="file"
+                                            accept=".jpg,.jpeg,.png"
+                                            onChange={(e) => handleImageChange(e, index)}
+                                            className="input-field-primary w-full p-2"
+                                            multiple
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveImageInput(index)}
+                                            className="absolute top-0 right-0 text-red-500 hover:text-red-700 font-bold text-2xl"
+                                            title="Remove Image"
+                                            style={{ margin: '5px', padding: '0 5px', border: 'none', background: 'transparent' }}
+                                        >
+                                            &times;
+                                        </button>
+                                    </div>
                                 ))}
+                                {imageInputError && (
+                                    <div className="text-red-500 text-center mb-2">
+                                        {imageInputError}
+                                    </div>
+                                )}
                                 <div className="text-center">
-                                <button
-                                    type="button"
-                                    onClick={handleAddImageInput}
-                                    className="btn-primary py-2 px-5 mt-2"
-                                >
-                                    Add More Images
-                                </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleAddImageInput}
+                                        className="btn-primary py-2 px-5 mt-2"
+                                    >
+                                        Add More Images
+                                    </button>
                                 </div>
                             </div>
                             <label className="block text-md font-medium text-gray-100">
