@@ -1,4 +1,4 @@
-import  { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
@@ -7,11 +7,15 @@ import Footer from '../footer/Footer';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errors, setErrors] = useState({ email: '', password: '' }); // Error states
     const navigate = useNavigate();
     const { login } = useContext(UserContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Clear previous errors
+        setErrors({ email: '', password: '' });
 
         try {
             const response = await axios.post('http://yanevshop.test/api/login', {
@@ -24,17 +28,23 @@ export default function Login() {
 
             if (token) {
                 localStorage.setItem('token', token);
-
                 login(response.data.user);
-
                 navigate('/');
             } else {
-                console.error('No token found in response');
-                alert('Login failed: No token provided');
+                setErrors({ ...errors, email: 'Login failed: No token provided' });
             }
         } catch (error) {
-            console.error(error);
-            alert("Invalid credentials. Please try again.");
+            if (error.response && error.response.data) {
+                const { errors: apiErrors } = error.response.data;
+
+                // Set error messages from API response
+                setErrors({
+                    email: apiErrors?.email || '',
+                    password: apiErrors?.password || ''
+                });
+            } else {
+                setErrors({ ...errors, email: 'Invalid credentials. Please try again.' });
+            }
         }
     };
 
@@ -54,11 +64,14 @@ export default function Login() {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        className="input-field-primary block w-full p-2"
+                                        className={`input-field-primary block w-full p-2 ${errors.email ? 'border-red-500' : ''}`}
                                         required
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
+                                    {errors.email && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                                    )}
                                 </div>
                                 <div>
                                     <label htmlFor="password" className="block mb-2 ml-1 text-sm font-medium text-gray-900 dark:text-white">Password</label>
@@ -66,11 +79,14 @@ export default function Login() {
                                         type="password"
                                         name="password"
                                         id="password"
-                                        className="input-field-primary block w-full p-2"
+                                        className={`input-field-primary block w-full p-2 ${errors.password ? 'border-red-500' : ''}`}
                                         required
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
+                                    {errors.password && (
+                                        <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+                                    )}
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-start">
@@ -80,7 +96,6 @@ export default function Login() {
                                                 aria-describedby="remember"
                                                 type="checkbox"
                                                 className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                                
                                             />
                                         </div>
                                         <div className="ml-3 text-sm">

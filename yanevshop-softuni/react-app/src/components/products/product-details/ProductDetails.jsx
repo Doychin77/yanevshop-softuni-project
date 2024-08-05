@@ -37,7 +37,6 @@ export default function ProductDetails() {
             const response = await axios.get(`http://yanevshop.test/api/products/${id}`);
             const product = response.data;
 
-            // Correctly format product images
             const images = product.images ? JSON.parse(product.images) : [];
             product.images = images;
 
