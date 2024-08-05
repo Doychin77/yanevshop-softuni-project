@@ -17,8 +17,8 @@ export default function ResetPassword() {
         try {
             await axios.post('http://yanevshop.test/api/forgot-password', { email });
             setSuccess('A reset code has been sent to your email.');
-            setStep(2); // Move to the next step
-            setError(''); // Clear previous errors
+            setStep(2); 
+            setError(''); 
         } catch (err) {
             console.error(err);
             if (err.response && err.response.data.message === 'Email not found.') {
@@ -26,7 +26,7 @@ export default function ResetPassword() {
             } else {
                 setError('Failed to send reset code.');
             }
-            setSuccess(''); // Clear previous success messages
+            setSuccess(''); 
         }
     };
 
@@ -45,7 +45,7 @@ export default function ResetPassword() {
             });
             setSuccess('Password reset successfully!');
             navigate('/login');
-            setError(''); // Clear previous errors
+            setError(''); 
         } catch (err) {
             console.error(err);
             if (err.response && err.response.data.message) {
@@ -53,7 +53,7 @@ export default function ResetPassword() {
             } else {
                 setError('Failed to reset password.');
             }
-            setSuccess(''); // Clear previous success messages
+            setSuccess(''); 
         }
     };
 

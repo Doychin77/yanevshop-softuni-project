@@ -23,7 +23,6 @@ export default function Login() {
             const token = response.data.token;
 
             if (token) {
-                // Always store the token in localStorage
                 localStorage.setItem('token', token);
 
                 login(response.data.user);

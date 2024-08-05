@@ -39,7 +39,7 @@ export default function ProductDetails() {
 
             // Correctly format product images
             const images = product.images ? JSON.parse(product.images) : [];
-            product.images = images.map(image => `http://yanevshop.test/storage/images/${image}`);
+            product.images = images;
 
             setProduct(product);
         } catch (error) {
@@ -246,27 +246,39 @@ export default function ProductDetails() {
                                 {/* Swiper for product images */}
                                 {product.images && product.images.length > 0 ? (
                                     <Swiper
-                                        modules={[Navigation, Pagination]}
-                                        navigation
-                                        pagination={{ clickable: true }}
-                                        className="mySwiper"
-                                        style={{ width: '400px', height: '400px' }}
-                                    >
-                                        {product.images.map((image, index) => (
+                                    spaceBetween={10}
+                                    slidesPerView={1}
+                                    navigation
+                                    pagination={{ clickable: true }}
+                                    modules={[Navigation, Pagination]}
+                                    className="swiper-container mb-4"
+                                    style={{ width: '350px', height: '350px' }} // Adjusted size
+                                >
+                                    {product.images.map((image, index) => {
+                                        const imageUrl = `http://yanevshop.test/storage/images/${image}`;
+                                        return (
                                             <SwiperSlide key={index}>
                                                 <img
-                                                    src={image}
-                                                    alt={`Product Image ${index + 1}`}
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                    src={imageUrl}
+                                                    alt={product.name}
+                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Adjusted size
                                                     className="rounded-md"
+                                                    onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
+                                                    onError={(e) => {
+                                                        e.target.onerror = null;
+                                                        e.target.src = 'http://yanevshop.test/storage/images/default.jpg';
+                                                        console.error(`Image failed to load: ${imageUrl}`);
+                                                    }}
                                                 />
                                             </SwiperSlide>
-                                        ))}
-                                    </Swiper>
+                                        );
+                                    })}
+                                </Swiper>
+                                
                                 ) : (
                                     <img
-                                        src={product.image}
-                                        alt={product.name}
+                                        src="http://yanevshop.test/storage/images/default.jpg"
+                                        alt="Default"
                                         style={{ width: '400px', height: '400px', objectFit: 'cover' }}
                                         className="rounded-md mb-4"
                                     />
