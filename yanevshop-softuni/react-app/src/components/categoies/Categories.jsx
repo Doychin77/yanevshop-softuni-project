@@ -25,9 +25,9 @@ const Categories = () => {
             <div className="home-background">
                 <div className="max-w-screen-xl mx-auto px-4 py-8">
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center mb-14">Categories</h1>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                         {categories.map((category) => (
-                            <div key={category.id} className="bg-white dark:bg-gray-700 border-2 border-orange-500 rounded-3xl shadow-md p-4 flex flex-col items-center">
+                            <div key={category.id} className="form-container p-4 flex flex-col items-center">
                                 <Link
                                     to={`/categories/${category.id}/products`}
                                     className="flex flex-col items-center text-center hover:text-blue-400 transition-colors duration-300"

@@ -7,11 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faStar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../../footer/Footer';
 import Spinner from '../../spinner/Spinner';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
 
 /* eslint-disable react/prop-types */
 export default function ProductDetails() {
@@ -24,6 +19,7 @@ export default function ProductDetails() {
     const [rating, setRating] = useState(1);
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [reviewsVisible, setReviewsVisible] = useState(false);
+    const [mainImage, setMainImage] = useState(''); // State for the main image
     const { addToCart } = useCart();
     const { user } = useUser(); // Get user context
 
@@ -41,6 +37,9 @@ export default function ProductDetails() {
             product.images = images;
 
             setProduct(product);
+            if (images.length > 0) {
+                setMainImage(`http://yanevshop.test/storage/images/${images[0]}`); // Set the first image as main
+            }
         } catch (error) {
             setError('Error fetching product details');
         } finally {
@@ -138,6 +137,10 @@ export default function ProductDetails() {
 
     const handleToggleReviewForm = () => {
         setShowReviewForm(!showReviewForm);
+    };
+
+    const handleThumbnailClick = (image) => {
+        setMainImage(`http://yanevshop.test/storage/images/${image}`);
     };
 
     const ReviewItem = ({ review }) => {
@@ -239,75 +242,58 @@ export default function ProductDetails() {
         <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen mx-auto px-4">
-                    <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto' }}>
+                    <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto', display: 'flex' }}>
                         {product && (
-                            <div className="flex flex-col items-center">
-                                {/* Swiper for product images */}
-                                {product.images && product.images.length > 0 ? (
-                                    <Swiper
-                                    spaceBetween={10}
-                                    slidesPerView={1}
-                                    navigation
-                                    pagination={{ clickable: true }}
-                                    modules={[Navigation, Pagination]}
-                                    className="swiper-container mb-4"
-                                    style={{ width: '350px', height: '350px' }} // Adjusted size
-                                >
-                                    {product.images.map((image, index) => {
-                                        const imageUrl = `http://yanevshop.test/storage/images/${image}`;
-                                        return (
-                                            <SwiperSlide key={index}>
-                                                <img
-                                                    src={imageUrl}
-                                                    alt={product.name}
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }} // Adjusted size
-                                                    className="rounded-md"
-                                                    onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
-                                                    onError={(e) => {
-                                                        e.target.onerror = null;
-                                                        e.target.src = 'http://yanevshop.test/storage/images/default.jpg';
-                                                        console.error(`Image failed to load: ${imageUrl}`);
-                                                    }}
-                                                />
-                                            </SwiperSlide>
-                                        );
-                                    })}
-                                </Swiper>
-                                
-                                ) : (
+                            <>
+                                <div className="flex-none">
+                                    {/* Thumbnail list */}
+                                    <div className="flex flex-col mt-8 space-y-4">
+                                        {product.images.map((image, index) => (
+                                            <img
+                                                key={index}
+                                                src={`http://yanevshop.test/storage/images/${image}`}
+                                                alt={`Thumbnail ${index}`}
+                                                className="cursor-pointer w-full h-20 object-cover rounded-md border border-gray-300"
+                                                onClick={() => handleThumbnailClick(image)}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="flex-2">
+                                    {/* Main image */}
                                     <img
-                                        src="http://yanevshop.test/storage/images/default.jpg"
-                                        alt="Default"
-                                        style={{ width: '400px', height: '400px', objectFit: 'cover' }}
+                                        src={mainImage || "http://yanevshop.test/storage/images/default.jpg"}
+                                        alt="Main"
+                                        style={{ width: '450px', height: 'auto', objectFit: 'cover' }}
                                         className="rounded-md mb-4"
                                     />
-                                )}
-                                <h1 className="text-2xl font-bold text-gray-800 mb-4">{product.name}</h1>
-                                <h1 className="text-1xl font-bold text-gray-800">Description:</h1>
-                                <p className="text-gray-800 text-lg mb-4 py-4" style={{ maxWidth: '740px', margin: '0 auto' }}>
-                                    {product.description}
-                                </p>
-                                <p className="text-gray-900 text-lg font-bold mb-4">Price: ${product.price}</p>
+                                    <h1 className="text-2xl font-medium text-gray-800 mb-4">{product.name}</h1>
+                                    <h1 className="text-1xl font-bold text-gray-800">Description</h1>
+                                    <p className="text-gray-800 text-lg mb-4 py-4" style={{ maxWidth: '740px', margin: '0 auto' }}>
+                                        {product.description}
+                                    </p>
+                                    <p className="text-gray-900 text-lg font-medium mb-4">Price: {product.price}$</p>
 
-                                <div className="flex items-center space-x-2 mb-4">
-                                    <button
-                                        onClick={() => handleAddToCart(product)}
-                                        className="bg-green-600 hover:bg-green-500 text-white font-medium px-5 py-2 rounded-2xl"
-                                        title="Buy"
-                                    >
-                                        <FontAwesomeIcon icon={faCartPlus} size="xl" />
-                                    </button>
-                                    <button
-                                        onClick={handleToggleReviewForm}
-                                        className="btn-primary px-4 py-2"
-                                    >
-                                        ADD REVIEW
-                                    </button>
-                                    <button onClick={handleToggleReviews} className="btn-primary px-4 py-2">
-                                        REVIEWS
-                                    </button>
+                                    <div className="flex-2">
+                                        <button
+                                            onClick={() => handleAddToCart(product)}
+                                            className="bg-green-600 hover:bg-green-500 text-white font-medium px-5 py-2 rounded-2xl"
+                                            title="Buy"
+                                        >
+                                            <FontAwesomeIcon icon={faCartPlus} size="xl" />
+                                        </button>
+                                        <button
+                                            onClick={handleToggleReviewForm}
+                                            className="btn-primary ml-2 mr-2 px-4 py-2"
+                                        >
+                                            ADD REVIEW
+                                        </button>
+                                        <button onClick={handleToggleReviews} className="btn-primary px-4 py-2">
+                                            REVIEWS
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                         )}
                         <div className="mt-8">
                             {showReviewForm && (

@@ -103,18 +103,38 @@
     padding-bottom: 3.5rem;    /* Footer height */
   }
 
-  .swiper-button-next, .swiper-button-prev {
+  .swiper-button-next {
     width: 30px; /* Adjust width */
     height: 30px; /* Adjust height */
     background-size: 20px; /* Adjust icon size */
-    /* background-color: rgba(0, 0, 0, 0.5); Optional: background color */
+    margin-right: -18px;
+    border-radius: 50%; /* Optional: make buttons circular */
+    z-index: 10; /* Ensure buttons are on top */
+}
+
+.swiper-button-prev {
+    width: 30px; /* Adjust width */
+    height: 30px; /* Adjust height */
+    background-size: 20px; /* Adjust icon size */
+    margin-left: -18px;
     border-radius: 50%; /* Optional: make buttons circular */
     z-index: 10; /* Ensure buttons are on top */
 }
 
 .swiper-button-next::after, .swiper-button-prev::after {
-    font-size: 20px; /* Adjust font size for arrow icons */
+    font-size: 15px; /* Adjust font size for arrow icons */
     color: #000000; /* Arrow color */
-  
+}
 
+.thumbnail-container {
+    width: 80%;
+}
+
+.thumbnail {
+    cursor: pointer;
+    width: 80%;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
 }

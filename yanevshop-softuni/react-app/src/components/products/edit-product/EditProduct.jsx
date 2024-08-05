@@ -201,7 +201,7 @@ const EditProduct = () => {
                                                     src={previewImages[index]}
                                                     alt="Preview"
                                                     className="max-w-full h-auto rounded-2xl"
-                                                    style={{ width: '300px', height: 'auto' }}
+                                                    style={{ width: '200px', height: 'auto' }}
                                                 />
                                             </div>
                                         )}

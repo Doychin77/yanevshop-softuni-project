@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Footer from '../footer/Footer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../spinner/Spinner';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useCart } from '../../contexts/CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import { Navigation, Autoplay } from 'swiper/modules';
+
 
 export default function Home() {
     const [products, setProducts] = useState([]);
@@ -16,6 +19,8 @@ export default function Home() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const { addToCart } = useCart();
 
     useEffect(() => {
         fetchProducts();
@@ -23,7 +28,6 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        // Filter products based on searchTerm
         const filtered = products.filter(product =>
             product.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -43,6 +47,8 @@ export default function Home() {
             setProducts(productsWithFirstImage);
         } catch (error) {
             console.error('Error fetching products:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -58,6 +64,19 @@ export default function Home() {
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
     };
+
+    const handleAddToCart = (product, event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        addToCart(product);
+        console.log(product);
+    };
+
+    if (loading) {
+        return (
+            <Spinner />
+        );
+    }
 
     return (
         <div className="page-container">
@@ -82,9 +101,9 @@ export default function Home() {
                     </div>
 
                     <section className="categories-section py-8 mb-10">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
                             {categories.map((category) => (
-                                <div key={category.id} className="bg-white dark:bg-gray-700 rounded-3xl shadow-md p-4 border-2 border-orange-500 flex flex-col items-center">
+                                <div key={category.id} className="form-container p-4 flex flex-col items-center">
                                     <Link
                                         to={`/categories/${category.id}/products`}
                                         className="flex flex-col items-center text-center hover:text-blue-400 transition-colors duration-300"
@@ -103,7 +122,7 @@ export default function Home() {
                         </div>
                     </section>
 
-                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5 ">
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((product) => {
                                 let images = [];
@@ -114,7 +133,12 @@ export default function Home() {
                                 }
 
                                 return (
-                                    <div key={product.id} className="bg-white rounded-3xl shadow-md text-gray-800 flex flex-col justify-center items-center p-4">
+                                    <Link
+                                        key={product.id}
+                                        to={`/products/${product.id}`}
+                                        className="bg-white rounded-3xl flex flex-col justify-center items-center p-4"
+                                        style={{ textDecoration: 'none' }}
+                                    >
                                         <Swiper
                                             spaceBetween={10}
                                             slidesPerView={1}
@@ -156,30 +180,18 @@ export default function Home() {
                                                 </SwiperSlide>
                                             )}
                                         </Swiper>
-                                        <h2 className="text-xl font-semibold mb-2 text-center">{product.name}</h2>
-                                        <p className="text-gray-800 text-lg mb-4" style={{
-                                            overflowWrap: 'break-word',
-                                            wordWrap: 'break-word',
-                                            hyphens: 'auto',
-                                            display: '-webkit-box',
-                                            WebkitBoxOrient: 'vertical',
-                                            WebkitLineClamp: 3,
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}>
-                                            {product.description.length > 30 ? product.description.substring(0, 30) + '...' : product.description}
-                                        </p>
-                                        <p className="text-gray-800 text-center mb-4">{product.price}$</p>
-                                        <div className="flex justify-center space-x-2">
-                                            <Link
-                                                to={`/products/${product.id}`}
-                                                className="bg-[#242529] hover:bg-orange-500 text-white font-semibold px-4 py-2 rounded-2xl"
-                                                title="View"
+                                        <h2 className="text-base font-semibold mb-2 text-center">{product.name}</h2>
+                                        <div className="flex">
+                                            <p className="text-red-600 font-semibold text-center">{product.price}$</p>
+                                            <button
+                                                onClick={(event) => handleAddToCart(product, event)}
+                                                className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-2 py-1 rounded-2xl ml-2"
+                                                title="Buy"
                                             >
-                                                <FontAwesomeIcon icon={faEye} />
-                                            </Link>
+                                                <FontAwesomeIcon icon={faCartPlus} size="sm" />
+                                            </button>
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })
                         ) : (
