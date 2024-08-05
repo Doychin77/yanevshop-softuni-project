@@ -138,3 +138,11 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
 }
+
+
+
+
+.review-text {
+    white-space: pre-wrap; /* Ensures line breaks are respected */
+    max-width: 600px; /* Adjust based on your design */
+}

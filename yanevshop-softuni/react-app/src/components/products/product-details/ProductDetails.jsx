@@ -125,11 +125,25 @@ export default function ProductDetails() {
         );
     };
 
-    const truncateReviewText = (text, limit) => {
+    const truncateReviewText = (text, maxCharsPerLine) => {
         if (!text) return '';
-        const words = text.split(' ');
-        return words.length > limit ? words.slice(0, limit).join(' ') + '...' : text;
+    
+        let result = '';
+        let currentLineLength = 0;
+    
+        for (let i = 0; i < text.length; i++) {
+            result += text[i];
+            currentLineLength++;
+    
+            if (currentLineLength >= maxCharsPerLine && text[i] !== ' ') {
+                result += '\n';
+                currentLineLength = 0;
+            }
+        }
+    
+        return result;
     };
+    
 
     const handleToggleReviews = () => {
         setReviewsVisible(!reviewsVisible);
@@ -148,34 +162,39 @@ export default function ProductDetails() {
         const [isEditing, setIsEditing] = useState(false);
         const [editText, setEditText] = useState(review.text || '');
         const [editRating, setEditRating] = useState(review.rating);
-
-        const handleToggle = () => {
-            setShowFull(!showFull);
-        };
-
-        const reviewText = showFull ? review.text : truncateReviewText(review.text, 40);
-
+    
+        // const handleToggle = () => {
+        //     setShowFull(!showFull);
+        // };
+    
+        // Truncate review text based on 25 chars per line
+        const truncatedText = truncateReviewText(review.text, 60);
+    
         return (
             <li key={review.id} className="border-b border-gray-200 pb-4 relative">
                 <p className="text-gray-700 mb-2">{review.user?.username || 'Anonymous'}</p>
                 <div className="flex justify-center mb-2">
                     {renderStars(review.rating)}
                 </div>
-                {review.text ? (
-                    <>
-                        <p>{reviewText}</p>
-                        {review.text.length > 40 && (
-                            <button
-                                onClick={handleToggle}
-                                className="text-blue-500 hover:underline mt-2"
-                            >
-                                {showFull ? 'Show Less' : 'See More'}
-                            </button>
-                        )}
-                    </>
-                ) : (
-                    <p></p>
-                )}
+                <div className="review-text">
+                    <p>{showFull ? review.text : truncatedText}</p>
+                    {/* {!showFull && review.text.length > 120 && (
+                        <button
+                            onClick={handleToggle}
+                            className="text-blue-500 hover:underline mt-2"
+                        >
+                            See More
+                        </button>
+                    )}
+                    {showFull && (
+                        <button
+                            onClick={handleToggle}
+                            className="text-blue-500 hover:underline mt-2"
+                        >
+                            Show Less
+                        </button>
+                    )} */}
+                </div>
                 {user?.id === review.user_id && (
                     <div className="absolute top-0 right-0 mt-2 flex space-x-2">
                         <button
@@ -229,6 +248,8 @@ export default function ProductDetails() {
             </li>
         );
     };
+    
+    
 
     if (loading) {
         return <Spinner />;
@@ -242,7 +263,7 @@ export default function ProductDetails() {
         <div className="page-container">
             <div className="home-background">
                 <div className="max-w-screen mx-auto px-4">
-                    <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '800px', margin: '0 auto', display: 'flex' }}>
+                    <div className="text-center bg-white rounded-3xl shadow-md p-8" style={{ maxWidth: '700px', margin: '0 auto', display: 'flex'}}>
                         {product && (
                             <>
                                 <div className="flex-none">
@@ -264,12 +285,12 @@ export default function ProductDetails() {
                                     <img
                                         src={mainImage || "http://yanevshop.test/storage/images/default.jpg"}
                                         alt="Main"
-                                        style={{ width: '450px', height: 'auto', objectFit: 'cover' }}
+                                        style={{ width: '450px', height: '450px', objectFit: 'cover' }}
                                         className="rounded-md mb-4"
                                     />
                                     <h1 className="text-2xl font-medium text-gray-800 mb-4">{product.name}</h1>
                                     <h1 className="text-1xl font-bold text-gray-800">Description</h1>
-                                    <p className="text-gray-800 text-lg mb-4 py-4" style={{ maxWidth: '740px', margin: '0 auto' }}>
+                                    <p className="text-gray-800 text-m mb-4 py-4" style={{ maxWidth: '450px', margin: '0 auto' }}>
                                         {product.description}
                                     </p>
                                     <p className="text-gray-900 text-lg font-medium mb-4">Price: {product.price}$</p>
@@ -292,59 +313,58 @@ export default function ProductDetails() {
                                             REVIEWS
                                         </button>
                                     </div>
+                                    {showReviewForm && (
+                                        <form onSubmit={handleReviewSubmit} className="flex flex-col mb-6 mt-4">
+                                            <textarea
+                                                value={reviewText}
+                                                onChange={(e) => setReviewText(e.target.value)}
+                                                rows="4"
+                                                className="border-2 rounded-2xl p-2 mb-4"
+                                                placeholder="Write your review here..."
+                                            />
+                                            <select
+                                                value={rating}
+                                                onChange={(e) => setRating(Number(e.target.value))}
+                                                className="border-2 rounded-2xl p-2 mb-4"
+                                            >
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <option key={star} value={star}>{star} Star{star > 1 ? 's' : ''}</option>
+                                                ))}
+                                            </select>
+                                            <div>
+                                                <button
+                                                    type="submit"
+                                                    className="btn-primary px-4 py-2"
+                                                >
+                                                    Submit Review
+                                                </button>
+                                                <button
+                                                    onClick={handleToggleReviewForm}
+                                                    className="bg-red-600 rounded-2xl ml-2 text-white font-medium hover:bg-red-500 px-4 py-2"
+                                                >
+                                                    Cancel Review
+                                                </button>
+                                            </div>
+                                        </form>
+                                    )}
+                                    {reviewsVisible && (
+                                        <div className="mt-4 overflow-auto">
+                                            {reviews.length === 0 ? (
+                                                <p className="text-gray-500">No reviews yet.</p>
+                                            ) : (
+                                                <ul className="space-y-4 items-center">
+                                                    {reviews.map((review) => (
+                                                        <ReviewItem review={review} key={review.id} />
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             </>
                         )}
-                        <div className="mt-8">
-                            {showReviewForm && (
-                                <form onSubmit={handleReviewSubmit} className="flex flex-col mb-6">
-                                    <textarea
-                                        value={reviewText}
-                                        onChange={(e) => setReviewText(e.target.value)}
-                                        rows="4"
-                                        className="border-2 rounded-2xl p-2 mb-4"
-                                        placeholder="Write your review here..."
-                                    />
-                                    <select
-                                        value={rating}
-                                        onChange={(e) => setRating(Number(e.target.value))}
-                                        className="border-2 rounded-2xl p-2 mb-4"
-                                    >
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                            <option key={star} value={star}>{star} Star{star > 1 ? 's' : ''}</option>
-                                        ))}
-                                    </select>
-                                    <div>
-                                        <button
-                                            type="submit"
-                                            className="btn-primary px-4 py-2"
-                                        >
-                                            Submit Review
-                                        </button>
-                                        <button
-                                            onClick={handleToggleReviewForm}
-                                            className="bg-red-600 rounded-2xl ml-2 text-white font-medium hover:bg-red-500 px-4 py-2"
-                                        >
-                                            Cancel Review
-                                        </button>
-                                    </div>
-                                </form>
-                            )}
-                            {reviewsVisible && (
-                                <div>
-                                    {reviews.length === 0 ? (
-                                        <p className="text-gray-500">No reviews yet.</p>
-                                    ) : (
-                                        <ul className="space-y-4">
-                                            {reviews.map((review) => (
-                                                <ReviewItem review={review} key={review.id} />
-                                            ))}
-                                        </ul>
-                                    )}
-                                </div>
-                            )}
-                        </div>
                     </div>
+                    <div className="mt-8"></div>
                 </div>
                 <Footer />
             </div>

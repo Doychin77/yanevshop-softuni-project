@@ -68,7 +68,8 @@ const Products = () => {
                             }
 
                             return (
-                                <div key={product.id} className="bg-white rounded-3xl shadow-md text-gray-800 flex flex-col justify-center items-center p-4">
+                                <div key={product.id} className="bg-white rounded-3xl shadow-md text-gray-800 flex flex-col justify-center items-center p-4"
+                                                      style={{ maxHeight: '500px', overflowY: 'auto' }}>
                                     <Swiper
                                         spaceBetween={10} // Adjust spacing between slides
                                         slidesPerView={1} // Number of slides visible at a time
@@ -86,7 +87,7 @@ const Products = () => {
                                                         <img
                                                             src={imageUrl}
                                                             alt={product.name}
-                                                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }} // Full width
+                                                            style={{ width: '100%', maxHeight: '290px', objectFit: 'cover' }} // Full width
                                                             className="rounded-md"
                                                             onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
                                                             onError={(e) => {
@@ -121,7 +122,7 @@ const Products = () => {
                                         overflow: 'hidden',
                                         textOverflow: 'ellipsis',
                                     }}>
-                                        {product.description.length > 30 ? product.description.substring(0, 30) + '...' : product.description}
+                                        {product.description.length > 27 ? product.description.substring(0, 27) + '...' : product.description}
                                     </p>
                                     <p className="text-gray-800 text-center mb-4">{product.price}$</p>
                                     <div className="flex justify-center space-x-2">
