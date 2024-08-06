@@ -1,95 +1,90 @@
-/* styles.css or main.css */
+
 .btn-primary {
-    background-color: #f97316; /* Orange-500 */
+    background-color: #f97316;
     color: white;
     text-align: center;
-    font-weight: 500; /* Medium font weight */
-    border-radius: 1rem; /* Rounded-2xl */
-    transition: background-color 0.3s ease; /* Transition for hover effect */
+    font-weight: 500;
+    border-radius: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #000000; /* Black */
+    background-color: #000000;
 }
 
 .home-search {
-    color: #1f2937; /* text-gray-800 */
+    color: #1f2937;
     border-radius: 1.5rem;
     padding: 1rem 9rem;
-    border: 2px solid transparent; /* border-2 border-transparent */
-    transition: background-color 0.2s, border-color 0.2s; 
+    border: 2px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .home-search:focus {
-    outline: none; /* focus:outline-none */
-    border-color: #f97316; /* focus:border-orange-500 */
+    outline: none;
+    border-color: #f97316;
 }
 
-
 .input-field-primary {
-    margin-top: 0.5rem; /* mt-2 equivalent */
-    width: 100%; /* w-full equivalent */
-    background-color: #374151; /* bg-gray-700 */
-    color: #f9fafb; /* text-gray-100 */
-    border-radius: 1rem; /* rounded-2xl */
-    padding: 0.5rem; /* p-2 */
-    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1); /* shadow-sm */
-    border: 2px solid transparent; /* border-2 border-transparent */
-    transition: background-color 0.2s, border-color 0.2s; /* Transition for hover and focus */
+    margin-top: 0.5rem;
+    width: 100%;
+    background-color: #374151;
+    color: #f9fafb;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .input-field-primary:hover {
-    background-color: #4B5563; /* hover:bg-gray-600 */
+    background-color: #4B5563;
 }
 
 .input-field-primary:focus {
-    outline: none; /* focus:outline-none */
-    border-color: #f97316; /* focus:border-orange-500 */
+    outline: none;
+    border-color: #f97316;
 }
 
 .label-profile {
-    display: block; /* block */
-    text-align: center; /* text-center */
-    font-size: 0.875rem; /* text-sm */
-    font-weight: 500; /* font-medium */
-    color: #f9fafb; /* text-gray-100 */
-    margin-bottom: 0.05rem; /* Adjust spacing below label */
+    display: block;
+    text-align: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #f9fafb;
+    margin-bottom: 0.05rem;
 }
 
 .form-container {
     background-color: rgba(36, 38, 41, 0.90);
-    border: 2px solid #F97316; /* Orange border */
-    border-radius: 1.5rem; /* Rounded corners (3xl) */
+    border: 2px solid #F97316;
+    border-radius: 1.5rem;
 }
 
 .home-background {
-    background-image: url('../../assets/wl.jpg'); /* Default background image */
-    background-size: cover; /* Cover the container */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent repeating the image */
+    background-image: url('../../assets/wl.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: repeat;
     padding-top: 50px;
-    flex-grow: 1; /* Allows the element to grow and fill available space */
-    position: relative; 
+    flex-grow: 1;
+    position: relative;
 }
 
-/* General styles for nav-link */
 .nav-link {
     display: block;
-    border-radius: 0.5rem; /* rounded */
-    transition: color 0.4s; /* transition-colors duration-400 */
-    color: #ffff; /* Default color (black) */
+    border-radius: 0.5rem;
+    transition: color 0.4s;
+    color: #ffff;
 }
 
-/* Active state styles */
 .nav-link.is-active {
-    color: #f97316 !important; /* text-orange-500 !important */
+    color: #f97316 !important;
 }
 
-/* Hover state styles */
 .nav-link:hover {
-    color: #f97316; /* hover:text-orange-500 */
+    color: #f97316;
 }
-
 
 .page-container {
     position: relative;
@@ -97,33 +92,33 @@
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden;
-  }
-  
-.content-wrap {
-    padding-bottom: 3.5rem;    /* Footer height */
-  }
+}
 
-  .swiper-button-next {
-    width: 30px; /* Adjust width */
-    height: 30px; /* Adjust height */
-    background-size: 20px; /* Adjust icon size */
+.content-wrap {
+    padding-bottom: 3.5rem;
+}
+
+.swiper-button-next {
+    width: 30px;
+    height: 30px;
+    background-size: 20px;
     margin-right: -18px;
-    border-radius: 50%; /* Optional: make buttons circular */
-    z-index: 10; /* Ensure buttons are on top */
+    border-radius: 50%;
+    z-index: 10;
 }
 
 .swiper-button-prev {
-    width: 30px; /* Adjust width */
-    height: 30px; /* Adjust height */
-    background-size: 20px; /* Adjust icon size */
+    width: 30px;
+    height: 30px;
+    background-size: 20px;
     margin-left: -18px;
-    border-radius: 50%; /* Optional: make buttons circular */
-    z-index: 10; /* Ensure buttons are on top */
+    border-radius: 50%;
+    z-index: 10;
 }
 
 .swiper-button-next::after, .swiper-button-prev::after {
-    font-size: 15px; /* Adjust font size for arrow icons */
-    color: #000000; /* Arrow color */
+    font-size: 15px;
+    color: #000000;
 }
 
 .thumbnail-container {
@@ -139,10 +134,7 @@
     border: 1px solid #ccc;
 }
 
-
-
-
 .review-text {
-    white-space: pre-wrap; /* Ensures line breaks are respected */
-    max-width: 600px; /* Adjust based on your design */
+    white-space: pre-wrap;
+    max-width: 600px;
 }

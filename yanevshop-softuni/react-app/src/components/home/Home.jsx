@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -5,6 +6,8 @@ import Footer from '../footer/Footer';
 import Spinner from '../spinner/Spinner';
 import { useCart } from '../../contexts/CartContext';
 import ProductGrid from '../products/ProductGrid';
+import SearchInput from '../SearchInput';
+
 
 export default function Home() {
     const [products, setProducts] = useState([]);
@@ -80,17 +83,12 @@ export default function Home() {
                         <p className="text-lg text-gray-300 text-center">Discover our featured products and latest offers!</p>
                     </header>
 
-                    <div className="text-center mb-6">
-                        <input
-                            type="text"
-                            placeholder={isSearchFocused ? '' : 'Search products...'}
-                            value={searchTerm}
-                            onChange={handleSearch}
-                            onFocus={() => setIsSearchFocused(true)}
-                            onBlur={() => setIsSearchFocused(false)}
-                            className="home-search"
-                        />
-                    </div>
+                    <SearchInput
+                        searchTerm={searchTerm}
+                        handleSearch={handleSearch}
+                        isSearchFocused={isSearchFocused}
+                        setIsSearchFocused={setIsSearchFocused}
+                    />
 
                     <section className="categories-section py-8 mb-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">

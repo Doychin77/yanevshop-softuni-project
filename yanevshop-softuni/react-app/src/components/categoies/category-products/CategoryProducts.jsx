@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
+
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../footer/Footer';
 import { useCart } from '../../../contexts/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus} from '@fortawesome/free-solid-svg-icons';
 import Spinner from '../../spinner/Spinner'; // Ensure this path is correct
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Autoplay } from 'swiper/modules';
+import SearchInput from '../../SearchInput';
 
 const CategoryProducts = () => {
     const { id } = useParams();
     const [products, setProducts] = useState([]);
     const [categoryName, setCategoryName] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [loading, setLoading] = useState(true);
 
     const { addToCart } = useCart();
@@ -26,6 +31,7 @@ const CategoryProducts = () => {
                 const response = await axios.get(`http://yanevshop.test/api/categories/${id}/products`);
                 setProducts(response.data.products);
                 setCategoryName(response.data.name);
+                setFilteredProducts(response.data.products); 
             } catch (error) {
                 console.error('Error fetching category products:', error);
             } finally {
@@ -36,8 +42,19 @@ const CategoryProducts = () => {
         fetchCategoryProducts();
     }, [id]);
 
+    useEffect(() => {
+        const filtered = products.filter(product =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredProducts(filtered);
+    }, [searchTerm, products]);
+
     const handleAddToCart = (product) => {
         addToCart(product);
+    };
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
     };
 
     if (loading) {
@@ -53,9 +70,17 @@ const CategoryProducts = () => {
                             {categoryName}
                         </h1>
                     </header>
-                    <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 ">
-                        {products.length > 0 ? (
-                            products.map((product) => {
+
+                    <SearchInput
+                        searchTerm={searchTerm}
+                        handleSearch={handleSearch}
+                        isSearchFocused={isSearchFocused}
+                        setIsSearchFocused={setIsSearchFocused}
+                    />
+
+                    <main className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((product) => {
                                 let images = [];
                                 try {
                                     images = JSON.parse(product.images || '[]');

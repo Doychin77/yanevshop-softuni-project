@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../../../contexts/CartContext';
@@ -167,7 +167,6 @@ export default function ProductDetails() {
         //     setShowFull(!showFull);
         // };
     
-        // Truncate review text based on 25 chars per line
         const truncatedText = truncateReviewText(review.text, 60);
     
         return (

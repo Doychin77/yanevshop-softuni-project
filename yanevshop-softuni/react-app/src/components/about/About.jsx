@@ -1,4 +1,3 @@
-import React from 'react';
 import topImage from '../../assets/topImage.jpg';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,7 +42,7 @@ const About = () => {
                         </div>
                     </div>
 
-                    {/* Sections separated from the main content */}
+                    
                     <div className="mt-12">
                         <div className="flex flex-col md:flex-row gap-8">
                             <div className="flex-1 rounded-2xl bg-orange-500 p-6 shadow-md">
