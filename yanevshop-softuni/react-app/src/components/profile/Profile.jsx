@@ -22,8 +22,6 @@ const Profile = () => {
                     throw new Error('No token found');
                 }
 
-                // Verify the token
-                // Optionally, you can add more robust token validation logic here
                 const response = await axios.get('http://yanevshop.test/api/user', {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -35,8 +33,6 @@ const Profile = () => {
                 console.error('Error fetching user data:', err);
                 if (err.response && err.response.status === 401) {
                     setError('Unauthorized: Invalid or expired token.');
-                    // Optionally, you can navigate to login page here
-                    // navigate('/login');
                 } else {
                     setError(err.message || 'Unknown error');
                 }
@@ -116,7 +112,7 @@ const Profile = () => {
                            <FontAwesomeIcon icon={faUserPen} size='xl'/>
                         </button>
                         <button
-                            onClick={() => navigate('/order-history')} // Navigate to the OrderHistory component
+                            onClick={() => navigate('/order-history')} 
                             className="btn-primary text-m px-4 py-2"
                         >
                             <FontAwesomeIcon icon={faBagShopping} /> ORDER HISTORY

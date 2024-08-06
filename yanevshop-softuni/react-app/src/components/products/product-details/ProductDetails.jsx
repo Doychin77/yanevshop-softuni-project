@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useCart } from '../../../contexts/CartContext';
-import { useUser } from '../../../contexts/useUser'; // Import custom hook
+import { useUser } from '../../../contexts/useUser'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faStar, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import Footer from '../../footer/Footer';
 import Spinner from '../../spinner/Spinner';
+import ReviewItem from '../ReviewItem';
+
 
 /* eslint-disable react/prop-types */
 export default function ProductDetails() {
@@ -19,9 +21,9 @@ export default function ProductDetails() {
     const [rating, setRating] = useState(1);
     const [showReviewForm, setShowReviewForm] = useState(false);
     const [reviewsVisible, setReviewsVisible] = useState(false);
-    const [mainImage, setMainImage] = useState(''); // State for the main image
+    const [mainImage, setMainImage] = useState('');
     const { addToCart } = useCart();
-    const { user } = useUser(); // Get user context
+    const { user } = useUser();
 
     useEffect(() => {
         fetchProductDetails();
@@ -38,7 +40,7 @@ export default function ProductDetails() {
 
             setProduct(product);
             if (images.length > 0) {
-                setMainImage(`http://yanevshop.test/storage/images/${images[0]}`); // Set the first image as main
+                setMainImage(`http://yanevshop.test/storage/images/${images[0]}`);
             }
         } catch (error) {
             setError('Error fetching product details');
@@ -84,14 +86,13 @@ export default function ProductDetails() {
     const handleEditReview = async (reviewId, updatedText, updatedRating) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.post(`http://yanevshop.test/api/reviews/${reviewId}`, {
+            await axios.post(`http://yanevshop.test/api/reviews/${reviewId}`, {
                 text: updatedText,
                 rating: Number(updatedRating)
             }, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            console.log('Edit review response:', response.data);
-            fetchReviews(); // Refresh the reviews list
+            fetchReviews();
         } catch (error) {
             console.error('Edit review error:', error);
             setError('Error editing review');
@@ -111,40 +112,6 @@ export default function ProductDetails() {
         }
     };
 
-    const renderStars = (rating) => {
-        return (
-            <div className="flex justify-center">
-                {[...Array(5)].map((_, index) => (
-                    <FontAwesomeIcon
-                        key={index}
-                        icon={faStar}
-                        className={`text-yellow-200 ${index < rating ? 'text-yellow-500' : 'text-gray-100'}`}
-                    />
-                ))}
-            </div>
-        );
-    };
-
-    const truncateReviewText = (text, maxCharsPerLine) => {
-        if (!text) return '';
-    
-        let result = '';
-        let currentLineLength = 0;
-    
-        for (let i = 0; i < text.length; i++) {
-            result += text[i];
-            currentLineLength++;
-    
-            if (currentLineLength >= maxCharsPerLine && text[i] !== ' ') {
-                result += '\n';
-                currentLineLength = 0;
-            }
-        }
-    
-        return result;
-    };
-    
-
     const handleToggleReviews = () => {
         setReviewsVisible(!reviewsVisible);
     };
@@ -156,99 +123,6 @@ export default function ProductDetails() {
     const handleThumbnailClick = (image) => {
         setMainImage(`http://yanevshop.test/storage/images/${image}`);
     };
-
-    const ReviewItem = ({ review }) => {
-        const [showFull, setShowFull] = useState(false);
-        const [isEditing, setIsEditing] = useState(false);
-        const [editText, setEditText] = useState(review.text || '');
-        const [editRating, setEditRating] = useState(review.rating);
-    
-        // const handleToggle = () => {
-        //     setShowFull(!showFull);
-        // };
-    
-        const truncatedText = truncateReviewText(review.text, 60);
-    
-        return (
-            <li key={review.id} className="border-b border-gray-200 pb-4 relative">
-                <p className="text-gray-700 mb-2">{review.user?.username || 'Anonymous'}</p>
-                <div className="flex justify-center mb-2">
-                    {renderStars(review.rating)}
-                </div>
-                <div className="review-text">
-                    <p>{showFull ? review.text : truncatedText}</p>
-                    {/* {!showFull && review.text.length > 120 && (
-                        <button
-                            onClick={handleToggle}
-                            className="text-blue-500 hover:underline mt-2"
-                        >
-                            See More
-                        </button>
-                    )}
-                    {showFull && (
-                        <button
-                            onClick={handleToggle}
-                            className="text-blue-500 hover:underline mt-2"
-                        >
-                            Show Less
-                        </button>
-                    )} */}
-                </div>
-                {user?.id === review.user_id && (
-                    <div className="absolute top-0 right-0 mt-2 flex space-x-2">
-                        <button
-                            onClick={() => setIsEditing(true)}
-                            className="text-blue-500 hover:text-blue-400"
-                        >
-                            <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                        <button
-                            onClick={() => handleDeleteReview(review.id)}
-                            className="text-red-500 hover:text-red-400"
-                        >
-                            <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                    </div>
-                )}
-                {isEditing && (
-                    <form
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleEditReview(review.id, editText, editRating);
-                            setIsEditing(false);
-                        }}
-                        className="flex flex-col mb-4"
-                    >
-                        <textarea
-                            value={editText}
-                            onChange={(e) => setEditText(e.target.value)}
-                            rows="4"
-                            className="border-2 rounded-2xl p-2 mb-4"
-                        />
-                        <select
-                            value={editRating}
-                            onChange={(e) => setEditRating(Number(e.target.value))}
-                            className="border-2 rounded-2xl p-2 mb-4"
-                        >
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <option key={star} value={star}>{star} Star{star > 1 ? 's' : ''}</option>
-                            ))}
-                        </select>
-                        <div>
-                            <button type="submit" className="btn-primary px-4 mr-2 py-2 mb-2">
-                                Save
-                            </button>
-                            <button onClick={() => setIsEditing(false)} className="bg-red-600 rounded-2xl text-white font-medium hover:bg-red-500 px-4 py-2">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                )}
-            </li>
-        );
-    };
-    
-    
 
     if (loading) {
         return <Spinner />;
@@ -266,7 +140,6 @@ export default function ProductDetails() {
                         {product && (
                             <>
                                 <div className="flex-none">
-                                    {/* Thumbnail list */}
                                     <div className="flex flex-col mt-8 space-y-4">
                                         {product.images.map((image, index) => (
                                             <img
@@ -280,7 +153,6 @@ export default function ProductDetails() {
                                     </div>
                                 </div>
                                 <div className="flex-2">
-                                    {/* Main image */}
                                     <img
                                         src={mainImage || "http://yanevshop.test/storage/images/default.jpg"}
                                         alt="Main"
@@ -353,7 +225,12 @@ export default function ProductDetails() {
                                             ) : (
                                                 <ul className="space-y-4 items-center">
                                                     {reviews.map((review) => (
-                                                        <ReviewItem review={review} key={review.id} />
+                                                        <ReviewItem
+                                                            review={review} 
+                                                            key={review.id}
+                                                            onEdit={handleEditReview}
+                                                            onDelete={handleDeleteReview}
+                                                        />
                                                     ))}
                                                 </ul>
                                             )}

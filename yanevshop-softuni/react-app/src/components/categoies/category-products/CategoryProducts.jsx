@@ -114,11 +114,9 @@ const CategoryProducts = () => {
                                                                 alt={product.name}
                                                                 style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
                                                                 className="rounded-md"
-                                                                onLoad={() => console.log(`Image loaded: ${imageUrl}`)}
                                                                 onError={(e) => {
                                                                     e.target.onerror = null;
-                                                                    e.target.src = 'http://yanevshop.test/storage/images/default.jpg';
-                                                                    console.error(`Image failed to load: ${imageUrl}`);
+                                                                    e.target.src = 'http://yanevshop.test/storage/images/default.jpg';   
                                                                 }}
                                                             />
                                                         </SwiperSlide>

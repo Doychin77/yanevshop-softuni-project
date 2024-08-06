@@ -5,7 +5,7 @@ import Footer from '../../footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../css/toaststyles.css';
 
-const MAX_IMAGE_INPUTS = 6; // Maximum number of image inputs
+const MAX_IMAGE_INPUTS = 6; 
 
 const AddProduct = () => {
     const [productData, setProductData] = useState({
@@ -14,11 +14,11 @@ const AddProduct = () => {
         price: ''
     });
     const [categoryId, setCategoryId] = useState('');
-    const [imageInputs, setImageInputs] = useState(['']); // Array to manage multiple image inputs
-    const [productImages, setProductImages] = useState([]); // To store selected images
+    const [imageInputs, setImageInputs] = useState(['']); 
+    const [productImages, setProductImages] = useState([]); 
     const [categories, setCategories] = useState([]);
     const [errors, setErrors] = useState({});
-    const [imageInputError, setImageInputError] = useState(''); // State for image input error
+    const [imageInputError, setImageInputError] = useState(''); 
     const navigate = useNavigate();
 
     useEffect(() => {

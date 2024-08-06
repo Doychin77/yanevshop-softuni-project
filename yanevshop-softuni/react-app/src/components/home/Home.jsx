@@ -65,7 +65,6 @@ export default function Home() {
         event.preventDefault();
         event.stopPropagation();
         addToCart(product);
-        console.log(product);
     };
 
     if (loading) {

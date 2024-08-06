@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import '../css/toaststyles.css';
 import Footer from '../footer/Footer';
 
 export default function Register() {
+    const navigate = useNavigate();
+
     const [formState, setFormState] = useState({
         username: '',
         email: '',
@@ -13,8 +13,7 @@ export default function Register() {
         confirmPassword: '',
         termsAccepted: false,
     });
-    const navigate = useNavigate();
-
+    
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
