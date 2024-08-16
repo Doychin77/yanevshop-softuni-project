@@ -1,32 +1,46 @@
-import { useContext, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import UserContext from '../../contexts/UserContext';
 import { NavLink } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import CartDropdown from './CartDropdown';
+import CategoriesDropdown from './CategoriesDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faHeart, faRightToBracket, faHouse, faAddressBook, faLayerGroup, faTag, faCircleInfo, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faHeart, faRightToBracket, faHouse, faAddressBook, faTag, faCircleInfo, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation() {
-    const { user, logout } = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const { cart } = useCart();
-    const [isCartOpen, setIsCartOpen] = useState(false);
-    const timeoutRef = useRef(null); // Ref to store timeout ID
+    const [categories, setCategories] = useState([]);
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const [dropdownTimer, setDropdownTimer] = useState(null);
 
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://yanevshop.test/api/categories');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
     const handleMouseEnter = () => {
-        // Clear any existing timeout and show the dropdown immediately
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
+        if (dropdownTimer) {
+            clearTimeout(dropdownTimer);
         }
-        setIsCartOpen(true);
+        setIsDropdownVisible(true);
     };
 
     const handleMouseLeave = () => {
-        // Set a timeout to hide the dropdown after 0.5 second
-        timeoutRef.current = setTimeout(() => {
-            setIsCartOpen(false);
-        }, 500);
+        setDropdownTimer(setTimeout(() => {
+            setIsDropdownVisible(false);
+        }, 400)); 
     };
 
     return (
@@ -45,7 +59,7 @@ export default function Navigation() {
                                     `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
-                                <FontAwesomeIcon icon={faHouse} /> Home
+                                <FontAwesomeIcon icon={faHouse} className="text-xl" /> Home
                             </NavLink>
                         </li>
                         <li>
@@ -55,7 +69,7 @@ export default function Navigation() {
                                     `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
-                                <FontAwesomeIcon icon={faAddressBook} /> Contacts
+                                <FontAwesomeIcon icon={faAddressBook} className="text-xl" /> Contacts
                             </NavLink>
                         </li>
                         <li>
@@ -65,7 +79,7 @@ export default function Navigation() {
                                     `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
-                                <FontAwesomeIcon icon={faCircleInfo} /> About
+                                <FontAwesomeIcon icon={faCircleInfo} className="text-xl" /> About
                             </NavLink>
                         </li>
                         {user ? (
@@ -77,18 +91,11 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        <FontAwesomeIcon icon={faTag} /> Products
+                                        <FontAwesomeIcon icon={faTag} className="text-xl" /> Products
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink
-                                        to="categories"
-                                        className={({ isActive }) =>
-                                            `nav-link ${isActive ? 'is-active' : ''}`
-                                        }
-                                    >
-                                        <FontAwesomeIcon icon={faLayerGroup} /> Categories
-                                    </NavLink>
+                                     <CategoriesDropdown categories={categories} />
                                 </li>
                                 <li>
                                     <NavLink
@@ -104,23 +111,21 @@ export default function Navigation() {
                                     style={{ position: 'relative' }}
                                     onMouseEnter={handleMouseEnter}
                                     onMouseLeave={handleMouseLeave}
+                                    className="relative"
                                 >
                                     <NavLink
-                                        to="cart"
+                                        to="/cart"
                                         className={({ isActive }) =>
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        <FontAwesomeIcon icon={faShoppingCart} />
+                                        <FontAwesomeIcon icon={faShoppingCart} size='' />
                                         {totalItems > 0 && (
                                             <span className="ml-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{totalItems}</span>
                                         )}
                                     </NavLink>
-                                    {isCartOpen && (
-                                        <CartDropdown cart={cart} totalItems={totalItems} />
-                                    )}
+                                    {isDropdownVisible && <CartDropdown />}
                                 </li>
-                                
                                 <li>
                                     <NavLink
                                         to="profile"
@@ -145,7 +150,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        <FontAwesomeIcon icon={faSquarePlus} /> Register
+                                        <FontAwesomeIcon icon={faSquarePlus} className="text-xl" /> Register
                                     </NavLink>
                                 </li>
                                 <li>
@@ -155,7 +160,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        <FontAwesomeIcon icon={faRightToBracket} /> Log In
+                                        <FontAwesomeIcon icon={faRightToBracket} className="text-xl" /> Log In
                                     </NavLink>
                                 </li>
                             </>
