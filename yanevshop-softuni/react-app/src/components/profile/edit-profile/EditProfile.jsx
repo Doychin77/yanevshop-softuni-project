@@ -157,7 +157,7 @@ const EditProfile = () => {
                 }}
             >
                 <div className="form-container p-8 w-full max-w-md bg-[#242629] border-2 border-orange-500 rounded-2xl shadow-xl">
-                    <h1 className="text-2xl text-gray-100 font-bold mb-6 text-center">Edit Profile</h1>
+                    
                     <form onSubmit={handleSubmit}>
                         {formError && (
                             <div className="mb-4 text-red-500 text-center">
@@ -179,7 +179,7 @@ const EditProfile = () => {
                         </div>
                         <div className="mb-4">
                             <label className="label-profile" htmlFor="username">
-                                Username:
+                                Username
                             </label>
                             <input
                                 type="text"
@@ -193,7 +193,7 @@ const EditProfile = () => {
                         </div>
                         <div className="mb-4">
                             <label className="label-profile" htmlFor="email">
-                                Email:
+                                Email
                             </label>
                             <input
                                 type="email"
@@ -207,7 +207,7 @@ const EditProfile = () => {
                         </div>
                         <div className="mb-4">
                             <label className="label-profile" htmlFor="old_password">
-                                Old Password:
+                                Old Password
                             </label>
                             <input
                                 type="password"
@@ -221,7 +221,7 @@ const EditProfile = () => {
                         </div>
                         <div className="mb-4">
                             <label className="label-profile" htmlFor="new_password">
-                                New Password:
+                                New Password
                             </label>
                             <input
                                 type="password"
@@ -235,7 +235,7 @@ const EditProfile = () => {
                         </div>
                         <div className="mb-4">
                             <label className="label-profile" htmlFor="confirm_password">
-                                Confirm Password:
+                                Confirm Password
                             </label>
                             <input
                                 type="password"
@@ -249,7 +249,7 @@ const EditProfile = () => {
                         </div>
                         <div className="mb-6">
                             <label className="label-profile" htmlFor="image">
-                                Profile Image:
+                                Profile Image
                             </label>
                             <input
                                 type="file"

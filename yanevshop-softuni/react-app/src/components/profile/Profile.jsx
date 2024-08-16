@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import UserContext from '../../contexts/UserContext';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import wl from '../../assets/wl.jpg';
@@ -6,9 +8,10 @@ import Spinner from '../spinner/Spinner';
 import '../css/styles.css';
 import Footer from '../footer/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBagShopping, faUserPen } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping, faUserPen, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
+    const { logout } = useContext(UserContext);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -78,8 +81,7 @@ const Profile = () => {
                 }}
             >
                 <div className="form-container p-8 w-full max-w-md">
-                    <h1 className="text-2xl text-gray-100 font-bold mb-6 text-center">Profile</h1>
-                    <div className="flex justify-center mb-4">
+                    <div className="flex justify-center mt-6 mb-4">
                         {user.image ? (
                             <img
                                 src={`http://yanevshop.test/storage/${user.image}`}
@@ -94,28 +96,34 @@ const Profile = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block text-center text-sm font-medium text-gray-100">
-                            Username:
+                            Username
                         </label>
                         <p className="mt-1 text-lg text-center text-gray-100">{user.username}</p>
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm text-center font-medium text-gray-100">
-                            Email:
+                            Email
                         </label>
                         <p className="mt-1 text-lg text-center text-gray-100">{user.email}</p>
                     </div>
                     <div className="flex justify-center mt-6 space-x-4">
                         <button
-                            onClick={() => navigate('/edit-profile')} 
-                            className="btn-primary text-m px-6 py-2"
+                            onClick={() => navigate('/edit-profile')}
+                            className="btn-primary text-m px-4 py-2"
                         >
-                           <FontAwesomeIcon icon={faUserPen} size='xl'/>
+                            <FontAwesomeIcon icon={faUserPen} size='xl' />
                         </button>
                         <button
-                            onClick={() => navigate('/order-history')} 
+                            onClick={() => navigate('/order-history')}
                             className="btn-primary text-m px-4 py-2"
                         >
                             <FontAwesomeIcon icon={faBagShopping} /> ORDER HISTORY
+                        </button>
+                        <button
+                            onClick={logout}
+                            className="btn-primary text-m px-4 py-2"
+                        >
+                            <FontAwesomeIcon icon={faRightFromBracket} size="lg" />
                         </button>
                     </div>
                 </div>

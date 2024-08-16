@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import CartDropdown from './CartDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faHeart, faRightToBracket, faHouse, faAddressBook, faLayerGroup, faTag, faCircleInfo, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation() {
     const { user, logout } = useContext(UserContext);
@@ -45,7 +45,7 @@ export default function Navigation() {
                                     `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
-                                Home
+                                <FontAwesomeIcon icon={faHouse} /> Home
                             </NavLink>
                         </li>
                         <li>
@@ -55,7 +55,7 @@ export default function Navigation() {
                                     `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
-                                Contacts
+                                <FontAwesomeIcon icon={faAddressBook} /> Contacts
                             </NavLink>
                         </li>
                         <li>
@@ -65,7 +65,7 @@ export default function Navigation() {
                                     `nav-link ${isActive ? 'is-active' : ''}`
                                 }
                             >
-                                About
+                                <FontAwesomeIcon icon={faCircleInfo} /> About
                             </NavLink>
                         </li>
                         {user ? (
@@ -77,7 +77,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        Products
+                                        <FontAwesomeIcon icon={faTag} /> Products
                                     </NavLink>
                                 </li>
                                 <li>
@@ -87,7 +87,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        Categories
+                                        <FontAwesomeIcon icon={faLayerGroup} /> Categories
                                     </NavLink>
                                 </li>
                                 <li>
@@ -120,6 +120,7 @@ export default function Navigation() {
                                         <CartDropdown cart={cart} totalItems={totalItems} />
                                     )}
                                 </li>
+                                
                                 <li>
                                     <NavLink
                                         to="profile"
@@ -144,7 +145,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        Register
+                                        <FontAwesomeIcon icon={faSquarePlus} /> Register
                                     </NavLink>
                                 </li>
                                 <li>
@@ -154,7 +155,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        Log In
+                                        <FontAwesomeIcon icon={faRightToBracket} /> Log In
                                     </NavLink>
                                 </li>
                             </>

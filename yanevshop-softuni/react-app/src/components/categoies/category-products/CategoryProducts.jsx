@@ -1,18 +1,11 @@
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../footer/Footer';
 import { useCart } from '../../../contexts/CartContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus} from '@fortawesome/free-solid-svg-icons';
 import Spinner from '../../spinner/Spinner'; // Ensure this path is correct
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Navigation, Autoplay } from 'swiper/modules';
 import SearchInput from '../../SearchInput';
+import ProductGrid from '../../products/ProductGrid';
 
 const CategoryProducts = () => {
     const { id } = useParams();
@@ -22,6 +15,7 @@ const CategoryProducts = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [favorites, setFavorites] = useState([]);
 
     const { addToCart } = useCart();
 
@@ -31,7 +25,7 @@ const CategoryProducts = () => {
                 const response = await axios.get(`http://yanevshop.test/api/categories/${id}/products`);
                 setProducts(response.data.products);
                 setCategoryName(response.data.name);
-                setFilteredProducts(response.data.products); 
+                setFilteredProducts(response.data.products);
             } catch (error) {
                 console.error('Error fetching category products:', error);
             } finally {
@@ -49,8 +43,28 @@ const CategoryProducts = () => {
         setFilteredProducts(filtered);
     }, [searchTerm, products]);
 
-    const handleAddToCart = (product) => {
+    useEffect(() => {
+        const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        setFavorites(storedFavorites);
+    }, []);
+
+    const handleAddToCart = (product, event) => {
+        event.preventDefault();
+        event.stopPropagation();
         addToCart(product);
+    };
+
+    const handleToggleFavorite = (product) => {
+        let updatedFavorites;
+
+        if (favorites.some(favProduct => favProduct.id === product.id)) {
+            updatedFavorites = favorites.filter(favProduct => favProduct.id !== product.id);
+        } else {
+            updatedFavorites = [...favorites, product];
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+        setFavorites(updatedFavorites);
     };
 
     const handleSearch = (e) => {
@@ -64,7 +78,7 @@ const CategoryProducts = () => {
     return (
         <div className="page-container">
             <div className="home-background">
-                <div className="max-w-screen-xl mx-auto px-4 py-8">
+                <div className="content-overlay relative z-10 max-w-screen mx-24 px-4 content-wrap">
                     <header className="py-6">
                         <h1 className="text-3xl font-bold text-gray-100 text-center mb-4">
                             {categoryName}
@@ -78,82 +92,12 @@ const CategoryProducts = () => {
                         setIsSearchFocused={setIsSearchFocused}
                     />
 
-                    <main className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                        {filteredProducts.length > 0 ? (
-                            filteredProducts.map((product) => {
-                                let images = [];
-                                try {
-                                    images = JSON.parse(product.images || '[]');
-                                } catch (e) {
-                                    console.error('Error parsing product images:', e);
-                                }
+                    <ProductGrid
+                        filteredProducts={filteredProducts}
+                        handleAddToCart={handleAddToCart}
+                        handleToggleFavorite={handleToggleFavorite}
+                    />
 
-                                return (
-                                    <Link
-                                        key={product.id}
-                                        to={`/products/${product.id}`}
-                                        className="bg-white rounded-3xl flex flex-col justify-center items-center p-4"
-                                        style={{ textDecoration: 'none' }}
-                                    >
-                                        <Swiper
-                                            spaceBetween={10}
-                                            slidesPerView={1}
-                                            navigation
-                                            autoplay={{ delay: 3000 }}
-                                            modules={[Navigation, Autoplay]}
-                                            className="swiper-container mb-4"
-                                            style={{ width: '100%', height: 'auto' }}
-                                        >
-                                            {images.length > 0 ? (
-                                                images.map((image, index) => {
-                                                    const imageUrl = `http://yanevshop.test/storage/images/${image}`;
-                                                    return (
-                                                        <SwiperSlide key={index}>
-                                                            <img
-                                                                src={imageUrl}
-                                                                alt={product.name}
-                                                                style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                                                                className="rounded-md"
-                                                                onError={(e) => {
-                                                                    e.target.onerror = null;
-                                                                    e.target.src = 'http://yanevshop.test/storage/images/default.jpg';   
-                                                                }}
-                                                            />
-                                                        </SwiperSlide>
-                                                    );
-                                                })
-                                            ) : (
-                                                <SwiperSlide>
-                                                    <img
-                                                        src="http://yanevshop.test/storage/images/default.jpg"
-                                                        alt="Default"
-                                                        style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                                                        className="rounded-md"
-                                                        onLoad={() => console.log('Default image loaded')}
-                                                    />
-                                                </SwiperSlide>
-                                            )}
-                                        </Swiper>
-                                        <h2 className="text-base font-semibold mb-2 text-center">{product.name}</h2>
-                                        <div className="flex">
-                                            <p className="text-red-600 font-semibold text-center">{product.price}$</p>
-                                            <button
-                                                onClick={(event) => handleAddToCart(product, event)}
-                                                className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-2 py-1 rounded-2xl ml-2"
-                                                title="Buy"
-                                            >
-                                                <FontAwesomeIcon icon={faCartPlus} size="sm" />
-                                            </button>
-                                        </div>
-                                    </Link>
-                                );
-                            })
-                        ) : (
-                            <div className="text-center text-gray-100 text-3xl font-medium col-span-1 md:col-span-2 lg:col-span-5">
-                                No products found
-                            </div>
-                        )}
-                    </main>
                     <div className="flex justify-center mt-20">
                         <Link
                             to="/categories"

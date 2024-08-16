@@ -48,10 +48,7 @@ const ProductGrid = ({ filteredProducts, handleAddToCart }) => {
                         console.error('Error parsing product images:', e);
                         images = []; // Ensure images is an array even if parsing fails
                     }
-
-                    // Log product and images for debugging
-                    console.log('Product:', product);
-                    console.log('Images:', images);
+                
 
                     return (
                         <Link
@@ -117,7 +114,7 @@ const ProductGrid = ({ filteredProducts, handleAddToCart }) => {
                     );
                 })
             ) : (
-                <div className="text-center text-gray-100 text-3xl font-medium col-span-1 md:col-span-2 lg:col-span-5">
+                <div className="text-center text-gray-100 text-3xl font-medium col-span-1 md:col-span-2 lg:col-span-6">
                     No products found
                 </div>
             )}
