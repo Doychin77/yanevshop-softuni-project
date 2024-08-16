@@ -33,7 +33,6 @@
         .content p {
             text-align: center;
             margin: 10px 0;
-            color: #ccc;
         }
         .reset-code {
             display: block;
@@ -48,6 +47,10 @@
             text-align: center;
             color: #888;
         }
+        .username {
+            font-weight: bold;
+            color: #f9a825;
+        }
     </style>
 </head>
 <body>
@@ -56,7 +59,7 @@
         <h1>Reset Password</h1>
     </div>
     <div class="content">
-        <p>Hello {{ $username }},</p>
+        <p>Hello, <span class="username">{{ $username }}</span></p>
         <p>You requested to reset your password. Please use the following code to reset your password:</p>
         <p class="reset-code">{{ $resetCode }}</p>
         <p>If you did not request a password reset, please ignore this email.</p>

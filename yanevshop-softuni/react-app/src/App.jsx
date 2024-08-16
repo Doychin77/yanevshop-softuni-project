@@ -25,6 +25,7 @@ import NotFound from './components/NotFound';
 import SuccessfulOrder from './components/orders/SuccessfulOrder';
 import OrderHistory from './components/orders/OrderHistory';
 import ResetPassword from './components/profile/passwords/ResetPassword';
+import Favorites from './components/products/Favorites';
 
 
 
@@ -53,6 +54,7 @@ function App() {
                             <Route path="/order" element={<Order />} />
                             <Route path="/successful-order" element={<SuccessfulOrder />} />
                             <Route path="/order-history" element={<OrderHistory />} />
+                            <Route path="/favorites" element={<Favorites />} />
                             <Route path="/add-category" element={<AddCategory />} />
                             <Route path="/add-product" element={<AddProduct />} />
                             <Route path="/products/:id" element={<ProductDetails />} />

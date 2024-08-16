@@ -1,4 +1,4 @@
-// src/components/ProductGrid.js
+// src/components/ProductGrid.jsx
 
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,21 +7,51 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { faCartPlus, faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
 
 /* eslint-disable react/prop-types */
 const ProductGrid = ({ filteredProducts, handleAddToCart }) => {
+    const [favorites, setFavorites] = useState([]);
+
+    useEffect(() => {
+        const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        setFavorites(storedFavorites);
+    }, []);
+
+    const isFavorite = (productId) => {
+        return favorites.some(favProduct => favProduct.id === productId);
+    };
+
+    const handleToggleFavorite = (product) => {
+        let updatedFavorites;
+
+        if (isFavorite(product.id)) {
+            updatedFavorites = favorites.filter(favProduct => favProduct.id !== product.id);
+        } else {
+            updatedFavorites = [...favorites, product];
+        }
+
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+        setFavorites(updatedFavorites);
+    };
+
     return (
         <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5">
             {filteredProducts.length > 0 ? (
                 filteredProducts.map((product) => {
                     let images = [];
                     try {
-                        images = JSON.parse(product.images || '[]');
+                        // Default to empty array if parsing fails
+                        images = JSON.parse(product.images || '[]') || [];
                     } catch (e) {
                         console.error('Error parsing product images:', e);
+                        images = []; // Ensure images is an array even if parsing fails
                     }
+
+                    // Log product and images for debugging
+                    console.log('Product:', product);
+                    console.log('Images:', images);
 
                     return (
                         <Link
@@ -39,46 +69,49 @@ const ProductGrid = ({ filteredProducts, handleAddToCart }) => {
                                 className="swiper-container mb-4"
                                 style={{ width: '100%', height: 'auto' }}
                             >
-                                {images.length > 0 ? (
-                                    images.map((image, index) => {
-                                        const imageUrl = `http://yanevshop.test/storage/images/${image}`;
-                                        return (
-                                            <SwiperSlide key={index}>
-                                                <img
-                                                    src={imageUrl}
-                                                    alt={product.name}
-                                                    style={{ width: '100%', height: '230px', objectFit: 'cover' }}
-                                                    className="rounded-md"
-                                                    onError={(e) => {
-                                                        e.target.onerror = null;
-                                                        e.target.src = 'http://yanevshop.test/storage/images/default.jpg';
-                                                    }}
-                                                />
-                                            </SwiperSlide>
-                                        );
-                                    })
-                                ) : (
-                                    <SwiperSlide>
-                                        <img
-                                            src="http://yanevshop.test/storage/images/default.jpg"
-                                            alt="Default"
-                                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-                                            className="rounded-md"
-                                            onLoad={() => console.log('Default image loaded')}
-                                        />
-                                    </SwiperSlide>
-                                )}
+                                {(images.length > 0 ? images : ['default.jpg']).map((image, index) => {
+                                    const imageUrl = image.includes('default.jpg')
+                                        ? 'http://yanevshop.test/storage/images/default.jpg'
+                                        : `http://yanevshop.test/storage/images/${image}`;
+
+                                    return (
+                                        <SwiperSlide key={index}>
+                                            <img
+                                                src={imageUrl}
+                                                alt={product.name}
+                                                style={{ width: '100%', height: '230px', objectFit: 'cover' }}
+                                                className="rounded-md"
+                                                onError={(e) => {
+                                                    e.target.onerror = null;
+                                                    e.target.src = 'http://yanevshop.test/storage/images/default.jpg';
+                                                }}
+                                            />
+                                        </SwiperSlide>
+                                    );
+                                })}
                             </Swiper>
                             <h2 className="text-base font-semibold mb-2 text-center">{product.name}</h2>
-                            <div className="flex">
+                            <div className="flex items-center">
                                 <p className="text-red-600 font-semibold text-center">{product.price}$</p>
                                 <button
                                     onClick={(event) => handleAddToCart(product, event)}
-                                    className="bg-green-600 hover:bg-green-500 text-white font-semibold text-sm px-2 py-1 rounded-2xl ml-2"
+                                    className="ml-2 p-2 rounded-full text-green-600 hover:text-green-800 transition-colors duration-300"
                                     title="Buy"
                                 >
-                                    <FontAwesomeIcon icon={faCartPlus} size="sm" />
+                                    <FontAwesomeIcon icon={faCartPlus} size="lg" />
                                 </button>
+                                <button
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        handleToggleFavorite(product);
+                                    }}
+                                    className={`ml-1 p-2 rounded-full ${isFavorite(product.id) ? 'text-red-600' : 'text-gray-500'} hover:text-red-600 transition-colors duration-300`}
+                                    title={isFavorite(product.id) ? 'Remove from Favorites' : 'Add to Favorites'}
+                                >
+                                    <FontAwesomeIcon icon={isFavorite(product.id) ? faHeart : faHeartBroken} size="xl" />
+                                </button>
+
                             </div>
                         </Link>
                     );

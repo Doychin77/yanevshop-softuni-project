@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
 import CartDropdown from './CartDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart} from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation() {
     const { user, logout } = useContext(UserContext);
@@ -90,16 +90,14 @@ export default function Navigation() {
                                         Categories
                                     </NavLink>
                                 </li>
-                                
                                 <li>
                                     <NavLink
-                                        to="login"
-                                        onClick={logout}
+                                        to="/favorites"
                                         className={({ isActive }) =>
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        Log out
+                                        <FontAwesomeIcon icon={faHeart} size='lg'/>
                                     </NavLink>
                                 </li>
                                 <li
