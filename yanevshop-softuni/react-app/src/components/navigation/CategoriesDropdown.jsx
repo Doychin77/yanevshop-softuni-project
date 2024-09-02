@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 const CategoriesDropdown = ({ categories }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -30,7 +32,7 @@ const CategoriesDropdown = ({ categories }) => {
                     `nav-link ${isActive ? 'is-active' : ''}`
                 }
             >
-                Categories
+                <FontAwesomeIcon icon={faLayerGroup} className="text-xl" /> Categories
             </NavLink>
             {isDropdownOpen && (
                 <div style={{
@@ -39,7 +41,7 @@ const CategoriesDropdown = ({ categories }) => {
                     left: '-50px',
                     width: '180px', 
                     textAlign: 'center',
-                    // backgroundColor: '#242629',
+                    backgroundColor: '#242629',
                     border: '1px solid #F97316',
                     borderRadius: '0.9rem',
                     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
@@ -57,7 +59,7 @@ const CategoriesDropdown = ({ categories }) => {
                                     style={{ color: '#ebf1f7', textDecoration: 'none' }}
                                     className="block"
                                 >
-                                    <p className="hover:text-orange-500">{category.name}</p>
+                                 <p className="hover:text-orange-500">{category.name}</p>
                                 </NavLink>
                             </li>
                         ))}

@@ -1,9 +1,7 @@
-// src/components/Favorites.jsx
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faHeart, faHeartCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faHeartCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -41,11 +39,14 @@ const Favorites = () => {
     }, [searchTerm, favorites]);
 
     const handleAddToCart = (product, e) => {
-        e.preventDefault(); // Prevent default action if necessary
+        e.preventDefault();
+        e.stopPropagation(); // Stop propagation to prevent redirecting when adding to cart
         addToCart(product);
     };
 
-    const handleRemoveFromFavorites = (productId) => {
+    const handleRemoveFromFavorites = (productId, e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Stop propagation to prevent redirecting when removing from favorites
         const updatedFavorites = favorites.filter(product => product.id !== productId);
         setFavorites(updatedFavorites);
         setFilteredFavorites(updatedFavorites);
@@ -89,7 +90,8 @@ const Favorites = () => {
                                 }
 
                                 return (
-                                    <div
+                                    <Link
+                                        to={`/products/${product.id}`} // Assuming product details page is at this route
                                         key={product.id}
                                         className="bg-white rounded-3xl flex flex-col justify-center items-center p-4"
                                     >
@@ -134,14 +136,14 @@ const Favorites = () => {
                                                 <FontAwesomeIcon icon={faCartPlus} size="sm" />
                                             </button>
                                             <button
-                                                onClick={() => handleRemoveFromFavorites(product.id)}
+                                                onClick={(e) => handleRemoveFromFavorites(product.id, e)}
                                                 className="bg-red-600 hover:bg-red-500 text-white font-semibold text-sm px-2 py-1 rounded-2xl ml-2"
                                                 title="Remove from Favorites"
                                             >
                                                 <FontAwesomeIcon icon={faHeartCircleXmark} size='lg'/>
                                             </button>
                                         </div>
-                                    </div>
+                                    </Link>
                                 );
                             })
                         ) : (

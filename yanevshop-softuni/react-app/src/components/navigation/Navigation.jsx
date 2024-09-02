@@ -6,7 +6,7 @@ import { useCart } from '../../contexts/CartContext';
 import CartDropdown from './CartDropdown';
 import CategoriesDropdown from './CategoriesDropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faHeart, faRightToBracket, faHouse, faAddressBook, faTag, faCircleInfo, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faHeart, faRightToBracket, faHouse, faAddressBook, faTag, faCircleInfo, faSquarePlus, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation() {
     const { user } = useContext(UserContext);
@@ -40,7 +40,7 @@ export default function Navigation() {
     const handleMouseLeave = () => {
         setDropdownTimer(setTimeout(() => {
             setIsDropdownVisible(false);
-        }, 400)); 
+        }, 400));
     };
 
     return (
@@ -95,7 +95,8 @@ export default function Navigation() {
                                     </NavLink>
                                 </li>
                                 <li>
-                                     <CategoriesDropdown categories={categories} />
+                                    {/* <FontAwesomeIcon icon={faLayerGroup} /> */}
+                                    <CategoriesDropdown categories={categories} />
                                 </li>
                                 <li>
                                     <NavLink
@@ -104,7 +105,7 @@ export default function Navigation() {
                                             `nav-link ${isActive ? 'is-active' : ''}`
                                         }
                                     >
-                                        <FontAwesomeIcon icon={faHeart} size='lg'/>
+                                        <FontAwesomeIcon icon={faHeart} size='lg' />
                                     </NavLink>
                                 </li>
                                 <li
