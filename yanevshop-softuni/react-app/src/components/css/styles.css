@@ -138,3 +138,29 @@
     white-space: pre-wrap;
     max-width: 600px;
 }
+
+
+.hidden-input-file {
+    display: none; /* Hides the file input */
+}
+
+.custom-upload-button {
+    background-color: #159419; /* Green */
+    color: white;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.custom-upload-button:hover {
+    background-color: #3bc742; /* Darker green */
+}
+
+.file-name-display {
+    margin-left: 10px;
+    font-size: 15px;
+    color: #706f6f;
+}
+

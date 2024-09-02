@@ -58,15 +58,20 @@ const EditProfile = () => {
             ...prevState,
             [name]: type === 'file' ? files[0] : value
         }));
+
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById('file-name').textContent = file.name;
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setFormError('');  
+        setFormError('');
 
         // Client-side validation
-        if (formState.new_password || formState.confirm_password) { 
+        if (formState.new_password || formState.confirm_password) {
             if (formState.new_password !== formState.confirm_password) {
                 setFormError('The new password and confirmation do not match!');
                 setLoading(false);
@@ -109,12 +114,12 @@ const EditProfile = () => {
 
             setUser(response.data.user);
             alert('Profile updated successfully');
-            setFormError('');  
+            setFormError('');
         } catch (err) {
             console.error('Error updating profile:', err.response ? err.response.data : err.message);
-            
-            const errorMessage = err.response?.data?.errors?.old_password?.[0] 
-                || err.response?.data?.message 
+
+            const errorMessage = err.response?.data?.errors?.old_password?.[0]
+                || err.response?.data?.message
                 || 'Unknown error';
 
             setFormError(errorMessage);
@@ -157,7 +162,7 @@ const EditProfile = () => {
                 }}
             >
                 <div className="form-container p-8 w-full max-w-md bg-[#242629] border-2 border-orange-500 rounded-2xl shadow-xl">
-                    
+
                     <form onSubmit={handleSubmit}>
                         {formError && (
                             <div className="mb-4 text-red-500 text-center">
@@ -216,7 +221,7 @@ const EditProfile = () => {
                                 value={formState.old_password}
                                 onChange={handleChange}
                                 className="input-field-primary"
-                                
+
                             />
                         </div>
                         <div className="mb-4">
@@ -230,7 +235,7 @@ const EditProfile = () => {
                                 value={formState.new_password}
                                 onChange={handleChange}
                                 className="input-field-primary"
-                                
+
                             />
                         </div>
                         <div className="mb-4">
@@ -244,7 +249,7 @@ const EditProfile = () => {
                                 value={formState.confirm_password}
                                 onChange={handleChange}
                                 className="input-field-primary"
-                                
+
                             />
                         </div>
                         <div className="mb-6">
@@ -257,9 +262,26 @@ const EditProfile = () => {
                                 name="image"
                                 accept=".jpg,.jpeg,.png"
                                 onChange={handleChange}
-                                className="input-field-primary"
+                                className="hidden-input-file"
                             />
+
+                            <div className="flex flex-col items-center">
+
+                                <span id="file-name" className="file-name-display mt-2"></span>
+
+                                <button
+                                    type="button"
+                                    onClick={() => document.getElementById('image').click()}
+                                    className="custom-upload-button btn-primary"
+                                >
+                                    Upload Image
+                                </button>
+
+                            </div>
+
+
                         </div>
+
                         <div className="text-center">
                             <button
                                 type="submit"

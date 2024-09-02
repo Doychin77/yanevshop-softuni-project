@@ -38,7 +38,7 @@ const CategoriesDropdown = ({ categories }) => {
                 <div style={{
                     position: 'absolute',
                     top: 'calc(100% + 22px)',
-                    left: '-50px',
+                    left: '-40px',
                     width: '180px', 
                     textAlign: 'center',
                     backgroundColor: '#242629',
